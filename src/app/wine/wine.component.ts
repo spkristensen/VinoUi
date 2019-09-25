@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { vindrueType } from '../model/vindrue-type.model';
 import { vinType } from '../model/vin-type.model';
 import { vinDistrikt } from '../model/vin-distrikt.model';
@@ -15,8 +14,6 @@ import { MessageService } from '../services/message.service';
 import { vin } from '../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../domain/user';
-//import * as $ from 'jquery';
-
 declare var $: any;
 
 @Component({
@@ -60,12 +57,12 @@ export class WineComponent implements OnInit {
   private success = new Subject<string>();
   private error = new Subject<string>();
 
-  //private wineCreatedAnnounced = new Subject<string>(); // Vin oprettet og den der lytter kan gøre et eller andet
-  //wineCreatedAnnounced$ = this.wineCreatedAnnounced.asObservable();
+  // private wineCreatedAnnounced = new Subject<string>(); // Vin oprettet og den der lytter kan gøre et eller andet
+  // wineCreatedAnnounced$ = this.wineCreatedAnnounced.asObservable();
 
-  //parentShowEvent: EventEmitter<any>;
+  // parentShowEvent: EventEmitter<any>;
 
-  constructor(private wineService: WineService, private messageService: MessageService, authenticationService: AuthenticationService,) {
+  constructor(private wineService: WineService, private messageService: MessageService, authenticationService: AuthenticationService, ) {
     this.currentUser = authenticationService.currentUserValue;
     this.getVindrueTyper();
     this.getVinTyper();
@@ -87,7 +84,7 @@ export class WineComponent implements OnInit {
     this.kodelisteItemUpdateSubscription = wineService.kodelisteItemUpdatedAnnounced$.subscribe(data => {
       this.messageService.success(data.type + data.value);
       $('#KodeListeModal').modal('hide');
-      var switchString = data.type;
+      const switchString = data.type;
       switch (switchString) {
         case 'Land':
           this.getVinLande();
@@ -115,23 +112,23 @@ export class WineComponent implements OnInit {
           break;
       }
     });
-    //debugger;
   }
 
 
   ngOnInit() {
-    //debugger;
-    //this.parentShowEvent.subscribe((any) => this.doSomething(any));
+    // debugger;
+    // this.parentShowEvent.subscribe((any) => this.doSomething(any));
 
-    //this.success.subscribe((message) => this.okMessage = message);
-    //this.success.pipe(debounceTime(5000)).subscribe(() => this.okMessage = null);
+    // this.success.subscribe((message) => this.okMessage = message);
+    // this.success.pipe(debounceTime(5000)).subscribe(() => this.okMessage = null);
 
-    //this.error.subscribe((message) => this.errorMessage = message);
-    //this.error.pipe(debounceTime(5000)).subscribe(() => this.errorMessage = null);
+    // this.error.subscribe((message) => this.errorMessage = message);
+    // this.error.pipe(debounceTime(5000)).subscribe(() => this.errorMessage = null);
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy() {
-    //debugger;
+    // debugger;
 
   }
 
@@ -140,20 +137,19 @@ export class WineComponent implements OnInit {
   }
 
   doSomething() {
-    var parts = this.wine.koebsDato.substr(0, 10).split('-');
+    const parts = this.wine.koebsDato.substr(0, 10).split('-');
     this.editDate = {
       day: Number(parts[2]),
       month: Number(parts[1]),
       year: Number(parts[0]),
-    }
+    };
   }
 
   handlKodelisteModal(kodelisteType: string) {
 
     this.kodelisteItem = new kodelisteItem();
     switch (kodelisteType) {
-      case 'land':
-        {
+      case 'land': {
           this.kodelisteType = 'land';
           this.labelKodeListeModalTitle = 'Rediger land';
           this.labelKodeListeModalName = 'Land:';
@@ -161,8 +157,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.landId;
           break;
         }
-      case 'distrikt':
-        {
+      case 'distrikt': {
           this.kodelisteType = 'distrikt';
           this.labelKodeListeModalTitle = 'Rediger distrikt';
           this.labelKodeListeModalName = 'Distrikt:';
@@ -170,8 +165,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.distriktId;
           break;
         }
-      case 'vinType':
-        {
+      case 'vinType': {
           this.kodelisteType = 'vinType';
           this.labelKodeListeModalTitle = 'Rediger vintype';
           this.labelKodeListeModalName = 'VinType:';
@@ -179,8 +173,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.vintypeId;
           break;
         }
-      case 'drueType':
-        {
+      case 'drueType': {
           this.kodelisteType = 'drueType';
           this.labelKodeListeModalTitle = 'Rediger druetype';
           this.labelKodeListeModalName = 'DrueType:';
@@ -188,8 +181,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.drueId;
           break;
         }
-      case 'klassifikation':
-        {
+      case 'klassifikation': {
           this.kodelisteType = 'klassifikation';
           this.labelKodeListeModalTitle = 'Rediger klassifikation';
           this.labelKodeListeModalName = 'Klassifikation:';
@@ -197,8 +189,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.klassifikationId;
           break;
         }
-      case 'producent':
-        {
+      case 'producent': {
           this.kodelisteType = 'producent';
           this.labelKodeListeModalTitle = 'Rediger producent';
           this.labelKodeListeModalName = 'Producent:';
@@ -206,8 +197,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.producentId;
           break;
         }
-      case 'flaskestoerrelse':
-        {
+      case 'flaskestoerrelse': {
           this.kodelisteType = 'flaskestoerrelse';
           this.labelKodeListeModalTitle = 'Rediger flaskestørrelse';
           this.labelKodeListeModalName = 'Flaskestørrelse:';
@@ -215,8 +205,7 @@ export class WineComponent implements OnInit {
           this.kodelisteItem.id = this.wine.flaskeStoerrelseId;
           break;
         }
-      case 'indkoebssted':
-        {
+      case 'indkoebssted': {
           this.kodelisteType = 'indkoebssted';
           this.labelKodeListeModalTitle = 'Rediger indkøbssted';
           this.labelKodeListeModalName = 'Indkøbssted:';
@@ -231,7 +220,7 @@ export class WineComponent implements OnInit {
   }
 
   nyKodeListeVaerdi() {
-    //console.log(event);
+    // console.log(event);
     switch (this.labelKodeListeModalTitle) {
       case 'Rediger land': this.labelKodeListeModalTitle = 'Opret land'; break;
       case 'Rediger distrikt': this.labelKodeListeModalTitle = 'Opret distrikt'; break;
@@ -267,14 +256,14 @@ export class WineComponent implements OnInit {
       case 'Rediger indkøbssted': this.opdaterIndkoebssted(); break;
       case 'Opret indkøbssted': this.opretIndkoebssted(); break;
       default:
-    }    
+    }
   }
 
   kodelisteModelChanged(event) {
 
     this.kodelisteItem.value = this.valueKodeListeModalName;
   }
-  
+
   opdaterVin(info) {
     console.log('Maincomponent gem vin: ' + this.wine.vinId + '/' + this.wine.navn);
     if (this.wine.vinId === -1) {
@@ -287,8 +276,7 @@ export class WineComponent implements OnInit {
             this.messageService.error(error.message, false);
           }
         );
-    }
-    else
+    } else {
       this.wineService.opdaterVin(this.wine)
         .subscribe(data => {
           this.messageService.success('Vinen blev opdateret');
@@ -298,7 +286,8 @@ export class WineComponent implements OnInit {
             this.messageService.error(error.message, false);
           }
         );
-    //this.error.next(`${new Date()} - ` + info);
+    }
+    // this.error.next(`${new Date()} - ` + info);
   }
 
   /* #region  Land */
@@ -318,7 +307,7 @@ export class WineComponent implements OnInit {
     this.vinLand.id = this.kodelisteItem.id;
     this.vinLand.land = this.kodelisteItem.value;
     this.wineService.updateLand(this.vinLand).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Land blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -331,7 +320,7 @@ export class WineComponent implements OnInit {
   opretLand() {
     this.vinLand.land = this.kodelisteItem.value;
     this.wineService.insertLand(this.vinLand).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Land blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -342,10 +331,12 @@ export class WineComponent implements OnInit {
   }
 
   findVinLandViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinLande.length; i++) {
-      if (this.vinLande[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinLande.length; i++) {
+      if (this.vinLande[i].id === idInt) {
         return this.vinLande[i].land;
+      }
     }
     return '';
   }
@@ -364,10 +355,12 @@ export class WineComponent implements OnInit {
     );
   }
   findDistriktViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinDistrikter.length; i++) {
-      if (this.vinDistrikter[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinDistrikter.length; i++) {
+      if (this.vinDistrikter[i].id === idInt) {
         return this.vinDistrikter[i].distrikt;
+      }
     }
     return '';
   }
@@ -375,7 +368,7 @@ export class WineComponent implements OnInit {
     this.vinDistrikt.distrikt = this.kodelisteItem.value;
     this.vinDistrikt.landId = this.wine.landId;
     this.wineService.insertVinDistrikt(this.vinDistrikt).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('distrikt blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -388,7 +381,7 @@ export class WineComponent implements OnInit {
     this.vinDistrikt.id = this.kodelisteItem.id;
     this.vinDistrikt.distrikt = this.kodelisteItem.value;
     this.wineService.updateVinDistrikt(this.vinDistrikt).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('distrikt blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -403,7 +396,7 @@ export class WineComponent implements OnInit {
     this.vinIndkoebssted.id = this.kodelisteItem.id;
     this.vinIndkoebssted.indkoebssted = this.kodelisteItem.value;
     this.wineService.updateVinindkoebssted(this.vinIndkoebssted).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Indkøbssted blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -415,7 +408,7 @@ export class WineComponent implements OnInit {
   opretIndkoebssted() {
     this.vinIndkoebssted.indkoebssted = this.kodelisteItem.value;
     this.wineService.insertVinindkoebssted(this.vinIndkoebssted).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Indkøbssted blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -437,10 +430,12 @@ export class WineComponent implements OnInit {
   }
 
   findIndkoebsStederViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinIndkoebsSteder.length; i++) {
-      if (this.vinIndkoebsSteder[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinIndkoebsSteder.length; i++) {
+      if (this.vinIndkoebsSteder[i].id === idInt) {
         return this.vinIndkoebsSteder[i].indkoebssted;
+      }
     }
     return '';
   }
@@ -458,10 +453,12 @@ export class WineComponent implements OnInit {
   }
 
   findFlaskestoerrelserViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinFlaskestoerrelser.length; i++) {
-      if (this.vinFlaskestoerrelser[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinFlaskestoerrelser.length; i++) {
+      if (this.vinFlaskestoerrelser[i].id === idInt) {
         return this.vinFlaskestoerrelser[i].flaskestoerrelse;
+      }
     }
     return '';
   }
@@ -470,7 +467,7 @@ export class WineComponent implements OnInit {
     this.vinFlaskestoerrelse.id = this.kodelisteItem.id;
     this.vinFlaskestoerrelse.flaskestoerrelse = this.kodelisteItem.value;
     this.wineService.updateVinFlaskestoerrelse(this.vinFlaskestoerrelse).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Flaskestørelse blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -483,7 +480,7 @@ export class WineComponent implements OnInit {
   opretVinFlaskestoerrelse() {
     this.vinFlaskestoerrelse.flaskestoerrelse = this.kodelisteItem.value;
     this.wineService.insertVinFlaskestoerrelse(this.vinFlaskestoerrelse).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Flaskestørelse blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -507,10 +504,12 @@ export class WineComponent implements OnInit {
   }
 
   findProducenterViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinProducenter.length; i++) {
-      if (this.vinProducenter[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinProducenter.length; i++) {
+      if (this.vinProducenter[i].id === idInt) {
         return this.vinProducenter[i].producent;
+      }
     }
     return '';
   }
@@ -519,7 +518,7 @@ export class WineComponent implements OnInit {
     this.vinProducent.id = this.kodelisteItem.id;
     this.vinProducent.producent = this.kodelisteItem.value;
     this.wineService.updateProducent(this.vinProducent).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Producent blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -533,7 +532,7 @@ export class WineComponent implements OnInit {
     this.vinProducent.producent = this.kodelisteItem.value;
     this.vinDistrikt.landId = this.wine.landId;
     this.wineService.insertProducent(this.vinProducent).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Producent blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -557,10 +556,12 @@ export class WineComponent implements OnInit {
   }
 
   findKlassifikationViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinKlassifikationer.length; i++) {
-      if (this.vinKlassifikationer[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinKlassifikationer.length; i++) {
+      if (this.vinKlassifikationer[i].id === idInt) {
         return this.vinKlassifikationer[i].klassifikation;
+      }
     }
     return '';
   }
@@ -569,7 +570,7 @@ export class WineComponent implements OnInit {
     this.vinKlassifikation.id = this.kodelisteItem.id;
     this.vinKlassifikation.klassifikation = this.kodelisteItem.value;
     this.wineService.updateVinKlassifikation(this.vinKlassifikation).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Klassifikation blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -582,7 +583,7 @@ export class WineComponent implements OnInit {
   opretKlassifikation() {
     this.vinKlassifikation.klassifikation = this.kodelisteItem.value;
     this.wineService.insertVinKlassifikation(this.vinKlassifikation).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('Klassifikation blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -598,7 +599,7 @@ export class WineComponent implements OnInit {
     this.wineService.getVindrueTyper().subscribe((data: vindrueType[]) => {
       this.vindrueTyper = data;
       console.log(data);
-      //https://stackoverflow.com/questions/43355334/how-to-bind-data-to-bootstrap-select
+      // https://stackoverflow.com/questions/43355334/how-to-bind-data-to-bootstrap-select
     },
       error => {
         this.messageService.error(error.message, false);
@@ -607,10 +608,12 @@ export class WineComponent implements OnInit {
   }
 
   findDrueTypeViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vindrueTyper.length; i++) {
-      if (this.vindrueTyper[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vindrueTyper.length; i++) {
+      if (this.vindrueTyper[i].id === idInt) {
         return this.vindrueTyper[i].drue;
+      }
     }
     return '';
   }
@@ -619,7 +622,7 @@ export class WineComponent implements OnInit {
     this.vindrueType.id = this.kodelisteItem.id;
     this.vindrueType.drue = this.kodelisteItem.value;
     this.wineService.updateVindrueType(this.vindrueType).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('VindrueType blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
@@ -631,7 +634,7 @@ export class WineComponent implements OnInit {
   opretDrueType() {
     this.vindrueType.drue = this.kodelisteItem.value;
     this.wineService.insertVindrueType(this.vindrueType).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('VindrueType blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -655,10 +658,12 @@ export class WineComponent implements OnInit {
   }
 
   findVinTypeViaId(id) {
-    var idInt = parseInt(id);
-    for (var i = 0; i < this.vinTyper.length; i++) {
-      if (this.vinTyper[i].id === idInt)
+    const idInt = parseInt(id, 10);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.vinTyper.length; i++) {
+      if (this.vinTyper[i].id === idInt) {
         return this.vinTyper[i].type;
+      }
     }
     return '';
   }
@@ -666,7 +671,7 @@ export class WineComponent implements OnInit {
   opretVinType() {
     this.vinType.type = this.kodelisteItem.value;
     this.wineService.insertVinType(this.vinType).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('VinType blev oprettet');
       $('.KodeListeModal').modal('hide');
     },
@@ -680,7 +685,7 @@ export class WineComponent implements OnInit {
     this.vinType.id = this.kodelisteItem.id;
     this.vinType.type = this.kodelisteItem.value;
     this.wineService.updateVinType(this.vinType).subscribe(data => {
-      console.log(data)
+      console.log(data);
       this.messageService.success('VinType blev opdateret');
       $('.KodeListeModal').modal('hide');
     },
