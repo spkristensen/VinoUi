@@ -1,0 +1,423 @@
+<div *ngIf="wine" class="container-fluid">
+  <div class="page-header">
+    <div class="pull-right mr-3">
+      <button type="button" id="Rediger" class="btn btn-primary hidden-xs" data-toggle="modal" (click)="doSomething()" data-target="#wineModal">Rediger</button>
+      <!--<button type="button" class="btn btn-primary hidden-xs" data-ng-click="editWine(wine.id)" data-toggle="modal" (click)="doSomething()" data-target="#wineModal">Rediger</button>-->
+    </div>
+    <h1>{{wine.navn}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-8 col-lg-8 main-container">
+      <div class="row datasheet">
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Årgang:</label>
+          <p class="pbuttom">{{wine.aargang}}</p>
+        </div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Land:</label>
+          <p class="pbuttom">{{wine.land}}</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Område:</label>
+          <p class="pbuttom">{{wine.distrikt}}</p>
+        </div>
+
+        <div class="clearfix visible-lg-block"></div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Type:</label>
+          <p class="pbuttom">{{wine.vinType}}</p>
+        </div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Druer:</label>
+          <p class="pbuttom">{{wine.drue}}</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Klassifikation:</label>
+          <p class="pbuttom">{{wine.klassifikation}}</p>
+        </div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Producent:</label>
+          <p class="pbuttom">{{wine.producent}}</p>
+        </div>
+        <div class="clearfix visible-lg-block"></div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Flaskestørelse:</label>
+          <p class="pbuttom">{{wine.flaskeStoerrelse}}</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">IndkøbsSted:</label>
+          <p class="pbuttom">{{wine.indkoebsSted}}</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">IndkøbsDato:</label>
+          <p class="pbuttom">{{wine.koebsDato | date: 'dd-MM-yyyy'}}</p>
+        </div>
+
+        <div class="clearfix visible-lg-block"></div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Alkohol:</label>
+          <p class="pbuttom">{{wine.alkoholProcent}}%</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Hylde:</label>
+          <p class="pbuttom">{{wine.hylde}}</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Pris:</label>
+          <p class="pbuttom">{{wine.koebsPris | currency : "kr. " }}</p>
+        </div>
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Antal:</label>
+          <p class="pbuttom">{{wine.antal}}</p>
+        </div>
+
+        <div class="col-xs-3  col-lg-3">
+          <label class="label">Website:</label>
+          <div class="inline-icon-text">
+            <small class="text-muted d-md-none mr-3">Link</small>
+            <a [attr.href]="'//' + wine.webSite" target="_blank" [title]="wine.webSite">
+              <i class="material-icons">{{wine.webSite}}</i>
+            </a>
+          </div>
+        </div>
+        <div class="clearfix visible-lg-block"></div>
+        <div class="col-xs-12  col-lg-12">
+          <label class="label">Bemærkning:</label>
+          <div class="alert alert-success" role="alert">
+            <p class="pbuttom">{{wine.noter}}</p>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-12">
+          <label class="label">Anvendelse:</label>
+          <div class="alert alert-success" role="alert">
+            <p class="pbuttom">{{wine.anvendelse}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-4 col-lg-4">
+      <div class="card mr-3">
+        <p>
+          <a href="https://www.w3schools.com" target="_blank">
+            <img src="assets/img/2015-negroamaro.jpg" class="rounded img-fluid" alt="Cinque Terre" style="height: 100%; width:100%" />
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="wineModal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h1 class="modal-title">
+            {{wine.navn}}
+          </h1>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-12 col-lg-12 main-container">
+              <div class="row datasheet">
+                <div class="col-xs-12 col-lg-12">
+                  <div class="row">
+                    <div class="col-xs-6 col-lg-6">
+                      <div class="row">
+                        <div class="col col-xs-10 col-lg-10">
+                          <!--https://stackoverflow.com/questions/52398765/how-to-display-different-error-messages-based-on-user-input-in-angular-6-->
+                          <div class="mb-3">
+                            <label class="label">Navn:</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Navn" name="navn" [(ngModel)]="wine.navn">
+                          </div>
+                        </div>
+                        <div class="col col-xs-2 col-lg-2">
+                          <div class="mb-3">
+                            <label class="label">Årgang:</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="9999" name="aargang" [(ngModel)]="wine.aargang">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-lg-6">
+                      <div class="row">
+                        <div class="col-xs-6 col-lg-6 mb-3">
+                          <label class="label">Land:</label>
+                          <div class="input-group">
+                            <select id="vinLand" name="vinLand" [(ngModel)]="wine.landId" class="form-control form-control-sm">
+                              <option *ngFor="let vinLand of vinLande" value={{vinLand.id}}>
+                                {{vinLand.land}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('land')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-lg-6 mb-3">
+                          <label class="label">Område:</label>
+                          <div class="input-group">
+                            <select id="vinDistrikt" name="vinDistrikt" [(ngModel)]="wine.distriktId" class="form-control form-control-sm">
+                              <option *ngFor="let vinDistrikt of vinDistrikter" value={{vinDistrikt.id}}>
+                                {{vinDistrikt.distrikt}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('distrikt')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xs-6 col-lg-6">
+                      <div class="row">
+                        <div class=" col-xs-6 col-lg-6 mb-3">
+                          <label class="label">Type:</label>
+                          <div class="input-group">
+                            <select id="vintype" name="vintype" [(ngModel)]="wine.vintypeId" class="form-control form-control-sm">
+                              <option *ngFor="let vinType of vinTyper" value={{vinType.id}}>
+                                {{vinType.type}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('vinType')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="  col-xs-6 col-lg-6 mb-3">
+                          <label class="label">Druer:</label>
+                          <div class="input-group">
+                            <select id="vindrue" name="vindrue" [(ngModel)]="wine.drueId" class="form-control form-control-sm">
+                              <option *ngFor="let drueType of vindrueTyper" value={{drueType.id}}>
+                                {{drueType.drue}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('drueType')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-lg-6">
+                      <div class="row">
+                        <div class="col-xs-6 col-lg-6 mb3">
+                          <label class="label">Klassifikation:</label>
+                          <div class="input-group">
+                            <select id="vinKlassifikation" name="vinKlassifikation" [(ngModel)]="wine.klassifikationId" class="form-control form-control-sm">
+                              <option *ngFor="let vinKlassifikation of vinKlassifikationer" value={{vinKlassifikation.id}}>
+                                {{vinKlassifikation.klassifikation}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('klassifikation')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-lg-6 mb3">
+                          <label class="label">Producent:</label>
+                          <div class="input-group">
+                            <select id="vinProducent" name="vinProducent" [(ngModel)]="wine.producentId" class="form-control form-control-sm">
+                              <option *ngFor="let vinProducent of vinProducenter" value={{vinProducent.id}}>
+                                {{vinProducent.producent}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('producent')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 col-lg-6">
+                      <div class="row">
+                        <div class="col-xs-6 col-lg-6 mb-3">
+                          <label class="label">Flaskestørelse:</label>
+                          <div class="input-group">
+                            <select id="vinflaskeStoerrelse" name="vinflaskeStoerrelse" [(ngModel)]="wine.flaskeStoerrelseId" class="form-control form-control-sm">
+                              <option *ngFor="let vinFlaskestoerrelse of vinFlaskestoerrelser" value={{vinFlaskestoerrelse.id}}>
+                                {{vinFlaskestoerrelse.flaskestoerrelse}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('flaskestoerrelse')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-6 col-lg-6 mb-3">
+                          <label class="label">IndkøbsSted:</label>
+                          <div class="input-group">
+                            <select id="vinIndkoebssted" name="vinIndkoebssted" [(ngModel)]="wine.indkoebsStedId" class="form-control form-control-sm">
+                              <option *ngFor="let vinIndkoebssted of vinIndkoebsSteder" value={{vinIndkoebssted.id}}>
+                                {{vinIndkoebssted.indkoebssted}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#KodeListeModal" (click)="handlKodelisteModal('indkoebssted')">
+                                <i class="fas fa-pencil-alt"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 col-lg-6">
+                      <div class="row">
+                        <div class="col-xs-6 col-lg-6 mb-3">
+                          <label class="label">IndkøbsDato:</label>
+                          <!--<input name="koebsDato" [ngModel]="wine.koebsDato | date: 'dd-MM-yyyy'" type="date" />-->
+                          <!--<input name="koebsDato" [(ngModel)]="wine.koebsDato" type="date" required>-->
+                          <input type="text" class="form-control form-control-sm" ngbDatepicker [(ngModel)]="editDate" (click)="datePicker.toggle()" #datePicker="ngbDatepicker">
+                          <!--<p class="pbuttom">{{wine.koebsDato | date: 'dd-MM-yyyy'}} bsDatepicker </p>-->
+                          <!--https://ng-bootstrap.github.io/#/components/datepicker/examples-->
+                        </div>
+                        <div class="col-xs-2 col-lg-2 mb-3">
+                          <label class="label">Alkohol:</label>
+                          <input type="text" class="form-control form-control-sm" placeholder="%" name="alkoholProcent" [(ngModel)]="wine.alkoholProcent">
+                        </div>
+                        <div class="col-xs-2 col-lg-2 mb-3">
+                          <label class="label">Hylde:</label>
+                          <input type="text" class="form-control form-control-sm" placeholder="Hylde" name="hylde" [(ngModel)]="wine.hylde">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 col-lg-12 mb-3">
+                      <div class="row">
+                        <div class="col-xs-2 col-lg-2 mb-3">
+                          <label class="label">Pris:</label>
+                          <input type="text" class="form-control form-control-sm" placeholder="Indkøbspris" name="koebsPris" [ngModel]="wine.koebsPris | number : '1.2-2'">
+                          <!--<https://stackoverflow.com/questions/39642882/using-pipes-within-ngmodel-on-input-elements-in-angular-->
+                        </div>
+                        <div class="col-xs-1 col-lg-1 mb-3">
+                          <label class="label">Antal:</label>
+                          <input type="number" class="form-control form-control-sm" placeholder="0" name="antal" [(ngModel)]="wine.antal">
+                        </div>
+
+                        <div class="col-xs-9  col-lg-9 mb-3">
+                          <label class="label">Website:</label>
+                          <input type="text" class="form-control form-control-sm" placeholder="WebSite" name="webSite" [(ngModel)]="wine.webSite">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-lg-12">
+                  <label class="label">Bemærkning:</label>
+                  <div class="alert alert-success" role="alert">
+                    <input type="text" class="form-control form-control-sm" placeholder="Noter" name="noter" [(ngModel)]="wine.noter">
+                  </div>
+                </div>
+                <div class="col-xs-12 col-lg-12">
+                  <label class="label">Anvendelse:</label>
+                  <div class="alert alert-success" role="alert">
+                    <input type="text" class="form-control form-control-sm" placeholder="Anvendelse" name="anvendelse" [(ngModel)]="wine.anvendelse">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <div class="col-xs-12 col-lg-12">
+            <div class="row">
+              <div class="col-xs-9 col-lg-10">
+                <alert></alert>
+                <!--<ngb-alert *ngIf="okMessage" type="success" [dismissible]="false">{{ okMessage }}</ngb-alert>-->
+              </div>
+              <!--<div class="col-xs-11 col-lg-10">
+                <ngb-alert *ngIf="errorMessage" type="danger" [dismissible]="false">{{ errorMessage }}</ngb-alert>
+              </div>-->
+              <div class="col-xs-3 col-lg-2">
+                <div class="row">
+                  <div class="col-xs-12 col-lg-12">
+                    <div class="row">
+                      <div class="ml-4">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
+                      </div>
+                      <!--<div class="ml-2 dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="listeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Lister
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#landModal">Land</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#omraadeModal">Område</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#vintypeModal">Vintype</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#drueModal">Drue</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#klassifikationModal">Klassifikation</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#producentModal">Producent</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#flaskeModal">Flaskestørrelse</button>
+                          <button class="dropdown-item" type="button" data-toggle="modal" data-target="#indkoedstedModal">Indkøbssted</button>
+                        </div>
+                      </div>-->
+                      <div class="ml-4">
+                        <button type="button" class="btn btn-primary" (click)="opdaterVin()">Gem</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="KodeListeModal" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="kodelisteModalLabel">{{labelKodeListeModalTitle}}</h5>          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="Kodeliste-name" class="col-form-label">{{labelKodeListeModalName}}</label>
+              <input type="text" class="form-control" id="KodeListeFildName" name="KodeListeFildName" [(ngModel)]="valueKodeListeModalName" (ngModelChange)="kodelisteModelChanged($event)">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Luk</button>
+          <button type="button" class="btn btn-primary" (click)="nyKodeListeVaerdi()">Ny</button>
+          <button type="button" class="btn btn-primary" (click)="gemKodeListeItem()">Gem</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

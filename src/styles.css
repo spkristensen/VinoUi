@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+    width: 100%;
+    height: 100%;  
+  }
+  .page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+  }
+ .label {
+   display: inline-block;
+   max-width: 100%;
+   margin-bottom: 5px;
+   font-weight: 700;
+ }
+ 
+ .profileimage-card {
+   max-width: 100%;
+   width: 100%;
+   height: 330px;
+   cursor: pointer
+ }
+ .pbuttom {
+   margin-bottom: 29px;
+ }

@@ -1,5 +1,5 @@
 {
-  "name": "ng8",
+  "name": "VinoUI",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,7 +19,13 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "jqwidgets-ng": "^8.1.2",
+    "popper.js": "^1.15.0",
     "rxjs": "~6.4.0",
+    "rxjs-compat": "^6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },

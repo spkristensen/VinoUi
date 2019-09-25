@@ -1,0 +1,34 @@
+<div id="DIV1" style="width: 100%; height: 100%;">  
+  <jqxSplitter [width]="'100%'" [height]="'100%'"
+               [panels]="[
+               { size: 300,min: 100 },
+               { min: 200, size: 900 }
+               ]">
+    <div>
+      <jqxTree #wineTree id="wineTree"
+               (onSelect)="onTreeSelect($event)"
+               (onInitialized)="wineTreeOnInitialized()"
+               [width]="'100%'" [height]="'100%'"
+               [auto-create]="false">
+        <!--auto-create giver mulighed for at generer træet programatisk-->
+      </jqxTree>
+      <jqxMenu #wineListContextMenu
+               (onItemclick)="wineListContextMenuOnItemClick($event)"
+               [width]="120" [height]="60" [autoOpenPopup]="false" [mode]="'popup'">
+        <ul>
+          <li>Opret vin</li>
+          <li>Slet vin</li>
+        </ul>
+      </jqxMenu>
+    </div>
+
+    <div class="container-fluid">
+      <!--data område her skal der være nogle felter
+      https://www.jqwidgets.com/community/topic/splitter-height-value/-->
+      <app-wine [wine]="selectedWine"></app-wine>
+      <!--<app-main [parentShowEvent]="parentShowEvent"></app-main>-->
+    </div> <!--<app-main></app-main>-->
+  </jqxSplitter>
+  <alert></alert>
+</div>
+

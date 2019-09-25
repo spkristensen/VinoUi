@@ -1,0 +1,7 @@
+<!-- <div class="col-xs-12 col-lg-12 mt-1">  
+  <ngb-alert *ngIf="successMessage" [type]="alert.type"  [dismissible]="false" (close)="successMessage = null">{{ successMessage.text }}</ngb-alert>  
+</div> -->
+
+<div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">{{ message.text }}</div>
+
+<!-- https://ng-bootstrap.github.io/#/components/alert/examples -->
