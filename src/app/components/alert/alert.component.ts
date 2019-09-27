@@ -16,39 +16,36 @@ export class AlertComponent implements OnInit, OnDestroy {
   successMessage: string;
   message: any;
   // obj : MessageInfo;
-  private success = new Subject<string>(); 
+  private success = new Subject<string>();
   alert: AlertInfo;
 
   constructor(private messageService: MessageService) {
 
   }
-  ngOnInit() {    
+  ngOnInit() {
     // this.success.pipe(debounceTime(10000)).subscribe(() => this.message = null);
     // this.success.subscribe((message) => this.message = message);
-    this.subscription = this.messageService.getMessage().subscribe(message => {      
-      if (message != undefined)
-      {          
+    this.subscription = this.messageService.getMessage().subscribe(message => {
+      if (message !== undefined) {
         const messageObject = {
-          type : "",       
-          text: ""
+          type : '',
+          text: ''
         };
-        if (message.type == "success")
-        {
+        if (message.type === 'success') {
           messageObject.text = message.text;
         }
-        if (message.type == "error")
-        {
-          messageObject.text = message.text.message;          
+        if (message.type === 'error') {
+          messageObject.text = message.text.message;
         }
-        messageObject.type = message.type;               
-        this.message = messageObject;          
+        messageObject.type = message.type;
+        this.message = messageObject;
       }
     });
   }
   // ngOnInit() {
   //   this.success.pipe(debounceTime(10000)).subscribe(() => this.successMessage = null);
   //   this.success.subscribe((message) => this.successMessage = message);
-        
+
   //   // abonner på meddelelser fra alertservice
   //   this.subscription = this.messageService.getMessage().subscribe(message => {
   //     if (message !== undefined) {
@@ -56,7 +53,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   //       if (message.type === 'success')
   //         this.alert.type = "success";
   //       else
-  //       {          
+  //       {
   //         this.alert.type = "danger";
   //       }
   //       this.success.next(message);
@@ -75,7 +72,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   // ngOnInit() {
   //   this.success.pipe(debounceTime(2000)).subscribe(() => this.successMessage = null);
   //   this.success.subscribe((message) => this.successMessage = message);
-        
+
   //   // abonner på meddelelser fra alertservice
   //   this.subscription = this.messageService.getMessage().subscribe(message => {
 
@@ -85,10 +82,10 @@ export class AlertComponent implements OnInit, OnDestroy {
   //         this.alert.type = "success";
   //       else
   //         this.alert.type = "danger";
-        
+
   //       this.success.next(message);
   //       this.successMessage = message;
   //     }
   //   });
-  
+
 
