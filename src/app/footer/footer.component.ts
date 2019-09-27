@@ -31,7 +31,7 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     console.log('FooterComponent ngOnInit');
-    //debugger;
+    // debugger;
     this.success.subscribe((message) => this.okMessage = message);
     this.success.pipe(debounceTime(5000)).subscribe(() => this.okMessage = null);
 
@@ -49,11 +49,11 @@ export class FooterComponent implements OnInit {
       this.wineCount = data.antal;
       this.winePriceTotal = data.totalAmount;
       this.wineInfo = this.wineCount +
-        " flasker" + "," +
-        " " + "" +
-        " kr: " +
+        ' flasker' + ',' +
+        ' ' + '' +
+        ' kr: ' +
         this.winePriceTotal.toLocaleString('da-DK', { style: 'decimal', maximumFractionDigits: 0, minimumFractionDigits: 0 }) +
-        ",-";
-    });    
+        ',-';
+    });
   }
 }
