@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d38d3a10-d57d-4e06-a675-82d6551f8917/resourceGroups/WineResourceGroup/providers/Microsoft.Web/sites/SpkWineCellar",
+    "appService.deploySubpath": ""
+}
