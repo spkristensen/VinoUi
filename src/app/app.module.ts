@@ -28,10 +28,10 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,    
-    AlertComponent,  
+    AppComponent,
+    AlertComponent,
     HeaderComponent,
-    FooterComponent,     
+    FooterComponent,
     WineComponent,
     ListComponent,
     jqxExpanderComponent,
@@ -40,10 +40,10 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     jqxPanelComponent,
     jqxMenuComponent,
     jqxListBoxComponent,
-    RegisterComponent,    
-    LoginComponent   
+    RegisterComponent,
+    LoginComponent
   ],
-  imports: [  
+  imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -55,7 +55,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
   providers: [
     WineService,
     DatePipe,
-    { provide: NgbDateParserFormatter, useClass: DanishDateFormatter},    
+    { provide: NgbDateParserFormatter, useClass: DanishDateFormatter},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
