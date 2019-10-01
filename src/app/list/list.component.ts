@@ -1,7 +1,8 @@
 import { Component, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Subscription, Subject } from 'rxjs';
-import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree'
+import { SharedModule } from '../shared/shared.module';
+import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
 import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
 import { WineService } from '../services/wine.service';
 import { FooterComponent } from '../footer/footer.component';
@@ -21,7 +22,7 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class ListComponent implements AfterViewInit   {
-   @ViewChild('wineTree', {static: false}) wineTree: jqxTreeComponent;
+  @ViewChild('wineTree', {static: false}) wineTree: jqxTreeComponent;
   @ViewChild('wineListContextMenu', {static: false}) wineListContextMenu: jqxMenuComponent;
   @ViewChild('FooterComponent', {static: false}) footerComponent: FooterComponent;
   @ViewChild('WineComponent', {static: false}) wineComponent: WineComponent;
@@ -182,6 +183,7 @@ export class ListComponent implements AfterViewInit   {
     });
   }
   expandCountryItem(wineTreeItems: any, wineId: any) {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < wineTreeItems.length; i++) {
       const treeItem = wineTreeItems[i];
       if (treeItem.id === wineId.toString()) {
@@ -191,6 +193,7 @@ export class ListComponent implements AfterViewInit   {
   }
 
   expandItem(wineTreeItems: any, wineId: any) {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < wineTreeItems.length; i++) {
       const treeItem = wineTreeItems[i];
       if (treeItem.id === wineId.toString()) {
@@ -201,6 +204,7 @@ export class ListComponent implements AfterViewInit   {
   }
 
   findPrevItem(wineTreeItems: any, wineId: any) {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < wineTreeItems.length; i++) {
       const treeItem = wineTreeItems[i];
       if (treeItem.id === wineId.toString()) {
@@ -211,6 +215,7 @@ export class ListComponent implements AfterViewInit   {
   }
 
   findItemToSelect(wineTreeItems: any, wineId: any) {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < wineTreeItems.length; i++) {
       const treeItem = wineTreeItems[i];
       if (treeItem.id === wineId.toString()) {
@@ -230,6 +235,7 @@ export class ListComponent implements AfterViewInit   {
   // Ved hjælp af jquery løbes træet igennen for at finde de noder som er vine. på dem sættes title som er tooltip
   setTooltip() {
     const treeItems = $('.jqx-tree-item-li');
+    // tslint:disable-next-line: only-arrow-functions
     $.each(treeItems, function(index, element) {
       if ($(element).children().length !== 2 || $($(element).children().eq(1)[0]).children().length !== 0) {
         return;
@@ -256,8 +262,7 @@ export class ListComponent implements AfterViewInit   {
     if (isNaN(item.id)) {
       if (item.isExpanded) {
         this.wineTree.collapseItem(item);
-      }
-      else {
+      } else {
         this.wineTree.expandItem(item);
       }
     } else {
@@ -299,9 +304,11 @@ export class ListComponent implements AfterViewInit   {
 
   getWinesCount(treeListData): any {
     // debugger;
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < treeListData.length; i++) {
       const land = treeListData[i];
       if (land.items !== undefined) {
+        // tslint:disable-next-line: prefer-for-of
         for (let j = 0; j < land.items.length; j++) {
           this.getWineCount(land.items[j]);
         }
@@ -310,7 +317,9 @@ export class ListComponent implements AfterViewInit   {
   }
 
   getWineCount(wineTypeNode): any {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < wineTypeNode.items.length; i++) {
+      // tslint:disable-next-line: no-shadowed-variable
       const vin = wineTypeNode.items[i];
       if (vin !== undefined && vin !== null) {
         this.wineCount = this.wineCount + vin.antal;

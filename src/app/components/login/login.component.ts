@@ -1,53 +1,47 @@
-import { Component, OnInit } from '@angular/core';    
-import { Router, ActivatedRoute } from '@angular/router';    
-// import { LoginService } from '../../services/login.service';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { MessageService } from 'src/app/services/message.service';
- 
-@Component({    
-  selector: 'app-login',    
-  templateUrl: './login.component.html'    
-  //styleUrls: ['./login.component.css']    
-})    
-export class LoginComponent {    
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html'
+})
+export class LoginComponent {
+  year = new Date().getFullYear();
   loginForm: FormGroup;
-  model : any={}; 
+  model: any = {};
   loading = false;
   submitted = false;
   returnUrl: string;
-  status: string;       
-  errorMessage:string;      
-  //constructor(private router:Router,private LoginService:LoginService) { } 
+  status: string;
+  errorMessage: string;
   constructor(
-    //titleService: TitleService,
+    // titleService: TitleService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    // private LoginService:LoginService,
     private authenticationService: AuthenticationService,
-    private messageService: MessageService)    
-    {
+    private messageService: MessageService) {
     if (this.authenticationService.currentUserValue) {
         this.router.navigate(['/']);
     }
-    //titleService.setTitle('Login');
-    
-}   
-  
-    
-  ngOnInit() {  
+    // titleService.setTitle('Login');
+}
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', Validators.required]
-    });     
+    });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/list';
-    this.status = this.route.snapshot.queryParams['status'] || '';
-  }   
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/list';
+    this.status = this.route.snapshot.queryParams.status || '';
+  }
   get f() { return this.loginForm.controls; }
-  
+
   onSubmit() {
     this.submitted = true;
 
@@ -59,7 +53,7 @@ export class LoginComponent {
     this.authenticationService.login(this.f.username.value, this.f.password.value)
         .pipe(first())
         .subscribe(
-            data => {              
+            data => {
               this.router.navigate([this.returnUrl]);
             },
             error => {
@@ -73,4 +67,4 @@ export class LoginComponent {
   //   localStorage.removeItem('currentUser');
   //   this.currentUserSubject.next(null);
   // }
- } 
+ }

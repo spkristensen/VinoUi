@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -13,18 +12,19 @@ import { DanishDateFormatter } from './formater/danish-date.formatter.component'
 import { AlertComponent } from './components/alert/alert.component';
 import { WineComponent } from './wine/wine.component';
 import { ListComponent } from './list/list.component';
-import { jqxExpanderComponent } from 'jqwidgets-ng/jqxexpander'
-import { jqxSplitterComponent } from 'jqwidgets-ng/jqxsplitter';
-import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
-import { jqxPanelComponent } from 'jqwidgets-ng/jqxpanel';
-import { jqxListBoxComponent } from 'jqwidgets-ng/jqxlistbox';
-import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
+import { jqxExpanderModule } from 'jqwidgets-ng/jqxexpander';
+import { jqxSplitterModule } from 'jqwidgets-ng/jqxsplitter';
+import { jqxTreeModule } from 'jqwidgets-ng/jqxtree';
+import { jqxPanelModule } from 'jqwidgets-ng/jqxpanel';
+import { jqxListBoxModule } from 'jqwidgets-ng/jqxlistbox';
+import { jqxMenuModule } from 'jqwidgets-ng/jqxmenu';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+// import { RegisterComponent } from './components/register/register.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+// import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,14 +34,9 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     FooterComponent,
     WineComponent,
     ListComponent,
-    jqxExpanderComponent,
-    jqxSplitterComponent,
-    jqxTreeComponent,
-    jqxPanelComponent,
-    jqxMenuComponent,
-    jqxListBoxComponent,
-    RegisterComponent,
-    LoginComponent
+    // RegisterComponent,
+    LoginComponent,
+    // SharedModule
   ],
   imports: [
     BrowserModule,
@@ -50,7 +45,13 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     ReactiveFormsModule,
     NgbModule,
     UiModule,
-    HttpClientModule
+    HttpClientModule,
+    jqxTreeModule,
+    jqxExpanderModule,
+    jqxSplitterModule,
+    jqxMenuModule,
+    jqxPanelModule,
+    jqxListBoxModule
   ],
   providers: [
     WineService,
