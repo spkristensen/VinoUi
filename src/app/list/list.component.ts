@@ -1,14 +1,12 @@
 import { Component, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Subscription, Subject } from 'rxjs';
-import { SharedModule } from '../shared/shared.module';
 import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
 import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
 import { WineService } from '../services/wine.service';
 import { FooterComponent } from '../footer/footer.component';
 import { vin } from '../model/vin.model';
 import { MessageService } from '../services/message.service';
-// import * as $ from 'jquery';
 import { WineComponent } from './../wine/wine.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
