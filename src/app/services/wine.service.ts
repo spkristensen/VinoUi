@@ -136,7 +136,7 @@ export class WineService {
   /* #region VindrueType methods */
   getVindrueTyper(): Observable<any> {
     console.log('Maincomponent getVindrueTyper');
-    return this.httpClient.get(`${environment.apiUrl}api/kodeliste/vindruetype`);
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/vindruetype`);
     // https://stackoverflow.com/questions/43355334/how-to-bind-data-to-bootstrap-select
   }
 
