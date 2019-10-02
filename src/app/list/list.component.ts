@@ -5,11 +5,10 @@ import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
 import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
 import { WineService } from '../services/wine.service';
 import { FooterComponent } from '../footer/footer.component';
-import { vin } from '../model/vin.model';
+import { Vin } from '../model/vin.model';
 import { MessageService } from '../services/message.service';
 import { WineComponent } from './../wine/wine.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Router } from '@angular/router';
 import { User } from '../domain/user';
 
 declare var $: any;
@@ -33,7 +32,7 @@ export class ListComponent implements AfterViewInit   {
   };
   wineCount = 0;
   winePriceTotal = 0;
-  selectedWine: vin;
+  selectedWine: Vin;
   selectedItem: any;
   searchClickedSubscription: Subscription;
   wineCreatedSubscription: Subscription;
@@ -48,7 +47,6 @@ export class ListComponent implements AfterViewInit   {
   constructor(
           private wineService: WineService,
           private messageService: MessageService,
-          private router: Router,
           private authenticationService: AuthenticationService,
           public datepipe: DatePipe) {
     console.log('listcomponent Constructor');
@@ -112,7 +110,7 @@ export class ListComponent implements AfterViewInit   {
     switch (item) {
       case 'Opret vin': {
           this.selectedItem = this.wineTree.getSelectedItem();
-          this.wineService.getVin(this.rightClickWineId).subscribe((data: vin) => {
+          this.wineService.getVin(this.rightClickWineId).subscribe((data: Vin) => {
             console.log(data);
             this.selectedWine = data;
             this.selectedWine.vinId = -1;
@@ -126,7 +124,7 @@ export class ListComponent implements AfterViewInit   {
           break;
       }
       case 'Slet vin': {
-        this.wineService.sletVin(this.rightClickWineId).subscribe((data: vin) => {
+        this.wineService.sletVin(this.rightClickWineId).subscribe((data: Vin) => {
           console.log(data);
           this.selectedWine = null;
           this.messageService.success('Vinen blev slettet');
@@ -273,7 +271,7 @@ export class ListComponent implements AfterViewInit   {
     console.log('listcomponent getVin');
     // debugger;
     // this.httpClient.get('/api/main/' + treeVinItem.id).subscribe((data: Vin) => {
-    this.wineService.getVin(treeVinItem.id).subscribe((data: vin) => {
+    this.wineService.getVin(treeVinItem.id).subscribe((data: Vin) => {
       console.log(data);
       this.selectedWine = data;
       // this.messageService.success('Vinen blev hentet');
