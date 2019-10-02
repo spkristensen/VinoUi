@@ -3,8 +3,7 @@ export class AlertInfo {
       this.message = message;
       this.type = type;
     }
-  
+
     type: string;
     message: string;
   }
-  

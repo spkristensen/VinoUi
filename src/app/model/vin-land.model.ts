@@ -1,5 +1,4 @@
-export class vinLand {
+export class VinLand {
     id: number;
     land: string;
   }
-  

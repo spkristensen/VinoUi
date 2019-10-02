@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { vindrueType } from '../model/vindrue-type.model';
-import { vinType } from '../model/vin-type.model';
-import { vinDistrikt } from '../model/vin-distrikt.model';
-import { vinFlaskestoerrelse } from '../model/vin-flaskestoerrelse.model';
-import { vinIndkoebssted } from '../model/vin-indkoebssted.model';
-import { vinKlassifikation } from '../model/vin-klassifikation.model';
-import { vinLand } from '../model/vin-land.model';
-import { kodelisteItem } from '../model/kodeliste-item.model';
-import { vinProducent } from '../model/vin-producent.model';
+import { VindrueType } from '../model/vindrue-type.model';
+import { VinType } from '../model/vin-type.model';
+import { VinDistrikt } from '../model/vin-distrikt.model';
+import { VinFlaskestoerrelse } from '../model/vin-flaskestoerrelse.model';
+import { VinIndkoebssted } from '../model/vin-indkoebssted.model';
+import { VinKlassifikation } from '../model/vin-klassifikation.model';
+import { VinLand } from '../model/vin-land.model';
+import { KodelisteItem } from '../model/kodeliste-item.model';
+import { VinProducent } from '../model/vin-producent.model';
 import { WineService } from '../services/wine.service';
 import { MessageService } from '../services/message.service';
-import { vin } from '../model/vin.model';
+import { Vin } from '../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../domain/user';
 declare var $: any;
@@ -23,27 +23,27 @@ declare var $: any;
 
 export class WineComponent implements OnInit {
   currentUser: User;
-  @Input() wine: vin;
+  @Input() wine: Vin;
   editDate: any;
-  vindrueTyper: vindrueType[];
-  vinTyper: vinType[];
-  vinDistrikter: vinDistrikt[];
-  vinFlaskestoerrelser: vinFlaskestoerrelse[];
-  vinIndkoebsSteder: vinIndkoebssted[];
-  vinKlassifikationer: vinKlassifikation[];
-  vinLande: vinLand[];
-  vinProducenter: vinProducent[];
+  vindrueTyper: VindrueType[];
+  vinTyper: VinType[];
+  vinDistrikter: VinDistrikt[];
+  vinFlaskestoerrelser: VinFlaskestoerrelse[];
+  vinIndkoebsSteder: VinIndkoebssted[];
+  vinKlassifikationer: VinKlassifikation[];
+  vinLande: VinLand[];
+  vinProducenter: VinProducent[];
 
-  vinLand: vinLand;
-  vinDistrikt: vinDistrikt;
-  vinIndkoebssted: vinIndkoebssted;
-  vinFlaskestoerrelse: vinFlaskestoerrelse;
-  vinProducent: vinProducent;
-  vinType: vinType;
-  vindrueType: vindrueType;
-  vinKlassifikation: vinKlassifikation;
+  vinLand: VinLand;
+  vinDistrikt: VinDistrikt;
+  vinIndkoebssted: VinIndkoebssted;
+  vinFlaskestoerrelse: VinFlaskestoerrelse;
+  vinProducent: VinProducent;
+  vinType: VinType;
+  vindrueType: VindrueType;
+  vinKlassifikation: VinKlassifikation;
 
-  kodelisteItem: kodelisteItem;
+  kodelisteItem: KodelisteItem;
 
   labelKodeListeModalName: string;
   labelKodeListeModalTitle: string;
@@ -72,14 +72,14 @@ export class WineComponent implements OnInit {
     this.getVinKlassifikationer();
     this.getVinLande();
     this.getVinProducenter();
-    this.vinLand = new vinLand();
-    this.vinDistrikt = new vinDistrikt();
-    this.vinType = new vinType();
-    this.vindrueType = new vindrueType();
-    this.vinKlassifikation = new vinKlassifikation();
-    this.vinProducent = new vinProducent();
-    this.vinFlaskestoerrelse = new vinFlaskestoerrelse();
-    this.vinIndkoebssted = new vinIndkoebssted();
+    this.vinLand = new VinLand();
+    this.vinDistrikt = new VinDistrikt();
+    this.vinType = new VinType();
+    this.vindrueType = new VindrueType();
+    this.vinKlassifikation = new VinKlassifikation();
+    this.vinProducent = new VinProducent();
+    this.vinFlaskestoerrelse = new VinFlaskestoerrelse();
+    this.vinIndkoebssted = new VinIndkoebssted();
 
     this.kodelisteItemUpdateSubscription = wineService.kodelisteItemUpdatedAnnounced$.subscribe(data => {
       this.messageService.success(data.type + data.value);
@@ -147,7 +147,7 @@ export class WineComponent implements OnInit {
 
   handlKodelisteModal(kodelisteType: string) {
 
-    this.kodelisteItem = new kodelisteItem();
+    this.kodelisteItem = new KodelisteItem();
     switch (kodelisteType) {
       case 'land': {
           this.kodelisteType = 'land';
@@ -294,7 +294,7 @@ export class WineComponent implements OnInit {
 
   getVinLande(): any {
     console.log('Maincomponent getVinLande');
-    this.wineService.getVinLande().subscribe((data: vinLand[]) => {
+    this.wineService.getVinLande().subscribe((data: VinLand[]) => {
       this.vinLande = data;
       console.log(data);
     },
@@ -345,7 +345,7 @@ export class WineComponent implements OnInit {
   /* #region  Distrikt */
   getVinDistrikter(): any {
     console.log('Maincomponent   getVinDistrikter()');
-    this.wineService.getVinDistrikter().subscribe((data: vinDistrikt[]) => {
+    this.wineService.getVinDistrikter().subscribe((data: VinDistrikt[]) => {
       this.vinDistrikter = data;
       console.log(data);
     },
@@ -419,7 +419,7 @@ export class WineComponent implements OnInit {
   }
   getVinindkoebssteder(): any {
     console.log('Maincomponent getVinindkoebssteder');
-    this.wineService.getVinindkoebssteder().subscribe((data: vinIndkoebssted[]) => {
+    this.wineService.getVinindkoebssteder().subscribe((data: VinIndkoebssted[]) => {
       this.vinIndkoebsSteder = data;
       console.log(data);
     },
@@ -443,7 +443,7 @@ export class WineComponent implements OnInit {
   /* #region  Flaskestørelse */
   getVinFlaskestoerrelser(): any {
     console.log('Maincomponent getVinFlaskestoerrelser');
-    this.wineService.getVinFlaskestoerrelser().subscribe((data: vinFlaskestoerrelse[]) => {
+    this.wineService.getVinFlaskestoerrelser().subscribe((data: VinFlaskestoerrelse[]) => {
       this.vinFlaskestoerrelser = data;
     },
       error => {
@@ -493,7 +493,7 @@ export class WineComponent implements OnInit {
   /* #region  Producent */
   getVinProducenter(): any {
     console.log('Maincomponent getVinProducenter');
-    this.wineService.getVinProducenter().subscribe((data: vinProducent[]) => {
+    this.wineService.getVinProducenter().subscribe((data: VinProducent[]) => {
       this.vinProducenter = data;
       console.log(data);
     },
@@ -545,7 +545,7 @@ export class WineComponent implements OnInit {
   /* #region  Klassifikation */
   getVinKlassifikationer(): any {
     console.log('Maincomponent getVinKlassifikationer');
-    this.wineService.getVinKlassifikationer().subscribe((data: vinKlassifikation[]) => {
+    this.wineService.getVinKlassifikationer().subscribe((data: VinKlassifikation[]) => {
       this.vinKlassifikationer = data;
       console.log(data);
     },
@@ -596,7 +596,7 @@ export class WineComponent implements OnInit {
   /* #region  VindrueType */
   getVindrueTyper(): any {
     console.log('Maincomponent getVindrueTyper');
-    this.wineService.getVindrueTyper().subscribe((data: vindrueType[]) => {
+    this.wineService.getVindrueTyper().subscribe((data: VindrueType[]) => {
       this.vindrueTyper = data;
       console.log(data);
       // https://stackoverflow.com/questions/43355334/how-to-bind-data-to-bootstrap-select
@@ -647,7 +647,7 @@ export class WineComponent implements OnInit {
   /* #region  VinType */
   getVinTyper(): any {
     console.log('Maincomponent getVinTyper');
-    this.wineService.getVinTyper().subscribe((data: vinType[]) => {
+    this.wineService.getVinTyper().subscribe((data: VinType[]) => {
       this.vinTyper = data;
       console.log(data);
     },

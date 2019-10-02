@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-//import { vin } from '../ClientModel/vin';
 import { MessageService } from '../services/message.service';
-import { vinUpdateReturn } from '../model/vin-update-return.model';
-import { kodelisteItem } from '../model/kodeliste-item.model';
-import { vinLand } from '../model/vin-land.model';
-import { vinProducent } from '../model/vin-producent.model';
-import { vinKlassifikation } from '../model/vin-klassifikation.model';
-import { vinIndkoebssted } from '../model/vin-indkoebssted.model';
-import { vinFlaskestoerrelse } from '../model/vin-flaskestoerrelse.model';
-import { vinDistrikt } from '../model/vin-distrikt.model';
-import { vinType } from '../model/vin-type.model';
-import { vindrueType } from '../model/vindrue-type.model';
+import { VinUpdateReturn } from '../model/vin-update-return.model';
+import { KodelisteItem } from '../model/kodeliste-item.model';
+import { VinLand } from '../model/vin-land.model';
+import { VinProducent } from '../model/vin-producent.model';
+import { VinKlassifikation } from '../model/vin-klassifikation.model';
+import { VinIndkoebssted } from '../model/vin-indkoebssted.model';
+import { VinFlaskestoerrelse } from '../model/vin-flaskestoerrelse.model';
+import { VinDistrikt } from '../model/vin-distrikt.model';
+import { VinType } from '../model/vin-type.model';
+import { VindrueType } from '../model/vindrue-type.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class WineService {
 
   constructor(private httpClient: HttpClient,  private messageService: MessageService) {
-    this.kodelisteItem = new kodelisteItem();    
+    this.kodelisteItem = new KodelisteItem();
   }
-  vinUpdate: vinUpdateReturn;
-  kodelisteItem: kodelisteItem;
-   //vinLand: vinLand;
+  vinUpdate: VinUpdateReturn;
+  kodelisteItem: KodelisteItem;
+   // vinLand: vinLand;
 
   // Observable string sources
   private searchClickedAnnounced = new Subject<string>();
@@ -34,7 +34,7 @@ export class WineService {
   private wineDeletedAnnounced = new Subject<string>(); // Vin slettet og den der lytter kan gøre et eller andet
   wineDeletedAnnounced$ = this.wineDeletedAnnounced.asObservable();
 
-  private wineUpdatedAnnounced = new Subject<vinUpdateReturn>(); // Vin ændret og den der lytter kan gøre et eller andet
+  private wineUpdatedAnnounced = new Subject<VinUpdateReturn>(); // Vin ændret og den der lytter kan gøre et eller andet
   wineUpdatedAnnounced$ = this.wineUpdatedAnnounced.asObservable();
 
   private updateFooterInfoAnnounced = new Subject<string>();
@@ -50,17 +50,18 @@ export class WineService {
   }
 
   searchVin(searchString): Observable<any> {
-    console.log('WineService searchVin');    
+    console.log('WineService searchVin');
     console.log('WineService searchVin: ' + searchString);
-    var res = this.httpClient.get('/api/wineList?searchText=' + searchString);
+    const res = this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + searchString);
+
     console.log(res);
-    this.updateFooterInfoAnnounced.next('');  
+    this.updateFooterInfoAnnounced.next('');
     return res;
   }
 
   getFooterInfo(): Observable<any> {
     console.log('WineService getfooterInfo: ');
-    return this.httpClient.get('/api/footer');
+    return this.httpClient.get(`${environment.apiUrl}/api/footer`);
   }
 
   opdaterVin(vin): Observable<any> {
@@ -69,9 +70,9 @@ export class WineService {
       observer.next(true);
       observer.complete();
     });
-    this.vinUpdate = new vinUpdateReturn(vin.vinId);
-    var res = this.httpClient.put('/api/wine/' + vin.vinId, vin).subscribe((data: any) => {
-      //console.log(res);
+    this.vinUpdate = new VinUpdateReturn(vin.vinId);
+
+    const res = this.httpClient.put(`${environment.apiUrl}/api/wine/` + vin.vinId, vin).subscribe((data: any) => {
       this.vinUpdate.status = data;
       this.vinUpdate.vinId = vin.vinId;
       this.wineUpdatedAnnounced.next(this.vinUpdate);
@@ -91,7 +92,7 @@ export class WineService {
     });
 
     console.log('WineService InsertVin');
-    this.httpClient.post('/api/wine', vin).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/wine`, vin).subscribe((data: any) => {
       this.wineCreatedAnnounced.next(data);
       this.updateFooterInfoAnnounced.next('');
       return data;
@@ -109,7 +110,7 @@ export class WineService {
       observer.complete();
     });
 
-    var res = this.httpClient.delete('/api/wine/' + vinId).subscribe((data: any) => {
+    const res = this.httpClient.delete(`${environment.apiUrl}/api/wine/` + vinId).subscribe((data: any) => {
       this.wineDeletedAnnounced.next(data);
       this.updateFooterInfoAnnounced.next('');
       return res;
@@ -121,12 +122,12 @@ export class WineService {
   }
 
   getAllWines(): Observable<any> {
-    return this.httpClient.get('/api/wineList?searchText=' + '');
+    return this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + '');
   }
 
   getVin(id): Observable<any> {
     console.log('WineService getVin: ' + id);
-    var vin = this.httpClient.get('/api/wineList/' + id);
+    const vin = this.httpClient.get(`${environment.apiUrl}/api/wineList/` + id);
     console.log(vin);
     return vin;
   }
@@ -135,21 +136,21 @@ export class WineService {
   /* #region VindrueType methods */
   getVindrueTyper(): Observable<any> {
     console.log('Maincomponent getVindrueTyper');
-    //debugger;
-    return this.httpClient.get('api/kodeliste/vindruetype');
-    //https://stackoverflow.com/questions/43355334/how-to-bind-data-to-bootstrap-select
+    return this.httpClient.get(`${environment.apiUrl}api/kodeliste/vindruetype`);
+    // https://stackoverflow.com/questions/43355334/how-to-bind-data-to-bootstrap-select
   }
 
-  insertVindrueType(vindrueType: vindrueType): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  insertVindrueType(vindrueType: VindrueType): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert vindrueType');
-    this.httpClient.post('/api/kodeliste/vindruetype', vindrueType).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/vindruetype`, vindrueType).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'DrueType'    
+      this.kodelisteItem.type = 'DrueType';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -160,16 +161,17 @@ export class WineService {
     return obs;
   }
 
-  updateVindrueType(vindrueType: vindrueType): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  updateVindrueType(vindrueType: VindrueType): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vindrueType');
-    this.httpClient.put('/api/kodeliste/vindruetype', vindrueType).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/vindruetype`, vindrueType).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'DrueType'    
+      this.kodelisteItem.type = 'DrueType';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -184,19 +186,20 @@ export class WineService {
   /* #region VinType methods */
   getVinTyper(): Observable<any> {
     console.log('Maincomponent getVinTyper');
-    //debugger;
-    return this.httpClient.get('/api/kodeliste/vintype');
+    // debugger;
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/vintype`);
   }
-  insertVinType(vinType: vinType): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  insertVinType(vinType: VinType): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert vinType');
-    this.httpClient.post('/api/kodeliste/vintype', vinType).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/vintype`, vinType).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'VinType'    
+      this.kodelisteItem.type = 'VinType';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -207,16 +210,17 @@ export class WineService {
     return obs;
   }
 
-  updateVinType(vinType: vinType): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  updateVinType(vinType: VinType): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vinType');
-    this.httpClient.put('/api/kodeliste/vintype', vinType).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/vintype`, vinType).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'VinType'    
+      this.kodelisteItem.type = 'VinType';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -231,19 +235,20 @@ export class WineService {
   /* #region VinDistrikt methods */
   getVinDistrikter(): Observable<any> {
     console.log('Maincomponent   getVinDistrikter()');
-    //debugger;
-    return this.httpClient.get('/api/kodeliste/vindistrikt');
+    // debugger;
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/vindistrikt`);
   }
-  insertVinDistrikt(vinDistrikt: vinDistrikt): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  insertVinDistrikt(vinDistrikt: VinDistrikt): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert VinDistrikt');
-    this.httpClient.post('/api/kodeliste/vindistrikt', vinDistrikt).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/vindistrikt`, vinDistrikt).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'Distrikt'    
+      this.kodelisteItem.type = 'Distrikt';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -254,16 +259,16 @@ export class WineService {
     return obs;
   }
 
-  updateVinDistrikt(VinDistrikt: vinDistrikt): Observable<any> {
+  updateVinDistrikt(vinDistrikt: VinDistrikt): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update VinDistrikt');
-    this.httpClient.put('/api/kodeliste/vindistrikt', VinDistrikt).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/vindistrikt`, vinDistrikt).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'Distrikt'    
+      this.kodelisteItem.type = 'Distrikt';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -278,18 +283,19 @@ export class WineService {
   /* #region VinFlaskestoerrelse methods */
   getVinFlaskestoerrelser(): Observable<any> {
     console.log('Maincomponent getVinFlaskestoerrelser');
-    return this.httpClient.get('/api/kodeliste/flaskestoerrelse');
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/flaskestoerrelse`);
   }
-  insertVinFlaskestoerrelse(vinFlaskestoerrelse: vinFlaskestoerrelse): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  insertVinFlaskestoerrelse(vinFlaskestoerrelse: VinFlaskestoerrelse): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert vinFlaskestoerrelse');
-    this.httpClient.post('/api/kodeliste/flaskestoerrelse', vinFlaskestoerrelse).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/flaskestoerrelse`, vinFlaskestoerrelse).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'Flaskestørrelse'    
+      this.kodelisteItem.type = 'Flaskestørrelse';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -300,16 +306,17 @@ export class WineService {
     return obs;
   }
 
-  updateVinFlaskestoerrelse(vinFlaskestoerrelse: vinFlaskestoerrelse): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  updateVinFlaskestoerrelse(vinFlaskestoerrelse: VinFlaskestoerrelse): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vinFlaskestoerrelse');
-    this.httpClient.put('/api/kodeliste/flaskestoerrelse', vinFlaskestoerrelse).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/flaskestoerrelse`, vinFlaskestoerrelse).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'Flaskestørrelse'    
+      this.kodelisteItem.type = 'Flaskestørrelse';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -325,19 +332,19 @@ export class WineService {
   /* #region Vinindkoebssted methods  */
   getVinindkoebssteder(): Observable<any> {
     console.log('Maincomponent getVinindkoebssteder');
-    return this.httpClient.get('api/kodeliste/indkoebssted');
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/indkoebssted`);
   }
 
-  insertVinindkoebssted(vinindkoebssted: vinIndkoebssted): Observable<any> {
+  insertVinindkoebssted(vinindkoebssted: VinIndkoebssted): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert Vinindkoebssted');
-    this.httpClient.post('api/kodeliste/indkoebssted', vinindkoebssted).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/indkoebssted`, vinindkoebssted).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'Indkøbssted'    
+      this.kodelisteItem.type = 'Indkøbssted';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -348,16 +355,16 @@ export class WineService {
     return obs;
   }
 
-  updateVinindkoebssted(vinindkoebssted: vinIndkoebssted): Observable<any> {
+  updateVinindkoebssted(vinindkoebssted: VinIndkoebssted): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vinKlassifikation');
-    this.httpClient.put('api/kodeliste/indkoebssted', vinindkoebssted).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/indkoebssted`, vinindkoebssted).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'Indkøbssted'    
+      this.kodelisteItem.type = 'Indkøbssted';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -372,19 +379,20 @@ export class WineService {
   /* #region VinKlassifikation methods */
   getVinKlassifikationer(): Observable<any> {
     console.log('Maincomponent getVinKlassifikationer');
-    return this.httpClient.get('/api/kodeliste/klassifikation');
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/klassifikation`);
   }
 
-  insertVinKlassifikation(vinKlassifikation: vinKlassifikation): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  insertVinKlassifikation(vinKlassifikation: VinKlassifikation): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert vinKlassifikation');
-    this.httpClient.post('/api/kodeliste/klassifikation', vinKlassifikation).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/klassifikation`, vinKlassifikation).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'Klassifikation'    
+      this.kodelisteItem.type = 'Klassifikation';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -395,16 +403,17 @@ export class WineService {
     return obs;
   }
 
-  updateVinKlassifikation(vinKlassifikation: vinKlassifikation): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  updateVinKlassifikation(vinKlassifikation: VinKlassifikation): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vinKlassifikation');
-    this.httpClient.put('/api/kodeliste/klassifikation', vinKlassifikation).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/klassifikation`, vinKlassifikation).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'Klassifikation'    
+      this.kodelisteItem.type = 'Klassifikation';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -419,19 +428,19 @@ export class WineService {
   /* #region Vinland Methods */
   getVinLande(): Observable<any> {
     console.log('Maincomponent getVinLande');
-    return this.httpClient.get('/api/kodeliste/land');
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/land`);
   }
 
-  insertLand(vinland: vinLand): Observable<any> {
+  insertLand(vinland: VinLand): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert vinland');
-    this.httpClient.post('/api/kodeliste/land', vinland).subscribe((data: any) => {
-      this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';  
-      this.kodelisteItem.type = 'Land'    
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/land`, vinland).subscribe((data: any) => {
+      this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
+      this.kodelisteItem.type = 'Land';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       // data skal  være et object med en text og en type der fortæller hvilken kodeliste der blev opdateret.
       // Det skal bruges til at styre hvilken kodeliste der skal refreshes efter opdatering
@@ -444,16 +453,16 @@ export class WineService {
     return obs;
   }
 
-  updateLand(vinland: vinLand): Observable<any> {
+  updateLand(vinland: VinLand): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vinland');
-    this.httpClient.put('/api/kodeliste/land', vinland).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/land`, vinland).subscribe((data: any) => {
       this.kodelisteItem.value = 'Land med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'Land'
+      this.kodelisteItem.type = 'Land';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -468,20 +477,21 @@ export class WineService {
   /* #region VinProducent methods */
   getVinProducenter(): Observable<any> {
     console.log('Maincomponent getVinProducenter');
-    //debugger;
-    return this.httpClient.get('/api/kodeliste/producent');
+    // debugger;
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/producent`);
   }
 
-  insertProducent(vinProducent: vinProducent): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  insertProducent(vinProducent: VinProducent): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService insert VinProducent');
-    this.httpClient.post('/api/kodeliste/producent', vinProducent).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/producent`, vinProducent).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
-      this.kodelisteItem.type = 'Producent'          
+      this.kodelisteItem.type = 'Producent';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       // data skal  være et object med en text og en type der fortæller hvilken kodeliste der blev opdateret.
       // Det skal bruges til at styre hvilken kodeliste der skal refreshes efter opdatering
@@ -494,16 +504,17 @@ export class WineService {
     return obs;
   }
 
-  updateProducent(vinProducent: vinProducent): Observable<any> {
+  // tslint:disable-next-line: no-shadowed-variable
+  updateProducent(vinProducent: VinProducent): Observable<any> {
     const obs = new Observable(observer => {
       observer.next(true);
       observer.complete();
     });
 
     console.log('WineService update vinProducent');
-    this.httpClient.put('/api/kodeliste/producent', vinProducent).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/producent`, vinProducent).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
-      this.kodelisteItem.type = 'Producent'    
+      this.kodelisteItem.type = 'Producent';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
     },
@@ -514,7 +525,7 @@ export class WineService {
     return obs;
   }
   /* #endregion */
-  
+
 }
-//https://stackoverflow.com/questions/30067767/how-do-i-collapse-sections-of-code-in-visual-studio-code-for-windows
+// https://stackoverflow.com/questions/30067767/how-do-i-collapse-sections-of-code-in-visual-studio-code-for-windows
 // https://marketplace.visualstudio.com/items?itemName=maptz.regionfolder ctrl M+R

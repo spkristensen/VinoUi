@@ -16,7 +16,7 @@ export class AuthenticationService {
     //     this.currentUser = this.currentUserSubject.asObservable();
     // }
     constructor(private http: HttpClient) {
-        //this.Url = 'http://localhost:4500/api/Login/';
+        // this.Url = 'http://localhost:4500/api/Login/';
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
       }
@@ -42,9 +42,9 @@ export class AuthenticationService {
     // }
 
     login(username: string, password: string) {
-        //var loginUrl =this.Url+'userLogin';
+        // var loginUrl =this.Url+'userLogin';
         return this.http.post<any>(`${environment.apiUrl}/api/login/userLogin`, { username, password })
-        //return this.http.post<any>(`${loginUrl}`, { username, password })
+        // return this.http.post<any>(`${loginUrl}`, { username, password })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {

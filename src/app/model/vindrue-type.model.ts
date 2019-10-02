@@ -1,5 +1,4 @@
-export class vindrueType {
+export class VindrueType {
     id: number;
     drue: string;
   }
-  

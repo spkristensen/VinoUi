@@ -1,6 +1,5 @@
-export class vinKlassifikation {
+export class VinKlassifikation {
     id: number;
     klassifikation: string;
   }
-  
-  
+

@@ -19,12 +19,10 @@ import { jqxPanelModule } from 'jqwidgets-ng/jqxpanel';
 import { jqxListBoxModule } from 'jqwidgets-ng/jqxlistbox';
 import { jqxMenuModule } from 'jqwidgets-ng/jqxmenu';
 import { LoginComponent } from './components/login/login.component';
-// import { RegisterComponent } from './components/register/register.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
-// import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [

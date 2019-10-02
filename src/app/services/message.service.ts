@@ -9,11 +9,10 @@ export class MessageService {
   private subject = new Subject<any>();
   private keepAfterNavigationChange = false;
 
-  constructor(private router: Router) {  
-    //clear alert message on route change
+  constructor(private router: Router) {
+    // clear alert message on route change
     router.events.subscribe(event => {
-      if (event instanceof NavigationStart)
-      {
+      if (event instanceof NavigationStart) {
         if (this.keepAfterNavigationChange) {
           // only keep for a single location change
           this.keepAfterNavigationChange = false;
@@ -27,7 +26,7 @@ export class MessageService {
 
   success(message: string, keepAfterNavigationChange = false) {
     this.keepAfterNavigationChange = keepAfterNavigationChange;
-    this.subject.next({ type: 'success', text: message });    
+    this.subject.next({ type: 'success', text: message });
   }
 
   error(message: string, keepAfterNavigationChange = false) {

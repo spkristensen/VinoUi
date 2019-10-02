@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DanishDateFormatter implements NgbDateParserFormatter {
   parse(value: string): NgbDateStruct {
-    const chunks = value.substr(0,10).split('-');
+    const chunks = value.substr(0, 10).split('-');
     return {
       day: Number(chunks[2]),
       month: Number(chunks[1]),

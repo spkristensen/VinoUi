@@ -1,5 +1,5 @@
-export class vin {
-  
+export class Vin {
+
     vinId: number;
     navn: string;
     aargang: number;
@@ -10,7 +10,7 @@ export class vin {
     antal: number;
     KoebsPris: number;
     webSite: string;
-    alkoholProcent: number;    
+    alkoholProcent: number;
     land: string;
     landId: number;
     flaskeStoerrelse: string;
@@ -27,6 +27,5 @@ export class vin {
     producentId: number;
     klassifikation: string;
     klassifikationId: number;
-    timestamp: Date;  
+    timestamp: Date;
   }
-  
