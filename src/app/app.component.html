@@ -1,21 +1,17 @@
-<div style="height: 97%">  
+
+<div style="height: 97%">
   <div style="height: 8%">
-    <app-header></app-header>
+    <app-header *ngIf="currentUser"></app-header>
   </div>
-  <div class="container-fluid " style="height: 82%">   
-    <router-outlet>
-      <!-- <app-layout></app-layout>     -->
-   </router-outlet>
-    <!-- <ng-content></ng-content>     -->
-    <!-- <router-outlet></router-outlet> -->
+  <div class="container-fluid " style="height: 82%">
+    <router-outlet></router-outlet>
   </div>
-  <app-footer></app-footer>  
+  <app-footer *ngIf="currentUser"></app-footer>
 </div>
+<!-- <app-header *ngIf="currentUser"></app-header>
 
-<!-- <app-layout>
-  <app-list></app-list>
-</app-layout> -->
-
-<!-- <router-outlet>
-    <app-layout></app-layout>     
-</router-outlet> -->
+<div class="container-fluid">
+    <router-outlet></router-outlet>
+</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.2)" size="large" color="#fff" type="timer"></ngx-spinner>
+<app-footer *ngIf="currentUser"></app-footer> -->

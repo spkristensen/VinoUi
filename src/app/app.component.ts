@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from './domain/user'
-// import { LoginService } from './services/login.service';
+import { User } from './domain/user';
 import { AuthenticationService } from './services/authentication.service';
-
 
 @Component({
   selector: 'app-root',
@@ -12,7 +10,7 @@ import { AuthenticationService } from './services/authentication.service';
 
 export class AppComponent {
   title = 'VinoUI';
-  currentUser: User
+  currentUser: User;
 
   constructor(private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);

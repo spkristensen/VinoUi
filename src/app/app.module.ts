@@ -23,6 +23,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     FooterComponent,
     WineComponent,
     ListComponent,
-    // RegisterComponent,
-    LoginComponent,
-    // SharedModule
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +48,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     jqxSplitterModule,
     jqxMenuModule,
     jqxPanelModule,
-    jqxListBoxModule
+    jqxListBoxModule,
+    NgxSpinnerModule
   ],
   providers: [
     WineService,

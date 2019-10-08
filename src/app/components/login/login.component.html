@@ -1,11 +1,6 @@
 <div class="row ">
   <div class="col-md-6 mx-auto">
       <alert></alert>
-
-      <div *ngIf="status === 'registered'" class="alert alert-success">
-          <strong>Congratulation!</strong> You are now registered and can login.
-      </div>
-
       <div class="card">
           <div class="card-header">
               <h2>Login</h2>
@@ -27,10 +22,10 @@
                           <div *ngIf="f.password.errors.required">Password is required</div>
                       </div>
                   </div>
-                  <div class="d-flex justify-content-between">                     
+                  <div class="d-flex justify-content-end">                                           
                       <button [disabled]="loading" class="btn btn-primary" title="Login">
-                          <i class="fas fa-sign-in-alt"></i>
-                      </button>
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
                   </div>
               </form>
           </div>
@@ -40,46 +35,3 @@
       </div>
   </div>
 </div>
-<!-- <div class="container" style="padding-top:60px;">  
-  <div class="row">  
-    <div class="col-md-6 mx-auto">  
-      <div class="card-group">  
-        <div class="card p-4">  
-          <div class="card-body">  
-            <form name="form" (ngSubmit)="login()" #f="ngForm">   
-              <h1 style="text-align:center">Login</h1>  
-               
-              <div class="input-group mb-3">  
-                <div class="input-group-prepend">  
-                  <span class="input-group-text"><i class="icon-user"></i></span>  
-                </div>  
-                <input type="text" name="UserName" [(ngModel)]="model.UserName" class="form-control sty1" placeholder="Username" required>  
-              </div>  
-              <div class="input-group mb-4">  
-                <div class="input-group-prepend">  
-                  <span class="input-group-text"><i class="icon-lock"></i></span>  
-                </div>  
-                <input  type="password" name="Passward" [(ngModel)]="model.Password" class="form-control"  
-               placeholder="Password">  
-              </div>  
-              <div>  
-                  <p style="color:#E92626;font-size:20px;font-weight:normal" Class="success" align="left">  
-                    {{errorMessage}}  
-                  </p>  
-                </div>  
-              <div class="row">  
-                <div class="col-6">  
-                  <button type="submit" class="btn btn-primary px-4">Login</button>  
-                </div>  
-                <div class="col-6 text-right">  
-                  <button type="button" class="btn btn-link px-0">Forgot password?</button>  
-                </div>  
-              </div>  
-                
-            </form>  
-          </div>  
-        </div>  
-      </div>  
-    </div>  
-  </div>  
-</div>   -->
