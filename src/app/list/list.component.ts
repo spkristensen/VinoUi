@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Subscription, Subject } from 'rxjs';
 import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
 import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
+import { jqxExpanderComponent } from 'jqwidgets-ng/jqxexpander';
 import { WineService } from '../services/wine.service';
 import { FooterComponent } from '../footer/footer.component';
 import { Vin } from '../model/vin.model';
@@ -23,6 +24,7 @@ export class ListComponent implements AfterViewInit   {
   @ViewChild('wineListContextMenu', {static: false}) wineListContextMenu: jqxMenuComponent;
   @ViewChild('FooterComponent', {static: false}) footerComponent: FooterComponent;
   @ViewChild('WineComponent', {static: false}) wineComponent: WineComponent;
+  @ViewChild('expanderComponent', {static: false}) expanderComponent: jqxExpanderComponent;
 
   treeSettings: jqwidgets.TreeOptions =
   {
@@ -222,10 +224,17 @@ export class ListComponent implements AfterViewInit   {
   }
 
   getWidth(): any {
-    if (document.body.offsetWidth < 850) {
+    if (document.body.offsetWidth < 1850) {
       return '90%';
     }
-    return 850;
+    return 1850;
+  }
+
+  getHeight(): any {
+    if (document.body.offsetHeight < 780) {
+      return '90%';
+    }
+    return 780;
   }
 
   // Ved hjælp af jquery løbes træet igennen for at finde de noder som er vine. på dem sættes title som er tooltip

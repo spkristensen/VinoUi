@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:4500',
+  apiUrl: 'https://spkwineapi.azurewebsites.net', // 'http://localhost:4500',
   baseTitle: 'VCA',
   baseLongTitle: 'Wine cellar Api'
 };

@@ -1,40 +1,30 @@
 <div *ngIf="wine" class="container-fluid">
-  <div class="page-header">
-
-    <!-- <div class="row">
-        <div class="col-xs-12 col-lg-12 main-container">
-          <div class="card">
-            <p>
-              <a href="https://www.w3schools.com" target="_blank">
-                <img src="assets/img/2015-negroamaro.jpg" class="rounded img-fluid" alt="Cinque Terre"
-                  style="height: 10%; width:10%" />
-              </a>
-            </p>
-          </div>
-        </div>
-      </div> -->
-    <div class="card">
-      <div class="row no-gutters align-middle">
-        <div class="col-xs-1 col-lg-1">
-          <img src="assets/img/2015-negroamaro.jpg" class="img-fluid" width="75%" height="75%" alt="">
-        </div>
-        <div class="col-xs-5 col-lg-5">
-          <h1>{{wine.navn}}</h1>
-        </div>
-        <div class="col-xs-6 col-lg-6">
-          <a href="#" class="btn btn-primary pull-right" >BUTTON</a>
-        </div>
+  <!-- <div class="page-header mr-2"> -->
+    <div class="row mt-3 mb-3">
+      <div class="col-xs-1 col-lg-1">
+        <img src="assets/img/2015-negroamaro100x100.jpg" class="img-thumbnail">
+      </div>
+      <div class="col-xs-10 col-lg-10 mt-3 pull-left">
+              <h1>{{wine.navn}}</h1>
+      </div>
+      <div class="col-xs-1 col-lg-1">
+        <!-- <a href="#" class="btn btn-primary">Rediger</a> -->
+        <button type="button" id="Rediger" class="btn btn-primary hidden-xs" data-toggle="modal" (click)="doSomething()" data-target="#wineModal">Rediger</button>
       </div>
     </div>
-    <!--   <div class="pull-right mr-3">
-        <button type="button" id="Rediger" class="btn btn-primary hidden-xs" data-toggle="modal"
-          (click)="doSomething()" data-target="#wineModal">Rediger</button>
+  <!-- </div> -->
+
+  <!-- https://www.reduceimages.com/ -->
+
+ 
+
+  <!--   <div class="pull-right mr-3">
+        <button type="button" id="Rediger" class="btn btn-primary hidden-xs" data-toggle="modal" (click)="doSomething()" data-target="#wineModal">Rediger</button>
         <button type="button" class="btn btn-primary hidden-xs" data-ng-click="editWine(wine.id)" data-toggle="modal" (click)="doSomething()" data-target="#wineModal">Rediger</button>
     </div> -->
 
-  </div>
   <div class="row">
-    <div class="col-xs-8 col-lg-8 main-container">
+    <div class="col-xs-12 col-lg-12 main-container">
       <div class="row datasheet">
         <div class="col-xs-3  col-lg-3">
           <label class="label">Årgang:</label>
@@ -116,19 +106,19 @@
         <div class="clearfix visible-lg-block"></div>
         <div class="col-xs-12  col-lg-12">
           <label class="label">Bemærkning:</label>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success  mr-2" role="alert">
             <p class="pbuttom">{{wine.noter}}</p>
           </div>
         </div>
         <div class="col-xs-12 col-lg-12">
           <label class="label">Anvendelse:</label>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success  mr-2" role="alert">
             <p class="pbuttom">{{wine.anvendelse}}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xs-4 col-lg-4">
+    <!-- <div class="col-xs-4 col-lg-4">
       <div class="card mr-3">
         <p>
           <a href="https://www.w3schools.com" target="_blank">
@@ -137,7 +127,7 @@
           </a>
         </p>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="modal fade" id="wineModal" data-keyboard="false" data-backdrop="static">
