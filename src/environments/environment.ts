@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  apiUrl: 'https://spkwineapi.azurewebsites.net', // 'http://localhost:4500',
+  production: false,
+  apiUrl: 'http://localhost:4500',
   baseTitle: 'VCA',
   baseLongTitle: 'Wine cellar Api'
 };
