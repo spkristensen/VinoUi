@@ -13,6 +13,7 @@ import { VinDistrikt } from '../model/vin-distrikt.model';
 import { VinType } from '../model/vin-type.model';
 import { VindrueType } from '../model/vindrue-type.model';
 import { environment } from 'src/environments/environment';
+import { Vin } from '../model/vin.model';
 
 @Injectable()
 export class WineService {
@@ -72,7 +73,7 @@ export class WineService {
     });
     this.vinUpdate = new VinUpdateReturn(vin.vinId);
 
-    const res = this.httpClient.put(`${environment.apiUrl}/api/wine/` + vin.vinId, vin).subscribe((data: any) => {
+    const res = this.httpClient.put(`${environment.apiUrl}/api/wine`, vin).subscribe((data: any) => {
       this.vinUpdate.status = data;
       this.vinUpdate.vinId = vin.vinId;
       this.wineUpdatedAnnounced.next(this.vinUpdate);
@@ -148,7 +149,7 @@ export class WineService {
     });
 
     console.log('WineService insert vindrueType');
-    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/vindruetype`, vindrueType).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/druetype`, vindrueType).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
       this.kodelisteItem.type = 'DrueType';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
@@ -169,7 +170,7 @@ export class WineService {
     });
 
     console.log('WineService update vindrueType');
-    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/vindruetype`, vindrueType).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/druetype`, vindrueType).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
       this.kodelisteItem.type = 'DrueType';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
@@ -233,10 +234,10 @@ export class WineService {
   /* #endregion */
 
   /* #region VinDistrikt methods */
-  getVinDistrikter(): Observable<any> {
+  getVinDistrikter(landid: number): Observable<any> {
     console.log('Maincomponent   getVinDistrikter()');
     // debugger;
-    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/vindistrikt`);
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/vindistrikt/` + landid);
   }
   // tslint:disable-next-line: no-shadowed-variable
   insertVinDistrikt(vinDistrikt: VinDistrikt): Observable<any> {
@@ -246,7 +247,7 @@ export class WineService {
     });
 
     console.log('WineService insert VinDistrikt');
-    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/vindistrikt`, vinDistrikt).subscribe((data: any) => {
+    this.httpClient.post(`${environment.apiUrl}/api/kodeliste/distrikt`, vinDistrikt).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
       this.kodelisteItem.type = 'Distrikt';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
@@ -266,7 +267,7 @@ export class WineService {
     });
 
     console.log('WineService update VinDistrikt');
-    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/vindistrikt`, vinDistrikt).subscribe((data: any) => {
+    this.httpClient.put(`${environment.apiUrl}/api/kodeliste/distrikt`, vinDistrikt).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
       this.kodelisteItem.type = 'Distrikt';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
@@ -436,8 +437,6 @@ export class WineService {
       observer.next(true);
       observer.complete();
     });
-
-    console.log('WineService insert vinland');
     this.httpClient.post(`${environment.apiUrl}/api/kodeliste/land`, vinland).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev oprettet';
       this.kodelisteItem.type = 'Land';
@@ -461,7 +460,7 @@ export class WineService {
 
     console.log('WineService update vinland');
     this.httpClient.put(`${environment.apiUrl}/api/kodeliste/land`, vinland).subscribe((data: any) => {
-      this.kodelisteItem.value = 'Land med id ' + data + ' blev gemt';
+      this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
       this.kodelisteItem.type = 'Land';
       this.kodelisteItemUpdatedAnnounced.next(this.kodelisteItem);
       return data;
@@ -475,10 +474,10 @@ export class WineService {
   /* #endregion */
 
   /* #region VinProducent methods */
-  getVinProducenter(): Observable<any> {
+  getVinProducenter(landid: number): Observable<any> {
     console.log('Maincomponent getVinProducenter');
     // debugger;
-    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/producent`);
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/producent/` + landid);
   }
 
   // tslint:disable-next-line: no-shadowed-variable

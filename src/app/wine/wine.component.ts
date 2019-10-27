@@ -66,12 +66,12 @@ export class WineComponent implements OnInit {
     this.currentUser = authenticationService.currentUserValue;
     this.getVindrueTyper();
     this.getVinTyper();
-    this.getVinDistrikter();
+    this.getVinDistrikter(-1); // landid -1 så henter vi alle
     this.getVinFlaskestoerrelser();
     this.getVinindkoebssteder();
     this.getVinKlassifikationer();
     this.getVinLande();
-    this.getVinProducenter();
+    this.getVinProducenter(-1);
     this.vinLand = new VinLand();
     this.vinDistrikt = new VinDistrikt();
     this.vinType = new VinType();
@@ -82,7 +82,7 @@ export class WineComponent implements OnInit {
     this.vinIndkoebssted = new VinIndkoebssted();
 
     this.kodelisteItemUpdateSubscription = wineService.kodelisteItemUpdatedAnnounced$.subscribe(data => {
-      this.messageService.success(data.type + data.value);
+      this.messageService.success(data.type + ' ' + data.value);
       $('#KodeListeModal').modal('hide');
       const switchString = data.type;
       switch (switchString) {
@@ -90,7 +90,7 @@ export class WineComponent implements OnInit {
           this.getVinLande();
           break;
         case 'Distrikt':
-          this.getVinDistrikter();
+          this.getVinDistrikter(-1);
           break;
         case 'VinType':
           this.getVinTyper();
@@ -102,7 +102,7 @@ export class WineComponent implements OnInit {
           this.getVinKlassifikationer();
           break;
         case 'Producent':
-          this.getVinProducenter();
+          this.getVinProducenter(-1);
           break;
         case 'Flaskestørrelse':
           this.getVinFlaskestoerrelser();
@@ -135,6 +135,10 @@ export class WineComponent implements OnInit {
   showModal() {
     $('#wineModal').modal('show');
   }
+  vinLandSelected(data: any)  {
+    this.getVinDistrikter(this.wine.landId);
+    this.getVinProducenter(this.wine.landId);
+  }
 
   doSomething() {
     const parts = this.wine.koebsDato.substr(0, 10).split('-');
@@ -143,6 +147,8 @@ export class WineComponent implements OnInit {
       month: Number(parts[1]),
       year: Number(parts[0]),
     };
+    this.getVinDistrikter(this.wine.landId);
+    this.getVinProducenter(this.wine.landId);
   }
 
   handlKodelisteModal(kodelisteType: string) {
@@ -308,8 +314,6 @@ export class WineComponent implements OnInit {
     this.vinLand.land = this.kodelisteItem.value;
     this.wineService.updateLand(this.vinLand).subscribe(data => {
       console.log(data);
-      this.messageService.success('Land blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -321,8 +325,6 @@ export class WineComponent implements OnInit {
     this.vinLand.land = this.kodelisteItem.value;
     this.wineService.insertLand(this.vinLand).subscribe(data => {
       console.log(data);
-      this.messageService.success('Land blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -343,9 +345,9 @@ export class WineComponent implements OnInit {
 
   /* #endregion */
   /* #region  Distrikt */
-  getVinDistrikter(): any {
+  getVinDistrikter(landid: number): any {
     console.log('Maincomponent   getVinDistrikter()');
-    this.wineService.getVinDistrikter().subscribe((data: VinDistrikt[]) => {
+    this.wineService.getVinDistrikter(landid).subscribe((data: VinDistrikt[]) => {
       this.vinDistrikter = data;
       console.log(data);
     },
@@ -369,8 +371,6 @@ export class WineComponent implements OnInit {
     this.vinDistrikt.landId = this.wine.landId;
     this.wineService.insertVinDistrikt(this.vinDistrikt).subscribe(data => {
       console.log(data);
-      this.messageService.success('distrikt blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -380,10 +380,9 @@ export class WineComponent implements OnInit {
   opdaterDistrikt() {
     this.vinDistrikt.id = this.kodelisteItem.id;
     this.vinDistrikt.distrikt = this.kodelisteItem.value;
+    this.vinDistrikt.landId = this.wine.landId;
     this.wineService.updateVinDistrikt(this.vinDistrikt).subscribe(data => {
       console.log(data);
-      this.messageService.success('distrikt blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -397,8 +396,6 @@ export class WineComponent implements OnInit {
     this.vinIndkoebssted.indkoebssted = this.kodelisteItem.value;
     this.wineService.updateVinindkoebssted(this.vinIndkoebssted).subscribe(data => {
       console.log(data);
-      this.messageService.success('Indkøbssted blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -409,8 +406,6 @@ export class WineComponent implements OnInit {
     this.vinIndkoebssted.indkoebssted = this.kodelisteItem.value;
     this.wineService.insertVinindkoebssted(this.vinIndkoebssted).subscribe(data => {
       console.log(data);
-      this.messageService.success('Indkøbssted blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -468,8 +463,6 @@ export class WineComponent implements OnInit {
     this.vinFlaskestoerrelse.flaskestoerrelse = this.kodelisteItem.value;
     this.wineService.updateVinFlaskestoerrelse(this.vinFlaskestoerrelse).subscribe(data => {
       console.log(data);
-      this.messageService.success('Flaskestørelse blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -481,8 +474,6 @@ export class WineComponent implements OnInit {
     this.vinFlaskestoerrelse.flaskestoerrelse = this.kodelisteItem.value;
     this.wineService.insertVinFlaskestoerrelse(this.vinFlaskestoerrelse).subscribe(data => {
       console.log(data);
-      this.messageService.success('Flaskestørelse blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -491,9 +482,9 @@ export class WineComponent implements OnInit {
   }
   /* #endregion */
   /* #region  Producent */
-  getVinProducenter(): any {
+  getVinProducenter(landid: number): any {
     console.log('Maincomponent getVinProducenter');
-    this.wineService.getVinProducenter().subscribe((data: VinProducent[]) => {
+    this.wineService.getVinProducenter(landid).subscribe((data: VinProducent[]) => {
       this.vinProducenter = data;
       console.log(data);
     },
@@ -519,8 +510,6 @@ export class WineComponent implements OnInit {
     this.vinProducent.producent = this.kodelisteItem.value;
     this.wineService.updateProducent(this.vinProducent).subscribe(data => {
       console.log(data);
-      this.messageService.success('Producent blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -530,11 +519,9 @@ export class WineComponent implements OnInit {
 
   opretProducent() {
     this.vinProducent.producent = this.kodelisteItem.value;
-    this.vinDistrikt.landId = this.wine.landId;
+    this.vinProducent.landId = this.wine.landId;
     this.wineService.insertProducent(this.vinProducent).subscribe(data => {
       console.log(data);
-      this.messageService.success('Producent blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -571,8 +558,6 @@ export class WineComponent implements OnInit {
     this.vinKlassifikation.klassifikation = this.kodelisteItem.value;
     this.wineService.updateVinKlassifikation(this.vinKlassifikation).subscribe(data => {
       console.log(data);
-      this.messageService.success('Klassifikation blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -584,8 +569,6 @@ export class WineComponent implements OnInit {
     this.vinKlassifikation.klassifikation = this.kodelisteItem.value;
     this.wineService.insertVinKlassifikation(this.vinKlassifikation).subscribe(data => {
       console.log(data);
-      this.messageService.success('Klassifikation blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -623,8 +606,6 @@ export class WineComponent implements OnInit {
     this.vindrueType.drue = this.kodelisteItem.value;
     this.wineService.updateVindrueType(this.vindrueType).subscribe(data => {
       console.log(data);
-      this.messageService.success('VindrueType blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -635,8 +616,6 @@ export class WineComponent implements OnInit {
     this.vindrueType.drue = this.kodelisteItem.value;
     this.wineService.insertVindrueType(this.vindrueType).subscribe(data => {
       console.log(data);
-      this.messageService.success('VindrueType blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -672,8 +651,6 @@ export class WineComponent implements OnInit {
     this.vinType.type = this.kodelisteItem.value;
     this.wineService.insertVinType(this.vinType).subscribe(data => {
       console.log(data);
-      this.messageService.success('VinType blev oprettet');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
@@ -686,8 +663,6 @@ export class WineComponent implements OnInit {
     this.vinType.type = this.kodelisteItem.value;
     this.wineService.updateVinType(this.vinType).subscribe(data => {
       console.log(data);
-      this.messageService.success('VinType blev opdateret');
-      $('.KodeListeModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);

@@ -279,11 +279,9 @@ export class ListComponent implements AfterViewInit   {
  getVin(treeVinItem): any {
     console.log('listcomponent getVin');
     // debugger;
-    // this.httpClient.get('/api/main/' + treeVinItem.id).subscribe((data: Vin) => {
     this.wineService.getVin(treeVinItem.id).subscribe((data: Vin) => {
       console.log(data);
       this.selectedWine = data;
-      // this.messageService.success('Vinen blev hentet');
     },
       error => {
         this.messageService.error(error.message, false);
