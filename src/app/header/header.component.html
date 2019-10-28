@@ -2,16 +2,7 @@
 
 <nav class="navbar navbar-dark bg-dark mb-5">
   <div class="navbar-expand mr-auto">
-    <!-- <div class="navbar-nav">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Filer
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <button ngbDropdownItem (click)="logout()">Log ud</button>
-        </div>      
-      </li>      
-    </div> -->
+   
   </div>
   <form class="form-inline">
     <input  type="text" placeholder="Søg.." [(ngModel)]="searchText" name="searchText"/>
@@ -20,6 +11,17 @@
     <button type="button" class="btn btn-primary btn-sm" (click)="logout()">
       <span class="glyphicon glyphicon-log-out"></span> Log out
     </button>   
+    <!-- <div id="navbarLinks" class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+          <li class="nav-item" *ngFor="let link of navLinks">
+              <a class="nav-link ftz-text-white shade" routerLink="{{link.RouterLink}}" routerLinkActive="active disabled">{{link.Name}}</a>
+          </li>
+          <li class="nav-item d-lg-none">
+              <div class="dropdown-divider"></div>            
+              <a class="nav-link" style="cursor: pointer" (click)="onLogout()"><fa-icon [icon]="logOutIcon" [styles]="{'color': 'inherit'}" size="lg"></fa-icon> Log ud</a>
+          </li>
+      </ul>
+  </div> -->
     <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (keyup.enter)="searchClick()"  (click)="searchClick()">Søg</button>       -->
   </form>
 </nav>
