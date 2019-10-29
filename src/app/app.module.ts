@@ -24,6 +24,7 @@ import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     jqxMenuModule,
     jqxPanelModule,
     jqxListBoxModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FontAwesomeModule
   ],
   providers: [
     WineService,

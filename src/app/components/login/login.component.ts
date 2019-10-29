@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { MessageService } from 'src/app/services/message.service';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
   returnUrl: string;
   status: string;
   errorMessage: string;
+  signInIcon = faSignInAlt;
   constructor(
     // titleService: TitleService,
     private formBuilder: FormBuilder,
