@@ -2,7 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { WineService } from '../services/wine.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
-import { User } from 'src/app/domain/user'
+import { User } from 'src/app/domain/user';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -10,18 +11,18 @@ import { User } from 'src/app/domain/user'
 })
 export class HeaderComponent  {
   currentUser: User;
-  public searchText: string = '';
-
+  public searchText = '';
+  public logOutIcon = faSignOutAlt;
   constructor(private wineSvc: WineService, private router: Router,
-    private authenticationService: AuthenticationService ) {      
+              private authenticationService: AuthenticationService ) {
     console.log('HeaderComponent constructor');
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
- 
+
   searchClick() {
     console.log('HeaderComponent searchClick');
-    //debugger;
-    this.wineSvc.search(this.searchText);    
+    // debugger;
+    this.wineSvc.search(this.searchText);
   }
 
   logout() {

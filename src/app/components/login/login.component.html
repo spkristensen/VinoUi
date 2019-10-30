@@ -10,7 +10,7 @@
               <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                   <div class="form-group">
                       <label for="Username">Brugernavn</label>
-                      <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                      <input type="text" formControlName="username" class="form-control" autocomplete="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                       <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                           <div *ngIf="f.username.errors.required">Brugernavn er krævet</div>
                           <div *ngIf="f.username.errors.Username">Brugernavn er ikke valid</div>
@@ -18,7 +18,7 @@
                   </div>
                   <div class="form-group">
                       <label for="password">Adgangskode</label>
-                      <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                      <input type="password" formControlName="password" class="form-control" autocomplete="current-password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                       <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                           <div *ngIf="f.password.errors.required">Adgangskode er et krævet felt</div>
                       </div>
@@ -27,7 +27,9 @@
                       <!-- <button [disabled]="loading" class="btn btn-primary" title="Login">
                         <i class="fas fa-sign-in-alt"></i>
                       </button> -->
-                      <button *ngIf="!isFetchingLogin" class="btn btn-flat btn-primary btn-login">Login <fa-icon [icon]="signInIcon"></fa-icon></button>
+                      <button *ngIf="!isFetchingLogin" class="btn btn-flat btn-primary btn-login">Login 
+                          <fa-icon [icon]="signInIcon"></fa-icon>
+                      </button>
                       <div *ngIf="isFetchingLogin" class="spinner-border text-secondary" role="status">
                         <span class="sr-only">Indlæser</span>
                     </div>
