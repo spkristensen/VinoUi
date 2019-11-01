@@ -69,7 +69,7 @@ export class WineComponent implements OnInit {
     this.getVinDistrikter(-1); // landid -1 så henter vi alle
     this.getVinFlaskestoerrelser();
     this.getVinindkoebssteder();
-    this.getVinKlassifikationer();
+    this.getVinKlassifikationer(-1);
     this.getVinLande();
     this.getVinProducenter(-1);
     this.vinLand = new VinLand();
@@ -99,7 +99,7 @@ export class WineComponent implements OnInit {
           this.getVindrueTyper();
           break;
         case 'Klassifikation':
-          this.getVinKlassifikationer();
+          this.getVinKlassifikationer(-1);
           break;
         case 'Producent':
           this.getVinProducenter(-1);
@@ -138,6 +138,7 @@ export class WineComponent implements OnInit {
   vinLandSelected(data: any)  {
     this.getVinDistrikter(this.wine.landId);
     this.getVinProducenter(this.wine.landId);
+    this.getVinKlassifikationer(this.wine.landId);
   }
 
   doSomething() {
@@ -149,6 +150,7 @@ export class WineComponent implements OnInit {
     };
     this.getVinDistrikter(this.wine.landId);
     this.getVinProducenter(this.wine.landId);
+    this.getVinKlassifikationer(this.wine.landId);
   }
 
   handlKodelisteModal(kodelisteType: string) {
@@ -530,9 +532,9 @@ export class WineComponent implements OnInit {
   }
   /* #endregion */
   /* #region  Klassifikation */
-  getVinKlassifikationer(): any {
+  getVinKlassifikationer(landid: number): any {
     console.log('Maincomponent getVinKlassifikationer');
-    this.wineService.getVinKlassifikationer().subscribe((data: VinKlassifikation[]) => {
+    this.wineService.getVinKlassifikationer(landid).subscribe((data: VinKlassifikation[]) => {
       this.vinKlassifikationer = data;
       console.log(data);
     },
@@ -567,6 +569,7 @@ export class WineComponent implements OnInit {
 
   opretKlassifikation() {
     this.vinKlassifikation.klassifikation = this.kodelisteItem.value;
+    this.vinKlassifikation.landId = this.wine.landId;
     this.wineService.insertVinKlassifikation(this.vinKlassifikation).subscribe(data => {
       console.log(data);
     },

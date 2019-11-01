@@ -361,8 +361,7 @@ export class WineService {
       observer.next(true);
       observer.complete();
     });
-
-    console.log('WineService update vinKlassifikation');
+    console.log('WineService update VinIndkøbssted');
     this.httpClient.put(`${environment.apiUrl}/api/kodeliste/indkoebssted`, vinindkoebssted).subscribe((data: any) => {
       this.kodelisteItem.value = ' med id ' + data + ' blev gemt';
       this.kodelisteItem.type = 'Indkøbssted';
@@ -378,9 +377,9 @@ export class WineService {
   /* #endregion */
 
   /* #region VinKlassifikation methods */
-  getVinKlassifikationer(): Observable<any> {
+  getVinKlassifikationer(landid: number): Observable<any> {
     console.log('Maincomponent getVinKlassifikationer');
-    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/klassifikation`);
+    return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/klassifikation/` + landid);
   }
 
   // tslint:disable-next-line: no-shadowed-variable

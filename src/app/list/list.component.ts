@@ -112,17 +112,20 @@ export class ListComponent implements AfterViewInit   {
     switch (item) {
       case 'Opret vin': {
           this.selectedItem = this.wineTree.getSelectedItem();
-          this.wineService.getVin(this.rightClickWineId).subscribe((data: Vin) => {
-            console.log(data);
-            this.selectedWine = data;
-            this.selectedWine.vinId = -1;
-            const date = new Date();
-            this.selectedWine.koebsDato = this.datepipe.transform(date, 'yyyy-MM-dd');
-            },
-          error => {
-            this.messageService.error(error.message, false);
+          if (this.selectedItem != null) {
+            this.wineService.getVin(this.rightClickWineId).subscribe((data: Vin) => {
+              console.log(data);
+              this.selectedWine = data;
+              this.selectedWine.vinId = -1;
+              const date = new Date();
+              this.selectedWine.koebsDato = this.datepipe.transform(date, 'yyyy-MM-dd');
+              },
+            error => {
+              this.messageService.error(error.message, false);
+            });
+          } else {
+            this.selectedWine = new Vin();
           }
-        );
           break;
       }
       case 'Slet vin': {
