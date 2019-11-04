@@ -90,7 +90,7 @@ export class WineComponent implements OnInit {
           this.getVinLande();
           break;
         case 'Distrikt':
-          this.getVinDistrikter(-1);
+          this.getVinDistrikter(this.wine.landId);
           break;
         case 'VinType':
           this.getVinTyper();
@@ -99,10 +99,10 @@ export class WineComponent implements OnInit {
           this.getVindrueTyper();
           break;
         case 'Klassifikation':
-          this.getVinKlassifikationer(-1);
+          this.getVinKlassifikationer(this.wine.landId);
           break;
         case 'Producent':
-          this.getVinProducenter(-1);
+          this.getVinProducenter(this.wine.landId);
           break;
         case 'Flaskestørrelse':
           this.getVinFlaskestoerrelser();
@@ -347,9 +347,9 @@ export class WineComponent implements OnInit {
 
   /* #endregion */
   /* #region  Distrikt */
-  getVinDistrikter(landid: number): any {
+  getVinDistrikter(landId: number): any {
     console.log('Maincomponent   getVinDistrikter()');
-    this.wineService.getVinDistrikter(landid).subscribe((data: VinDistrikt[]) => {
+    this.wineService.getVinDistrikter(landId).subscribe((data: VinDistrikt[]) => {
       this.vinDistrikter = data;
       console.log(data);
     },
