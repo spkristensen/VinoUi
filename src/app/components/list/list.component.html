@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-12">
+    <jqxSplitter [width]="'100%'" [height]=780 [panels]="[{ size: '20%',  min: '7%'},{ size: '100%', min: '30%'}]">
+      <div>
+        <jqxTree #wineTree id="wineTree" (onSelect)="onTreeSelect($event)" (onInitialized)="wineTreeOnInitialized()"
+          [width]="'100%'" [height]="'100%'" [auto-create]="false" [allowDrag]="false">
+          <!--auto-create giver mulighed for at generer træet programatisk-->
+        </jqxTree>
+        <jqxMenu #wineListContextMenu (onItemclick)="wineListContextMenuOnItemClick($event)" [width]="120" [height]="60"
+          [autoOpenPopup]="false" [mode]="'popup'">
+          <ul>
+            <li>Opret vin</li>
+            <li>Slet vin</li>
+          </ul>
+        </jqxMenu>
+      </div>
+      <div class="container-fluid">
+        <div *ngIf="isFetchingData" class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <jqxPanel #panelReference class="jqx-hideborder" [width]="'100%'" [height]="'100%'">
+          <app-wine [wine]="selectedWine"></app-wine>
+        </jqxPanel>
+      </div>
+    </jqxSplitter>
+    <alert></alert>
+  </div>
+</div>

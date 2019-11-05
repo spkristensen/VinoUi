@@ -4,13 +4,13 @@ import { Subscription, Subject } from 'rxjs';
 import { jqxTreeComponent } from 'jqwidgets-ng/jqxtree';
 import { jqxMenuComponent } from 'jqwidgets-ng/jqxmenu';
 import { jqxExpanderComponent } from 'jqwidgets-ng/jqxexpander';
-import { WineService } from '../services/wine.service';
-import { FooterComponent } from '../footer/footer.component';
-import { Vin } from '../model/vin.model';
-import { MessageService } from '../services/message.service';
-import { WineComponent } from './../wine/wine.component';
+import { WineService } from '../../services/wine.service';
+import { FooterComponent } from '../../footer/footer.component';
+import { Vin } from '../../model/vin.model';
+import { MessageService } from '../../services/message.service';
+import { WineComponent } from '../wine/wine.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { User } from '../domain/user';
+import { User } from '../../domain/user';
 
 declare var $: any;
 
@@ -44,6 +44,7 @@ export class ListComponent implements AfterViewInit   {
   searchString = ' ';
   rightClickWineId: string;
   currentUser: User;
+  isFetchingData = false;
   // https://www.youtube.com/watch?v=FssKK37Ob4k
 
   constructor(
@@ -51,26 +52,27 @@ export class ListComponent implements AfterViewInit   {
           private messageService: MessageService,
           private authenticationService: AuthenticationService,
           public datepipe: DatePipe) {
-    console.log('listcomponent Constructor');
-    this.currentUser = authenticationService.currentUserValue;
-    this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(soeg => {
-    if (soeg !== '') {
-       this.searchVin(soeg);
-    } else {
-       this.treeListGetAll(0, false);
-    }
+      console.log('listcomponent Constructor');
+      this.currentUser = authenticationService.currentUserValue;
+      this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(soeg => {
+      this.isFetchingData = true;
+      if (soeg !== '') {
+        this.searchVin(soeg);
+      } else {
+        this.treeListGetAll(0, false);
+      }
     });
 
-    this.wineCreatedSubscription = wineService.wineCreatedAnnounced$.subscribe(data => {
+      this.wineCreatedSubscription = wineService.wineCreatedAnnounced$.subscribe(data => {
       this.treeListGetAll(data, false);
       this.selectedWine = null; // Fjern visning på højre side
     });
 
-    this.wineUpdatedSubscription = wineService.wineUpdatedAnnounced$.subscribe(data => {
+      this.wineUpdatedSubscription = wineService.wineUpdatedAnnounced$.subscribe(data => {
       this.treeListGetAll(data.vinId, true);
     });
 
-    this.wineDeletedSubscription = wineService.wineDeletedAnnounced$.subscribe(data => {
+      this.wineDeletedSubscription = wineService.wineDeletedAnnounced$.subscribe(data => {
       const items = this.wineTree.getItems();
       const itemToExpandAfterDelete = this.findPrevItem(items, this.rightClickWineId);
       this.treeListGetAll(itemToExpandAfterDelete, false);
@@ -181,6 +183,7 @@ export class ListComponent implements AfterViewInit   {
           this.getVin(item);
         } // hent vin efter den er opdateret
       }
+      this.isFetchingData = false;
     });
   }
   expandCountryItem(wineTreeItems: any, wineId: any) {
@@ -287,7 +290,11 @@ export class ListComponent implements AfterViewInit   {
       this.selectedWine = data;
     },
       error => {
+        if (error.message == null) {
+          this.messageService.error(error.title, false);
+        } else {
         this.messageService.error(error.message, false);
+        }
       }
     );
   }
@@ -301,6 +308,7 @@ export class ListComponent implements AfterViewInit   {
       this.wineTree.addTo(res[0], res[0].id);
       const items = this.wineTree.getItems();
       this.wineTree.expandItem(items[0]);
+      this.isFetchingData = false;
       },
       error => {
         this.messageService.error(error.message, false);

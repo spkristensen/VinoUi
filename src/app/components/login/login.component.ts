@@ -20,6 +20,7 @@ export class LoginComponent {
   status: string;
   errorMessage: string;
   signInIcon = faSignInAlt;
+  isFetchingLogin = false;
   constructor(
     // titleService: TitleService,
     private formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class LoginComponent {
 
   onSubmit() {
     this.submitted = true;
+    this.isFetchingLogin = true;
 
     if (this.loginForm.invalid) {
         return;
@@ -56,10 +58,12 @@ export class LoginComponent {
         .pipe(first())
         .subscribe(
             data => {
+              this.isFetchingLogin = false;
               this.router.navigate([this.returnUrl]);
             },
             error => {
               // der opstod en fejl vi sender den ned til MessageService
+                this.isFetchingLogin = false;
                 this.messageService.error(error);
                 this.loading = false;
             });

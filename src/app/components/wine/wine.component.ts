@@ -1,19 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { VindrueType } from '../model/vindrue-type.model';
-import { VinType } from '../model/vin-type.model';
-import { VinDistrikt } from '../model/vin-distrikt.model';
-import { VinFlaskestoerrelse } from '../model/vin-flaskestoerrelse.model';
-import { VinIndkoebssted } from '../model/vin-indkoebssted.model';
-import { VinKlassifikation } from '../model/vin-klassifikation.model';
-import { VinLand } from '../model/vin-land.model';
-import { KodelisteItem } from '../model/kodeliste-item.model';
-import { VinProducent } from '../model/vin-producent.model';
-import { WineService } from '../services/wine.service';
-import { MessageService } from '../services/message.service';
-import { Vin } from '../model/vin.model';
+import { VindrueType } from '../../model/vindrue-type.model';
+import { VinType } from '../../model/vin-type.model';
+import { VinDistrikt } from '../../model/vin-distrikt.model';
+import { VinFlaskestoerrelse } from '../../model/vin-flaskestoerrelse.model';
+import { VinIndkoebssted } from '../../model/vin-indkoebssted.model';
+import { VinKlassifikation } from '../../model/vin-klassifikation.model';
+import { VinLand } from '../../model/vin-land.model';
+import { KodelisteItem } from '../../model/kodeliste-item.model';
+import { VinProducent } from '../../model/vin-producent.model';
+import { WineService } from '../../services/wine.service';
+import { MessageService } from '../../services/message.service';
+import { Vin } from '../../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { User } from '../domain/user';
+import { User } from '../../domain/user';
 declare var $: any;
 
 @Component({
@@ -52,7 +52,6 @@ export class WineComponent implements OnInit {
 
   okMessage: string;
   errorMessage: string;
-
   kodelisteItemUpdateSubscription: Subscription;
   private success = new Subject<string>();
   private error = new Subject<string>();
@@ -62,6 +61,7 @@ export class WineComponent implements OnInit {
 
   // parentShowEvent: EventEmitter<any>;
 
+  // tslint:disable-next-line: max-line-length
   constructor(private wineService: WineService, private messageService: MessageService, authenticationService: AuthenticationService, ) {
     this.currentUser = authenticationService.currentUserValue;
     this.getVindrueTyper();

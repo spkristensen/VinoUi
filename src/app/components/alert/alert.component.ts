@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { MessageService } from 'src/app/services/message.service';
 import { Subject } from 'rxjs';
 import { debounceTime, retry } from 'rxjs/operators';
 import { AlertInfo } from 'src/app/model/alertinfo.model';
+import { Xtb } from '@angular/compiler';
 
 
 @Component({
@@ -35,7 +36,12 @@ export class AlertComponent implements OnInit, OnDestroy {
           messageObject.text = message.text;
         }
         if (message.type === 'error') {
-          messageObject.text = message.text.message;
+          // tslint:disable-next-line: triple-equals
+          if (message.text.title == undefined) {
+            messageObject.text = message.text;
+          } else {
+            messageObject.text = message.text.title;
+          }
         }
         messageObject.type = message.type;
         this.message = messageObject;

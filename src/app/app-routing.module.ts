@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { ListComponent } from './list/list.component';
-import { WineComponent } from './wine/wine.component';
+import { ListComponent } from './components/list/list.component';
+import { WineComponent } from './components/wine/wine.component';
 import { AuthGuard } from './guards/auth-guard';
 import { FooterComponent } from './footer/footer.component';
 
