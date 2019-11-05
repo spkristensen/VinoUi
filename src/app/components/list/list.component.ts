@@ -238,7 +238,7 @@ export class ListComponent implements AfterViewInit   {
 
   getHeight(): any {
     if (document.body.offsetHeight < 780) {
-      return '90%';
+      return 525;
     }
     return 780;
   }
