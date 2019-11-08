@@ -24,3 +24,7 @@ html, body {
  .pbuttom {
    margin-bottom: 29px;
  }
+
+ .cursor-pointer{
+  cursor: pointer;
+}

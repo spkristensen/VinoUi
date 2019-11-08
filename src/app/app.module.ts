@@ -25,6 +25,8 @@ import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FotoService } from './services/foto.service';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FooterComponent,
     WineComponent,
     ListComponent,
-    LoginComponent
+    LoginComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   providers: [
     WineService,
+    FotoService,
     DatePipe,
     { provide: NgbDateParserFormatter, useClass: DanishDateFormatter},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

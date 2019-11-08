@@ -10,10 +10,12 @@ import { VinLand } from '../../model/vin-land.model';
 import { KodelisteItem } from '../../model/kodeliste-item.model';
 import { VinProducent } from '../../model/vin-producent.model';
 import { WineService } from '../../services/wine.service';
+import { FotoService } from '../../services/foto.service';
 import { MessageService } from '../../services/message.service';
 import { Vin } from '../../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../../domain/user';
+
 declare var $: any;
 
 @Component({
@@ -53,8 +55,13 @@ export class WineComponent implements OnInit {
   okMessage: string;
   errorMessage: string;
   kodelisteItemUpdateSubscription: Subscription;
-  private success = new Subject<string>();
-  private error = new Subject<string>();
+  imageUrl = '../assets/img/UploadImageDefault.png';
+  selectedFile: File = null;
+  onFileSelected(file: FileList) {
+    console.log(file);
+    this.selectedFile = file.item(0);
+    this.opretBillede();
+  }
 
   // private wineCreatedAnnounced = new Subject<string>(); // Vin oprettet og den der lytter kan gøre et eller andet
   // wineCreatedAnnounced$ = this.wineCreatedAnnounced.asObservable();
@@ -62,7 +69,11 @@ export class WineComponent implements OnInit {
   // parentShowEvent: EventEmitter<any>;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private wineService: WineService, private messageService: MessageService, authenticationService: AuthenticationService, ) {
+  constructor(
+    private wineService: WineService,
+    private messageService: MessageService,
+    private fotoService: FotoService,
+    authenticationService: AuthenticationService, ) {
     this.currentUser = authenticationService.currentUserValue;
     this.getVindrueTyper();
     this.getVinTyper();
@@ -135,7 +146,7 @@ export class WineComponent implements OnInit {
   showModal() {
     $('#wineModal').modal('show');
   }
-  vinLandSelected(data: any)  {
+  vinLandSelected() {
     this.getVinDistrikter(this.wine.landId);
     this.getVinProducenter(this.wine.landId);
     this.getVinKlassifikationer(this.wine.landId);
@@ -153,74 +164,87 @@ export class WineComponent implements OnInit {
     this.getVinKlassifikationer(this.wine.landId);
   }
 
+  opretBillede() {
+    // https://www.youtube.com/watch?v=YkvqLNcJz3Y
+    this.fotoService.uploadFoto('Test', this.selectedFile).subscribe(data => {
+      console.log(data);
+      this.messageService.success('Billedet blev tilføjet');
+    },
+      error => {
+        this.messageService.error(error.message, false);
+      }
+    );
+
+  }
+
   handlKodelisteModal(kodelisteType: string) {
 
     this.kodelisteItem = new KodelisteItem();
     switch (kodelisteType) {
       case 'land': {
-          this.kodelisteType = 'land';
-          this.labelKodeListeModalTitle = 'Rediger land';
-          this.labelKodeListeModalName = 'Land:';
-          this.valueKodeListeModalName = this.findVinLandViaId(this.wine.landId);
-          this.kodelisteItem.id = this.wine.landId;
-          break;
-        }
+        this.kodelisteType = 'land';
+        this.labelKodeListeModalTitle = 'Rediger land';
+        this.labelKodeListeModalName = 'Land:';
+        this.valueKodeListeModalName = this.findVinLandViaId(this.wine.landId);
+        this.kodelisteItem.id = this.wine.landId;
+        break;
+      }
       case 'distrikt': {
-          this.kodelisteType = 'distrikt';
-          this.labelKodeListeModalTitle = 'Rediger distrikt';
-          this.labelKodeListeModalName = 'Distrikt:';
-          this.valueKodeListeModalName = this.findDistriktViaId(this.wine.distriktId);
-          this.kodelisteItem.id = this.wine.distriktId;
-          break;
-        }
+        this.kodelisteType = 'distrikt';
+        this.labelKodeListeModalTitle = 'Rediger distrikt';
+        this.labelKodeListeModalName = 'Distrikt:';
+        this.valueKodeListeModalName = this.findDistriktViaId(this.wine.distriktId);
+        this.kodelisteItem.id = this.wine.distriktId;
+        break;
+      }
       case 'vinType': {
-          this.kodelisteType = 'vinType';
-          this.labelKodeListeModalTitle = 'Rediger vintype';
-          this.labelKodeListeModalName = 'VinType:';
-          this.valueKodeListeModalName = this.findVinTypeViaId(this.wine.vintypeId);
-          this.kodelisteItem.id = this.wine.vintypeId;
-          break;
-        }
+        this.kodelisteType = 'vinType';
+        this.labelKodeListeModalTitle = 'Rediger vintype';
+        this.labelKodeListeModalName = 'VinType:';
+        this.valueKodeListeModalName = this.findVinTypeViaId(this.wine.vintypeId);
+        this.kodelisteItem.id = this.wine.vintypeId;
+        break;
+      }
       case 'drueType': {
-          this.kodelisteType = 'drueType';
-          this.labelKodeListeModalTitle = 'Rediger druetype';
-          this.labelKodeListeModalName = 'DrueType:';
-          this.valueKodeListeModalName = this.findDrueTypeViaId(this.wine.drueId);
-          this.kodelisteItem.id = this.wine.drueId;
-          break;
-        }
+        this.kodelisteType = 'drueType';
+        this.labelKodeListeModalTitle = 'Rediger druetype';
+        this.labelKodeListeModalName = 'DrueType:';
+        this.valueKodeListeModalName = this.findDrueTypeViaId(this.wine.drueId);
+        this.kodelisteItem.id = this.wine.drueId;
+        break;
+      }
       case 'klassifikation': {
-          this.kodelisteType = 'klassifikation';
-          this.labelKodeListeModalTitle = 'Rediger klassifikation';
-          this.labelKodeListeModalName = 'Klassifikation:';
-          this.valueKodeListeModalName = this.findKlassifikationViaId(this.wine.klassifikationId);
-          this.kodelisteItem.id = this.wine.klassifikationId;
-          break;
-        }
+        this.kodelisteType = 'klassifikation';
+        this.labelKodeListeModalTitle = 'Rediger klassifikation';
+        this.labelKodeListeModalName = 'Klassifikation:';
+        this.valueKodeListeModalName = this.findKlassifikationViaId(this.wine.klassifikationId);
+        this.kodelisteItem.id = this.wine.klassifikationId;
+        break;
+      }
       case 'producent': {
-          this.kodelisteType = 'producent';
-          this.labelKodeListeModalTitle = 'Rediger producent';
-          this.labelKodeListeModalName = 'Producent:';
-          this.valueKodeListeModalName = this.findProducenterViaId(this.wine.producentId);
-          this.kodelisteItem.id = this.wine.producentId;
-          break;
-        }
+        this.kodelisteType = 'producent';
+        this.labelKodeListeModalTitle = 'Rediger producent';
+        this.labelKodeListeModalName = 'Producent:';
+        this.valueKodeListeModalName = this.findProducenterViaId(this.wine.producentId);
+        this.kodelisteItem.id = this.wine.producentId;
+        break;
+      }
       case 'flaskestoerrelse': {
-          this.kodelisteType = 'flaskestoerrelse';
-          this.labelKodeListeModalTitle = 'Rediger flaskestørrelse';
-          this.labelKodeListeModalName = 'Flaskestørrelse:';
-          this.valueKodeListeModalName = this.findFlaskestoerrelserViaId(this.wine.flaskeStoerrelseId);
-          this.kodelisteItem.id = this.wine.flaskeStoerrelseId;
-          break;
-        }
+        this.kodelisteType = 'flaskestoerrelse';
+        this.labelKodeListeModalTitle = 'Rediger flaskestørrelse';
+        this.labelKodeListeModalName = 'Flaskestørrelse:';
+        this.valueKodeListeModalName = this.findFlaskestoerrelserViaId(this.wine.flaskeStoerrelseId);
+        this.kodelisteItem.id = this.wine.flaskeStoerrelseId;
+        break;
+      }
       case 'indkoebssted': {
-          this.kodelisteType = 'indkoebssted';
-          this.labelKodeListeModalTitle = 'Rediger indkøbssted';
-          this.labelKodeListeModalName = 'Indkøbssted:';
-          this.valueKodeListeModalName = this.findIndkoebsStederViaId(this.wine.indkoebsStedId);
-          this.kodelisteItem.id = this.wine.indkoebsStedId;
-          break;
-        }
+        this.kodelisteType = 'indkoebssted';
+        this.labelKodeListeModalTitle = 'Rediger indkøbssted';
+        this.labelKodeListeModalName = 'Indkøbssted:';
+        this.valueKodeListeModalName = this.findIndkoebsStederViaId(this.wine.indkoebsStedId);
+        this.kodelisteItem.id = this.wine.indkoebsStedId;
+        break;
+      }
       default:
     }
     this.kodelisteItem.type = this.labelKodeListeModalName;
@@ -267,16 +291,16 @@ export class WineComponent implements OnInit {
     }
   }
 
-  kodelisteModelChanged(event) {
+  kodelisteModelChanged() {
 
     this.kodelisteItem.value = this.valueKodeListeModalName;
   }
 
-  opdaterVin(info) {
+  opdaterVin() {
     console.log('Maincomponent gem vin: ' + this.wine.vinId + '/' + this.wine.navn);
     if (this.wine.vinId === -1) {
       this.wineService.opretVin(this.wine)
-        .subscribe(data => {                        // husk at der skal subscribes for at kaldet til serveren bliver udført
+        .subscribe(() => {                        // husk at der skal subscribes for at kaldet til serveren bliver udført
           this.messageService.success('Vinen blev oprettet');
           $('.modal').modal('hide');
         },
@@ -286,7 +310,7 @@ export class WineComponent implements OnInit {
         );
     } else {
       this.wineService.opdaterVin(this.wine)
-        .subscribe(data => {
+        .subscribe(() => {
           this.messageService.success('Vinen blev opdateret');
           $('.modal').modal('hide');
         },
