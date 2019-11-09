@@ -54,7 +54,8 @@ export class WineComponent implements OnInit {
 
   okMessage: string;
   errorMessage: string;
-  kodelisteItemUpdateSubscription: Subscription;
+  kodelisteItemUpdateSubscription: Subscription;  
+
   imageUrl = '../assets/img/UploadImageDefault.png';
   selectedFile: File = null;
   onFileSelected(file: FileList) {

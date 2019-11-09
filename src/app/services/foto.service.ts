@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MessageService } from '../services/message.service';
 
@@ -8,6 +8,9 @@ import { MessageService } from '../services/message.service';
 export class FotoService {
     constructor(private httpClient: HttpClient, private messageService: MessageService) {
     }
+
+    private fileUploadedAnnounced = new Subject<any>();
+    fileUploadedAnnounced$ = this.fileUploadedAnnounced.asObservable();
 
     uploadFoto(caption: string, fileToUpload: File): Observable<any> {
         const obs = new Observable(observer => {
@@ -20,7 +23,7 @@ export class FotoService {
         formData.append('ImageCaption', caption);
 
         this.httpClient.post(`${environment.apiUrl}/api/foto`, formData).subscribe((data: any) => {
-            return data;
+            this.fileUploadedAnnounced.next();
         },
             error => {
                 this.messageService.error(error.title, false);

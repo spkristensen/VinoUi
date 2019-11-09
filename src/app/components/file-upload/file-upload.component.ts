@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'src/app/services/message.service';
 import { FotoService } from 'src/app/services/foto.service';
 
+declare var $: any;
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
@@ -26,16 +27,16 @@ export class FileUploadComponent implements OnInit {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  opretBillede() {
+  uploadFoto() {
     // https://www.youtube.com/watch?v=YkvqLNcJz3Y
     this.fotoService.uploadFoto('Test', this.selectedFile).subscribe(data => {
       console.log(data);
-      this.messageService.success('Billedet blev tilføjet');
+      this.messageService.success('Fotoet blev uploaded');
+      $('#FileUploadModal').modal('hide');
     },
       error => {
         this.messageService.error(error.message, false);
       }
     );
-
   }
 }
