@@ -15,6 +15,7 @@ import { MessageService } from '../../services/message.service';
 import { Vin } from '../../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../../domain/user';
+import { environment } from 'src/environments/environment';
 
 declare var $: any;
 
@@ -25,7 +26,8 @@ declare var $: any;
 
 export class WineComponent implements OnInit {
   currentUser: User;
-  @Input() wine: Vin;
+  // @Input() wine: Vin;
+  wine: Vin;
   editDate: any;
   vindrueTyper: VindrueType[];
   vinTyper: VinType[];
@@ -54,15 +56,19 @@ export class WineComponent implements OnInit {
 
   okMessage: string;
   errorMessage: string;
-  kodelisteItemUpdateSubscription: Subscription;  
-
+  kodelisteItemUpdateSubscription: Subscription;
+  WineGetSubscription: Subscription;
+  WineGetCreateSubscription: Subscription;
+  wineDeletedSubscription: Subscription;
+  fileUploadedSubscription: Subscription;
+  vinDetail: Vin;
   imageUrl = '../assets/img/UploadImageDefault.png';
-  selectedFile: File = null;
-  onFileSelected(file: FileList) {
-    console.log(file);
-    this.selectedFile = file.item(0);
-    this.opretBillede();
-  }
+  // selectedFile: File = null;
+  // onFileSelected(file: FileList) {
+  //   console.log(file);
+  //   this.selectedFile = file.item(0);
+  //   this.opretBillede();
+  // }
 
   // private wineCreatedAnnounced = new Subject<string>(); // Vin oprettet og den der lytter kan gøre et eller andet
   // wineCreatedAnnounced$ = this.wineCreatedAnnounced.asObservable();
@@ -124,6 +130,27 @@ export class WineComponent implements OnInit {
           break;
       }
     });
+    this.fileUploadedSubscription = fotoService.fileUploadedAnnounced$.subscribe(data => {
+      const url = `${environment.apiUrl}/image/${data}`;
+      this.imageUrl = url;
+    });
+
+    this.WineGetSubscription = wineService.getWineAnnounced$.subscribe(vin => {
+      const url = `${environment.apiUrl}/image/${vin.imageId}`;
+      this.wine = vin;
+      this.imageUrl = url;
+    });
+
+    this.WineGetCreateSubscription = wineService.getWineCreateAnnounced$.subscribe(vin => {
+      const url = `${environment.apiUrl}/image/${vin.imageId}`;
+      this.wine = vin;
+      this.imageUrl = url;
+      $('#wineModal').modal('show');
+    });
+
+    this.wineDeletedSubscription = wineService.wineDeletedAnnounced$.subscribe(data => {
+      this.wine = null;
+    });
   }
 
 
@@ -165,18 +192,18 @@ export class WineComponent implements OnInit {
     this.getVinKlassifikationer(this.wine.landId);
   }
 
-  opretBillede() {
-    // https://www.youtube.com/watch?v=YkvqLNcJz3Y
-    this.fotoService.uploadFoto('Test', this.selectedFile).subscribe(data => {
-      console.log(data);
-      this.messageService.success('Billedet blev tilføjet');
-    },
-      error => {
-        this.messageService.error(error.message, false);
-      }
-    );
+  // opretBillede() {
+  //   // https://www.youtube.com/watch?v=YkvqLNcJz3Y
+  //   this.fotoService.uploadFoto(this.wine.vinId, this.selectedFile).subscribe(data => {
+  //     console.log(data);
+  //     this.messageService.success('Billedet blev tilføjet');
+  //   },
+  //     error => {
+  //       this.messageService.error(error.message, false);
+  //     }
+  //   );
 
-  }
+  // }
 
   handlKodelisteModal(kodelisteType: string) {
 

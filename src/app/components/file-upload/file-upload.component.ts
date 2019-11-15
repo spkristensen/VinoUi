@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'src/app/services/message.service';
 import { FotoService } from 'src/app/services/foto.service';
+import { Vin } from '../../model/vin.model';
+import { WineService } from '../../services/wine.service';
 
 declare var $: any;
 @Component({
@@ -10,8 +12,10 @@ declare var $: any;
 export class FileUploadComponent implements OnInit {
   imageUrl = '../assets/img/UploadImageDefault.png';
   selectedFile: File = null;
+  vin: Vin;
   constructor(
     private messageService: MessageService,
+    private wineService: WineService,
     private fotoService: FotoService) { }
 
   ngOnInit() {
@@ -29,7 +33,7 @@ export class FileUploadComponent implements OnInit {
 
   uploadFoto() {
     // https://www.youtube.com/watch?v=YkvqLNcJz3Y
-    this.fotoService.uploadFoto('Test', this.selectedFile).subscribe(data => {
+    this.fotoService.uploadFoto(this.wineService.vin.vinId, this.selectedFile).subscribe(data => {
       console.log(data);
       this.messageService.success('Fotoet blev uploaded');
       $('#FileUploadModal').modal('hide');

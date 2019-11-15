@@ -11,6 +11,7 @@ import { MessageService } from '../../services/message.service';
 import { WineComponent } from '../wine/wine.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../../domain/user';
+import { FotoService } from 'src/app/services/foto.service';
 
 declare var $: any;
 
@@ -19,19 +20,19 @@ declare var $: any;
   templateUrl: './list.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class ListComponent implements AfterViewInit   {
-  @ViewChild('wineTree', {static: false}) wineTree: jqxTreeComponent;
-  @ViewChild('wineListContextMenu', {static: false}) wineListContextMenu: jqxMenuComponent;
-  @ViewChild('FooterComponent', {static: false}) footerComponent: FooterComponent;
-  @ViewChild('WineComponent', {static: false}) wineComponent: WineComponent;
-  @ViewChild('expanderComponent', {static: false}) expanderComponent: jqxExpanderComponent;
+export class ListComponent implements AfterViewInit {
+  @ViewChild('wineTree', { static: false }) wineTree: jqxTreeComponent;
+  @ViewChild('wineListContextMenu', { static: false }) wineListContextMenu: jqxMenuComponent;
+  @ViewChild('FooterComponent', { static: false }) footerComponent: FooterComponent;
+  @ViewChild('WineComponent', { static: false }) wineComponent: WineComponent;
+  @ViewChild('expanderComponent', { static: false }) expanderComponent: jqxExpanderComponent;
 
   treeSettings: jqwidgets.TreeOptions =
-  {
-    width: '100%',
-    height: '100%',
-    source: null
-  };
+    {
+      width: '100%',
+      height: '100%',
+      source: null
+    };
   wineCount = 0;
   winePriceTotal = 0;
   selectedWine: Vin;
@@ -44,17 +45,18 @@ export class ListComponent implements AfterViewInit   {
   searchString = ' ';
   rightClickWineId: string;
   currentUser: User;
+  getWineSubscription: Subscription;
   isFetchingData = false;
   // https://www.youtube.com/watch?v=FssKK37Ob4k
 
   constructor(
-          private wineService: WineService,
-          private messageService: MessageService,
-          private authenticationService: AuthenticationService,
-          public datepipe: DatePipe) {
-      console.log('listcomponent Constructor');
-      this.currentUser = authenticationService.currentUserValue;
-      this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(soeg => {
+    private wineService: WineService,
+    private fotoService: FotoService,
+    private messageService: MessageService,
+    private authenticationService: AuthenticationService) {
+    console.log('listcomponent Constructor');
+    this.currentUser = authenticationService.currentUserValue;
+    this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(soeg => {
       this.isFetchingData = true;
       if (soeg !== '') {
         this.searchVin(soeg);
@@ -63,24 +65,28 @@ export class ListComponent implements AfterViewInit   {
       }
     });
 
-      this.wineCreatedSubscription = wineService.wineCreatedAnnounced$.subscribe(data => {
+    this.wineCreatedSubscription = wineService.wineCreatedAnnounced$.subscribe(data => {
       this.treeListGetAll(data, false);
-      this.selectedWine = null; // Fjern visning på højre side
+      // this.selectedWine = null; // Fjern visning på højre side
     });
 
-      this.wineUpdatedSubscription = wineService.wineUpdatedAnnounced$.subscribe(data => {
+    this.wineUpdatedSubscription = wineService.wineUpdatedAnnounced$.subscribe(data => {
       this.treeListGetAll(data.vinId, true);
     });
 
-      this.wineDeletedSubscription = wineService.wineDeletedAnnounced$.subscribe(data => {
+    this.wineDeletedSubscription = wineService.wineDeletedAnnounced$.subscribe(data => {
       const items = this.wineTree.getItems();
       const itemToExpandAfterDelete = this.findPrevItem(items, this.rightClickWineId);
       this.treeListGetAll(itemToExpandAfterDelete, false);
+
+      this.getWineSubscription = wineService.getWineAnnounced$.subscribe(vin => {
+        this.selectedWine = vin;
+      });
     });
 
   }
-  private updateFooterInfoAnnounced = new Subject<string>();
-  updateFooterInfoAnnounced$ = this.updateFooterInfoAnnounced.asObservable();
+  // private updateFooterInfoAnnounced = new Subject<string>();
+  // updateFooterInfoAnnounced$ = this.updateFooterInfoAnnounced.asObservable();
 
   wineTreeOnInitialized(): void {
 
@@ -92,11 +98,11 @@ export class ListComponent implements AfterViewInit   {
       event.preventDefault();
 
       // .classList.contains('jqx-tree-item-li')) {
-      if (( event.target as Element).parentElement.className === 'jqx-tree-item-li') {
+      if ((event.target as Element).parentElement.className === 'jqx-tree-item-li') {
         this.wineTree.selectItem(event.target);
         // this.selectedItem = this.wineTree.getSelectedItem();
         const element = event.target as HTMLElement;
-        this.rightClickWineId =  element.parentElement.id; // event.srcElement.parentElement.id; // id på den vin der er højreklikket på
+        this.rightClickWineId = element.parentElement.id; // event.srcElement.parentElement.id; // id på den vin der er højreklikket på
         const scrollTop = window.scrollY;
         const scrollLeft = window.scrollX;
         this.wineListContextMenu.open(event.clientX + 5 + scrollLeft, event.clientY + 5 + scrollTop);
@@ -113,32 +119,27 @@ export class ListComponent implements AfterViewInit   {
     this.selectedItem = null;
     switch (item) {
       case 'Opret vin': {
-          this.selectedItem = this.wineTree.getSelectedItem();
-          if (this.selectedItem != null) {
-            this.wineService.getVin(this.rightClickWineId).subscribe((data: Vin) => {
-              console.log(data);
-              this.selectedWine = data;
-              this.selectedWine.vinId = -1;
-              const date = new Date();
-              this.selectedWine.koebsDato = this.datepipe.transform(date, 'yyyy-MM-dd');
-              },
+        this.selectedItem = this.wineTree.getSelectedItem();
+        if (this.selectedItem != null) {
+          this.wineService.getVinOpret(this.rightClickWineId).subscribe((data: Vin) => {
+            console.log(data);
+          },
             error => {
               this.messageService.error(error.message, false);
             });
-          } else {
-            this.selectedWine = new Vin();
-          }
-          break;
+        } else {
+          this.wineService.vin = new Vin();
+        }
+        break;
       }
       case 'Slet vin': {
         this.wineService.sletVin(this.rightClickWineId).subscribe((data: Vin) => {
           console.log(data);
-          this.selectedWine = null;
           this.messageService.success('Vinen blev slettet');
         },
-        error => {
-          this.messageService.error(error.message, false);
-        });
+          error => {
+            this.messageService.error(error.message, false);
+          });
         break;
       }
     }
@@ -157,9 +158,9 @@ export class ListComponent implements AfterViewInit   {
       this.setTooltip();
       this.wineTree.expandItem(items[0]);
     },
-    error => {
-      this.messageService.error(error);
-    });
+      error => {
+        this.messageService.error(error);
+      });
   }
 
   treeListGetAll(vinId: any, getVin: boolean) {
@@ -282,18 +283,19 @@ export class ListComponent implements AfterViewInit   {
     console.log(item);
   }
 
- getVin(treeVinItem): any {
+  getVin(treeVinItem): any {
     console.log('listcomponent getVin');
     // debugger;
     this.wineService.getVin(treeVinItem.id).subscribe((data: Vin) => {
-      console.log(data);
-      this.selectedWine = data;
+      // console.log(data);
+      // this.wineService.vin = data;
+      // this.selectedWine = data;
     },
       error => {
         if (error.message == null) {
           this.messageService.error(error.title, false);
         } else {
-        this.messageService.error(error.message, false);
+          this.messageService.error(error.message, false);
         }
       }
     );
@@ -309,7 +311,7 @@ export class ListComponent implements AfterViewInit   {
       const items = this.wineTree.getItems();
       this.wineTree.expandItem(items[0]);
       this.isFetchingData = false;
-      },
+    },
       error => {
         this.messageService.error(error.message, false);
       }
