@@ -1,7 +1,6 @@
 export class Vin {
 
     vinId: number;
-    imageId: string;
     navn: string;
     aargang: number;
     hylde: string;
@@ -28,5 +27,7 @@ export class Vin {
     producentId: number;
     klassifikation: string;
     klassifikationId: number;
+    imageId: number;
+    imageName: string;
     timestamp: Date;
   }

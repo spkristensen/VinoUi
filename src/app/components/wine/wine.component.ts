@@ -16,6 +16,7 @@ import { Vin } from '../../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../../domain/user';
 import { environment } from 'src/environments/environment';
+import { Image } from './../../model/image.model';
 
 declare var $: any;
 
@@ -136,13 +137,18 @@ export class WineComponent implements OnInit {
     });
 
     this.WineGetSubscription = wineService.getWineAnnounced$.subscribe(vin => {
-      const url = `${environment.apiUrl}/image/${vin.imageId}`;
+      // tslint:disable-next-line: label-position
+
+      if (vin.imageName == null) {
+        this.imageUrl = '../assets/img/UploadImageDefault.png';
+      } else {
+        this.imageUrl = `${environment.apiUrl}/image/${vin.imageName}`;
+      }
       this.wine = vin;
-      this.imageUrl = url;
     });
 
     this.WineGetCreateSubscription = wineService.getWineCreateAnnounced$.subscribe(vin => {
-      const url = `${environment.apiUrl}/image/${vin.imageId}`;
+      const url = `${environment.apiUrl}/image/${vin.imageName}`;
       this.wine = vin;
       this.imageUrl = url;
       $('#wineModal').modal('show');
