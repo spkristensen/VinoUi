@@ -1,13 +1,22 @@
 <div *ngIf="wine" class="container-fluid">
   <div class="row mt-3 mb-3">
-    <div class="col-xs-1 col-lg-1">
-      <form #imageForm=ngForm>
-        <a class="cursor-pointer">
-          <img [src]="imageUrl" style="width:100px; height: 100px" data-toggle="modal" data-target="#FileUploadModal"
-          placement="bottom" ngbTooltip="Klik for at tilføje foto">
-        </a>
-      </form>
-    </div>
+    
+      <div *ngIf="imageTempplate"class="col-xs-1 col-lg-1">
+        <form #imageForm=ngForm>
+          <a class="cursor-pointer">
+            <img [src]="imageUrl" style="width:100px; height: 100px" data-toggle="modal" data-target="#FileUploadModal"
+              placement="bottom" ngbTooltip="Klik for at tilføje foto">
+          </a>
+        </form>
+      </div>
+      <div *ngIf="imageShow"class="col-xs-1 col-lg-1">
+          <form #imageForm=ngForm>
+            <a class="cursor-pointer" [attr.href]="imageUrlOrg" target="_blank">
+              <img [src]="imageUrl" style="width:100px; height: 100px" 
+                placement="bottom" ngbTooltip="Klik for at vise foto i stort format">
+            </a>
+          </form>
+        </div>
     <div class="col-xs-9 col-lg-9 mt-3 pull-left">
       <h1>{{wine.navn}}</h1>
     </div>
@@ -156,7 +165,7 @@
                 <form #imageForm=ngForm>
                   <a class="cursor-pointer">
                     <img [src]="imageUrl" style="width:100px; height: 100px" data-toggle="modal"
-                      data-target="#FileUploadModal" placement="bottom" ngbTooltip="Klik for at tilføje foto">
+                      data-target="#FileUploadModal" placement="bottom" ngbTooltip="Klik for at tilføje eller ændre foto">
                   </a>
                 </form>
               </div>
@@ -478,8 +487,8 @@
                   </select>                 
                 </div> -->
               <label for="Kodeliste-name" class="col-form-label">{{labelKodeListeModalName}}</label>
-              <input type="text" class="form-control" id="KodeListeFildName" name="KodeListeFildName" 
-                        [(ngModel)]="valueKodeListeModalName" (ngModelChange)="kodelisteModelChanged($event)">
+              <input type="text" class="form-control" id="KodeListeFildName" name="KodeListeFildName"
+                [(ngModel)]="valueKodeListeModalName" (ngModelChange)="kodelisteModelChanged($event)">
             </div>
           </form>
         </div>
@@ -496,7 +505,7 @@
 <div class="modal fade" id="FileUploadModal" tabindex="-1" role="dialog" data-backdrop="static">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-        <app-file-upload></app-file-upload>
+      <app-file-upload></app-file-upload>
     </div>
   </div>
 </div>

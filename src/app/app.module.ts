@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UiModule } from './ui/ui.module';
 import { NgbModule, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { WineService } from './services/wine.service';
@@ -45,7 +44,6 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    UiModule,
     HttpClientModule,
     jqxTreeModule,
     jqxExpanderModule,

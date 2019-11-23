@@ -43,4 +43,7 @@ export class FileUploadComponent implements OnInit {
       }
     );
   }
+  clearImage() {
+    this.imageUrl = '../assets/img/UploadImageDefault.png';
+  }
 }

@@ -10,11 +10,6 @@ export class AuthenticationService {
   Url: string;
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-
-    // constructor(private http: HttpClient) {
-    //     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    //     this.currentUser = this.currentUserSubject.asObservable();
-    // }
     constructor(private http: HttpClient) {
         // this.Url = 'http://localhost:4500/api/Login/';
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -24,22 +19,6 @@ export class AuthenticationService {
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
-
-    // login(mail: string, password: string) { // se hvordan du kalder til webapi de andre steder
-    //   var a = 'http://4500/api/Login/UserLogin';
-    //   //return this.http.post<any>(`${environment.apiUrl}/auth`, { mail, password })
-    //   return this.http.post<any>(`${a}/auth`, { mail, password })
-    //         .pipe(map(user => {
-    //             //login successful if there's a jwt token in the response
-    //             if (user && user.token) {
-    //                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-    //                 localStorage.setItem('currentUser', JSON.stringify(user));
-    //                 this.currentUserSubject.next(user);
-    //             }
-
-    //             return user;
-    //         }));
-    // }
 
     login(username: string, password: string) {
         // var loginUrl =this.Url+'userLogin';
