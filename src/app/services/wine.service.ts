@@ -54,7 +54,7 @@ export class WineService {
 
   private getWineCreateAnnounced = new Subject<any>();
   getWineCreateAnnounced$ = this.getWineCreateAnnounced.asObservable();
-  
+
   // Service message commands
   /* #region Vin Methods */
   search(mission: string) {
@@ -146,7 +146,7 @@ export class WineService {
     console.log('WineService getVin: ' + id);
     this.httpClient.get(`${environment.apiUrl}/api/wineList/` + id).subscribe((vin: Vin) => {
       this.vin = vin;
-      this.getWineAnnounced.next(vin);      
+      this.getWineAnnounced.next(vin);
       return vin;
     });
     return obs;
@@ -465,10 +465,43 @@ export class WineService {
     /* #endregion */
 
     /* #region Vinland Methods */
-    getVinLande(): Observable < any > {
-      console.log('Maincomponent getVinLande');
+    getVinLande(): Observable <any> {
+      // const obs = new Observable(observer => {
+      //   observer.next(true);
+      //   observer.complete();
+      // });
       return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/land`);
-    }
+      // console.log('Maincomponent getVinLande');
+      // const key = 'Vinlande';
+      // localStorage.removeItem(key);
+      // const localVinlande = localStorage.getItem(key);
+      // if (localVinlande == null) {
+      //   // const lande = this.httpClient.get(`${environment.apiUrl}/api/kodeliste/land`);
+      //   // localStorage.setItem(key, JSON.stringify(lande));
+      //   //     // tslint:disable-next-line: align
+      //   //     const getlocalVinlande = JSON.parse(localStorage.getItem(key) || '[]');
+      //   // return getlocalVinlande as Observable<[]>;
+      //      return this.httpClient.get(`${environment.apiUrl}/api/kodeliste/land`).subscribe((vinLande: any) => {
+      //       localStorage.setItem(key, JSON.stringify(vinLande));
+      //       const getlocalVinlande = JSON.parse(localStorage.getItem(key) || '[]');
+      //       return getlocalVinlande as Observable<[]>;
+      //       // return vinLande;
+      //     });
+      // } else {
+      //   const getlocalVinlande = JSON.parse(localStorage.getItem(key) || '[]');
+      //   return getlocalVinlande;
+      // }
+      // return obs;
+      // if (localVinlande == null) {
+      //   this.httpClient.get(`${environment.apiUrl}/api/kodeliste/land`).subscribe((vinLande: any) => {
+      //     localStorage.setItem(key, JSON.stringify(vinLande));
+      //     let getlocalVinlande = JSON.parse(localStorage.getItem(key));
+      //     return getlocalVinlande;
+
+      //     return vinLande;
+      // });
+      //   return JSON.parse(localStorage.getItem(key));
+  }
 
     insertLand(vinland: VinLand): Observable < any > {
       const obs = new Observable(observer => {
