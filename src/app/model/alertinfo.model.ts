@@ -4,6 +4,7 @@ export class AlertInfo {
       this.type = type;
     }
 
+    
     type: string;
     message: string;
   }
