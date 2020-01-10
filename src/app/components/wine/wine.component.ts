@@ -62,7 +62,7 @@ export class WineComponent implements OnInit {
   WineGetCreateSubscription: Subscription;
   wineDeletedSubscription: Subscription;
   fileUploadedSubscription: Subscription;
-  vinDetail: Vin;
+  vinDetail: Vin;  
   imageUrl = '../assets/img/UploadImageDefault.png';
   imageUrlOrg = '';
   imageTempplate = true;
@@ -135,8 +135,9 @@ export class WineComponent implements OnInit {
       }
     });
     this.fileUploadedSubscription = fotoService.fileUploadedAnnounced$.subscribe(data => {
-      const url = `${environment.apiUrl}/image/${data}`;
+      const url = `${environment.apiUrl}/image/${data.imageId}`;
       this.imageUrl = url;
+      this.wine.imageId = data.id;
       this.imageTempplate = false;
       this.imageShow = false;
       this.imageShow = true;
