@@ -1,8 +1,7 @@
 
-<nav class="navbar navbar-dark bg-dark fixed-top">
-<!-- <nav class="navbar navbar-dark bg-dark mb-5"> -->
-  <div class="navbar-expand mr-auto">   
-  </div>
+<!-- <nav class="navbar navbar-dark bg-dark fixed-top">
+ <nav class="navbar navbar-dark bg-dark mb-5">
+  <div class="navbar-expand mr-auto"></div>
   <form class="form-inline">
     <input  type="search" placeholder="Søg.." [(ngModel)]="searchText" name="searchText"/>
     <button type="submit" class="mr-2" (keyup.enter)="searchClick()"  (click)="searchClick()"><i class="fa fa-search"></i></button>
@@ -10,4 +9,31 @@
         <fa-icon [icon]="logOutIcon"></fa-icon>
     </button>     
   </form>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerVino" aria-controls="navbarTogglerVino" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerVino">    
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="SkiftPassword" >Skift password</a>
+          <a class="dropdown-item" (click)="export()">Export data</a>
+          <a class="dropdown-item" style="cursor: pointer" (click)="logout()">Log ud</a>
+        </div>
+      </li>    
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input  type="search" placeholder="Søg.." [(ngModel)]="searchText" name="searchText"/>
+    <button type="submit" class="mr-2" (keyup.enter)="searchClick()"  (click)="searchClick()"><i class="fa fa-search"></i></button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="logout()">
+        <fa-icon [icon]="logOutIcon"></fa-icon>
+    </button> 
+    </form>
+  </div>
 </nav>

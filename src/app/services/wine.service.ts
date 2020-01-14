@@ -62,7 +62,6 @@ export class WineService {
   }
 
   searchVin(searchString): Observable<any> {
-    console.log('WineService searchVin');
     console.log('WineService searchVin: ' + searchString);
     const res = this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + searchString);
 
@@ -70,6 +69,15 @@ export class WineService {
     this.updateFooterInfoAnnounced.next('');
     return res;
   }
+
+  ExportVine(): Observable<any> {
+    console.log('WineService ExportVin');    
+    const res = this.httpClient.get(`${environment.apiUrl}/api/wineExport`);
+    console.log(res);    
+    return res;
+    
+  }
+
 
   getFooterInfo(): Observable<any> {
     console.log('WineService getfooterInfo: ');
