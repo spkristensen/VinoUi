@@ -213,7 +213,8 @@ export class WineComponent implements OnInit {
 
   editkoebsPris(event)
   {
-    console.log(event);
+    console.log('editkoebsPris ' + event )
+    //console.log(event);
     this.wine.KoebsPris = event;
   }
   // opretBillede() {
