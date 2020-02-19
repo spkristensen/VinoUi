@@ -211,6 +211,11 @@ export class WineComponent implements OnInit {
     this.getVinKlassifikationer(this.wine.landId);
   }
 
+  editkoebsPris(event)
+  {
+    console.log(event);
+    this.wine.KoebsPris = event;
+  }
   // opretBillede() {
   //   // https://www.youtube.com/watch?v=YkvqLNcJz3Y
   //   this.fotoService.uploadFoto(this.wine.vinId, this.selectedFile).subscribe(data => {

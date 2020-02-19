@@ -398,7 +398,8 @@
                           <label class="label">Pris:</label>
                           <input type="text" class="form-control form-control-sm" placeholder="Indkøbspris"
                             name="koebsPris"
-                            [ngModel]="wine.koebsPris | number : '1.2-2'"  (ngModelChange)="wine.koebsPris=$event">                            
+                            [ngModel]="wine.koebsPris | number : '1.2-2'"  (ngModelChange)="editkoebsPris($event)">                            
+                            <!-- [ngModel]="wine.koebsPris | number : '1.2-2'"  (ngModelChange)="wine.koebsPris=$event">                             -->
                           <!--<https://stackoverflow.com/questions/39642882/using-pipes-within-ngmodel-on-input-elements-in-angular-->
                         </div>
                         <div class="col-xs-1 col-lg-1 mb-3">
