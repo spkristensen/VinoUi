@@ -17,6 +17,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../../domain/user';
 import { environment } from 'src/environments/environment';
 import { Image } from './../../model/image.model';
+import { format } from 'url';
 
 declare var $: any;
 
@@ -213,9 +214,19 @@ export class WineComponent implements OnInit {
 
   editkoebsPris(event)
   {
-    console.log('editkoebsPris ' + event )
-    //console.log(event);
+    console.log('editkoebsPris ' + event )    
     this.wine.KoebsPris = event;
+  }
+
+  onDateSelect(event)
+  {
+    console.log(event )   
+    this.editDate = {
+      day: event.day,
+      month: event.month,
+      year: event.year,
+    }; 
+    this.wine.koebsDato = `${event.year}-${event.month}-${event.day}`; // de små pinger giver mulighed for intelicense
   }
   // opretBillede() {
   //   // https://www.youtube.com/watch?v=YkvqLNcJz3Y
