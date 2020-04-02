@@ -12,6 +12,7 @@ import { WineComponent } from '../wine/wine.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from '../../domain/user';
 import { FotoService } from 'src/app/services/foto.service';
+import { SearchItem } from 'src/app/model/SearchItem.models';
 
 declare var $: any;
 
@@ -47,6 +48,7 @@ export class ListComponent implements AfterViewInit {
   currentUser: User;
   getWineSubscription: Subscription;
   isFetchingData = false;
+  searchItem: SearchItem;
   // https://www.youtube.com/watch?v=FssKK37Ob4k
 
   constructor(
@@ -55,11 +57,11 @@ export class ListComponent implements AfterViewInit {
     private messageService: MessageService,
     private authenticationService: AuthenticationService) {
     console.log('listcomponent Constructor');
-    this.currentUser = authenticationService.currentUserValue;
-    this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(soeg => {
+    this.currentUser = authenticationService.currentUserValue;    
+    this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(searchItem => {
       this.isFetchingData = true;
-      if (soeg !== '') {
-        this.searchVin(soeg);
+      if (searchItem.searchHistory = true) {
+        this.searchVin(searchItem);
       } else {
         this.treeListGetAll(0, false);
       }
@@ -81,9 +83,11 @@ export class ListComponent implements AfterViewInit {
 
       this.getWineSubscription = wineService.getWineAnnounced$.subscribe(vin => {
         this.selectedWine = vin;
-      });
+      });      
     });
-
+    this.searchItem = new SearchItem();
+    this.searchItem.searchValue = '';
+    this.searchItem.searchHistory = false;
   }
   // private updateFooterInfoAnnounced = new Subject<string>();
   // updateFooterInfoAnnounced$ = this.updateFooterInfoAnnounced.asObservable();
@@ -149,7 +153,7 @@ export class ListComponent implements AfterViewInit {
     console.log('listcomponent ngAfterViewInit');
     this.wineTreeOnInitialized();
     // $http.get("/api/CarDetail/GetAMCars?userId=" + userid + "&customerId=" + customerId).success(callback_success);
-    this.wineService.searchVin('').subscribe((res: any) => {
+    this.wineService.searchVin(this.searchItem).subscribe((res: any) => {
       console.log('listcomponent after search: ' + res);
       console.log(res);
       this.treeSettings.source = res;
@@ -301,10 +305,10 @@ export class ListComponent implements AfterViewInit {
     );
   }
 
-  searchVin(searchString): any {
-    console.log('listcomponent searchVin: ' + searchString);
+  searchVin(searchItem): any {
+    console.log('listcomponent searchVin: ' + searchItem);
 
-    this.wineService.searchVin(searchString).subscribe((res: any) => {
+    this.wineService.searchVin(searchItem).subscribe((res: any) => {
       this.treeSettings.source = res;
       this.wineTree.clear();
       this.wineTree.addTo(res[0], res[0].id);

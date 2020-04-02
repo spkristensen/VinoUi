@@ -36,7 +36,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     WineComponent,
     ListComponent,
     LoginComponent,
-    FileUploadComponent
+    FileUploadComponent    
   ],
   imports: [
     BrowserModule,

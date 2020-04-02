@@ -15,6 +15,7 @@ import { VindrueType } from '../model/vindrue-type.model';
 import { environment } from 'src/environments/environment';
 import { Vin } from '../model/vin.model';
 import { DatePipe } from '@angular/common';
+import { SearchItem } from '../model/SearchItem.models';
 
 @Injectable()
 export class WineService {
@@ -23,15 +24,17 @@ export class WineService {
     private messageService: MessageService,
     private datepipe: DatePipe)  {
     this.kodelisteItem = new KodelisteItem();
+    this.searchItem = new SearchItem();
   }
   vinUpdate: VinUpdateReturn;
   kodelisteItem: KodelisteItem;
+  searchItem: SearchItem;
   vin: Vin;
 
   // vinLand: vinLand;
 
   // Observable string sources
-  private searchClickedAnnounced = new Subject<string>();
+  private searchClickedAnnounced = new Subject<SearchItem>();
   searchClickedAnnounced$ = this.searchClickedAnnounced.asObservable();
 
   private wineCreatedAnnounced = new Subject<string>(); // Vin oprettet og den der lytter kan gøre et eller andet
@@ -57,13 +60,15 @@ export class WineService {
 
   // Service message commands
   /* #region Vin Methods */
-  search(mission: string) {
-    this.searchClickedAnnounced.next(mission);
+  search(mission: string, searchHistory: boolean) {
+    this.searchItem.searchValue = mission;
+    this.searchItem.searchHistory = searchHistory;
+    this.searchClickedAnnounced.next(this.searchItem);
   }
 
-  searchVin(searchString): Observable<any> {
-    console.log('WineService searchVin: ' + searchString);
-    const res = this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + searchString);
+  searchVin(searchItem): Observable<any> {
+    console.log('WineService searchVin: ' + searchItem);
+    const res = this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + searchItem.searchValue + `&searchHistory=` + searchItem.searchHistory);
 
     console.log(res);
     this.updateFooterInfoAnnounced.next('');

@@ -14,16 +14,21 @@ export class HeaderComponent  {
   currentUser: User;
   public searchText = '';
   public logOutIcon = faSignOutAlt;
+  cbHistory = false;
   constructor(private wineSvc: WineService, private fileSrv: FileService, private router: Router,
               private authenticationService: AuthenticationService ) {
     console.log('HeaderComponent constructor');
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
+  cbHistoryChange(e)
+  {
+      this.cbHistory = e.target.checked;
+  }
   searchClick() {
     console.log('HeaderComponent searchClick');
     // debugger;
-    this.wineSvc.search(this.searchText);
+    this.wineSvc.search(this.searchText, this.cbHistory);
   }
 
   logout() {
