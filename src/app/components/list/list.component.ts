@@ -60,8 +60,8 @@ export class ListComponent implements AfterViewInit {
     this.currentUser = authenticationService.currentUserValue;    
     this.searchClickedSubscription = wineService.searchClickedAnnounced$.subscribe(searchItem => {
       this.isFetchingData = true;
-      if (searchItem.searchHistory = true) {
-        this.searchVin(searchItem);
+      if (searchItem.searchHistory == true || searchItem.searchValue != '') {
+        this.searchVin(searchItem);                  
       } else {
         this.treeListGetAll(0, false);
       }
@@ -168,7 +168,7 @@ export class ListComponent implements AfterViewInit {
   }
 
   treeListGetAll(vinId: any, getVin: boolean) {
-    this.wineService.getAllWines().subscribe((res: any) => {
+    this.wineService.getAllWines(this.searchItem).subscribe((res: any) => {
       console.log('TreeListGetAll: ' + res);
       this.treeSettings.source = res;
       this.wineTree.clear();

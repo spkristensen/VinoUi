@@ -146,8 +146,8 @@ export class WineService {
     return obs;
   }
 
-  getAllWines(): Observable<any> {
-    return this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + '');
+  getAllWines(searchItem): Observable<any> {
+    return this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + '' + searchItem.searchValue + `&searchHistory=` + searchItem.searchHistory);
   }
 
   getVin(id): Observable<any> {
