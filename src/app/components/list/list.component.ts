@@ -22,11 +22,11 @@ declare var $: any;
   encapsulation: ViewEncapsulation.None
 })
 export class ListComponent implements AfterViewInit {
-  @ViewChild('wineTree', { static: false }) wineTree: jqxTreeComponent;
-  @ViewChild('wineListContextMenu', { static: false }) wineListContextMenu: jqxMenuComponent;
-  @ViewChild('FooterComponent', { static: false }) footerComponent: FooterComponent;
-  @ViewChild('WineComponent', { static: false }) wineComponent: WineComponent;
-  @ViewChild('expanderComponent', { static: false }) expanderComponent: jqxExpanderComponent;
+  @ViewChild('wineTree') wineTree: jqxTreeComponent;
+  @ViewChild('wineListContextMenu') wineListContextMenu: jqxMenuComponent;
+  @ViewChild('FooterComponent') footerComponent: FooterComponent;
+  @ViewChild('WineComponent') wineComponent: WineComponent;
+  @ViewChild('expanderComponent') expanderComponent: jqxExpanderComponent;
 
   treeSettings: jqwidgets.TreeOptions =
     {
