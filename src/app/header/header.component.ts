@@ -40,4 +40,9 @@ export class HeaderComponent  {
     console.log('HeaderComponent exportClick');
     this.fileSrv.DownloadCsvFile();
   }
+
+  vinliste()  {
+    console.log('HeaderComponent vinlisteClick');
+    this.router.navigate(['/VinListe']);
+  }
 }

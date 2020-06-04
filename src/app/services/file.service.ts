@@ -11,7 +11,7 @@ export class FileService {
       private wineSvc: WineService, private messageSvc: MessageService) { }
 
   DownloadCsvFile() {
-    this.wineSvc.ExportVine().subscribe((excelData: any) => {
+    this.wineSvc.exportVine().subscribe((excelData: any) => {
         const filename: string = 'Vindata';
         const headerList: string[] = Object.keys(excelData[0]);
 

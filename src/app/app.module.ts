@@ -26,6 +26,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FotoService } from './services/foto.service';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { ListeComponent } from './components/liste/liste.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -36,11 +38,19 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     WineComponent,
     ListComponent,
     LoginComponent,
-    FileUploadComponent    
+    FileUploadComponent,
+    ListeComponent        
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgxDatatableModule.forRoot({
+      messages: {
+        emptyMessage: 'Ingen data er hentet.',
+        totalMessage: 'I alt',
+        selectedMessage: 'Valgt(e)'
+      }
+    }),
     FormsModule,
     ReactiveFormsModule,
     NgbModule,

@@ -1,0 +1,57 @@
+<!-- <div style="height: 97%"> -->
+    <h2 class="mb-2">Vinliste</h2>
+    <div class="dropdown-divider"></div>
+
+    <!-- <ngx-datatable class="bootstrap" [rows]="rows" columnMode="force" [headerHeight]="50" [footerHeight]="0"
+        [rowHeight]="50" [scrollbarV]="true" [scrollbarH]="true"> -->
+        <ngx-datatable #datatable class="table table-striped material" [rows]="rows" [rowHeight]="40" [columnMode]="'flex'"
+        [selectionType]="'single'" [sorts]="[ { prop: 'Dato', dir: 'desc' } ]"
+        [headerHeight]="50" [footerHeight]="0">
+        <ngx-datatable-column name="Id" prop="vinId" [width]="10"></ngx-datatable-column>
+        <ngx-datatable-column name="År" prop="aargang" [width]="50"></ngx-datatable-column>
+        <ngx-datatable-column name="Navn" prop="navn" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="Land" [width]="100"></ngx-datatable-column>
+        <ngx-datatable-column name="Antal" [width]="10"></ngx-datatable-column>
+        <ngx-datatable-column name="Pris" prop="koebsPris"  [width]="10"></ngx-datatable-column>
+    </ngx-datatable>
+
+
+    <!-- <div  class="tableListView row">
+        <div class="col-lg-12">
+            <ngx-datatable #datatable class="bootstrap" [rows]="ordersList" [rowHeight]="40"
+                [columnMode]="'flex'" [selectionType]="'single'" [sorts]="[ { prop: 'Årgang', dir: 'desc' } ]"
+                [headerHeight]="50" [footerHeight]="50">
+                <ngx-datatable-column prop="Id" name="Id">
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <span [innerHTML]="value"></span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column prop="Årgang" name="Årgang" >
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <span [innerHTML]="value"></span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column prop="Navn" name="Navn" >
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <span [innerHTML]="value"></span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column prop="Land" name="Land" >
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <span [innerHTML]="value"></span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column prop="Antal" name="Antal" >
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <span [innerHTML]="value"></span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column prop="Pris" name="Pris" >
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <span [innerHTML]="value"></span>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div> -->
+<!-- </div> -->
