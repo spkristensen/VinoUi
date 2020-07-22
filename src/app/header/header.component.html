@@ -1,15 +1,3 @@
-<!-- <nav class="navbar navbar-dark bg-dark fixed-top">
- <nav class="navbar navbar-dark bg-dark mb-5">
-  <div class="navbar-expand mr-auto"></div>
-  <form class="form-inline">
-    <input  type="search" placeholder="Søg.." [(ngModel)]="searchText" name="searchText"/>
-    <button type="submit" class="mr-2" (keyup.enter)="searchClick()"  (click)="searchClick()"><i class="fa fa-search"></i></button>
-    <button type="button" class="btn btn-primary btn-sm" (click)="logout()">
-        <fa-icon [icon]="logOutIcon"></fa-icon>
-    </button>     
-  </form>
-</nav> -->
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerVino"
     aria-controls="navbarTogglerVino" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,20 +18,20 @@
         </div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">  
-      <div class="input-group ">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <input type="checkbox"  [(ngModel)]="cbHistory"  data-md-icheck (change)="cbHistoryChange($event)" name="cbHistory"  >
-          </div>
+    <form class="form-inline">
+      <div>
+        <div class="input-group-text" style="width: 255px;  height: 35px; ">
+          <input type="checkbox" class="mr-2" [(ngModel)]="cbHistory" data-md-icheck (change)="cbHistoryChange($event)"
+            name="cbHistory" data-toggle="tooltip" title="Søg også i slettede vine">
+          <input type="search" placeholder="Søg.." [(ngModel)]="searchText" name="searchText">
+          <button (keyup.enter)="searchClick()" (click)="searchClick()" style="font-size:16px" type="submit"
+            class="btn"><i class="fa fa-search"></i></button>
         </div>
-        <input type="search" class="form-control" placeholder="Søg.." [(ngModel)]="searchText" name="searchText" >
-        <div class="input-group-append">
-          <button  (keyup.enter)="searchClick()"  (click)="searchClick()" class="fa fa-search" type="submit"></button>
-        </div>
-      </div>   
-      <button type="button" class="btn btn-primary btn-sm ml-2" (click)="logout()" data-toggle="tooltip" data-placement="bottom" title="Log ud">
+      </div>
+      <button type="button" class="btn btn-primary ml-2" title="Log ud">
+        <!-- <i class="fa fa-file-excel-o"></i> -->
         <fa-icon [icon]="logOutIcon"></fa-icon>
+        <!-- <span class="badge">Eksport til excel</span> -->
       </button>
     </form>
   </div>

@@ -1,0 +1,33 @@
+@import '_variables.scss';
+
+@mixin brand-blue-bg-gradient($alpha-top:1, $alpha-bottom:1, $base: #000000) {
+    background: linear-gradient(to bottom, rgba(var(--brand-blue-gradient-top), $alpha-top), rgba(var(--brand-blue-gradient-bottom), $alpha-bottom)), $base;
+}
+
+@mixin brand-green-bg-gradient($alpha-top:1, $alpha-bottom:1, $base: #000000) {
+    background: linear-gradient(to bottom, rgba(var(--brand-green-gradient-top), $alpha-top), rgba(var(--brand-green-gradient-bottom), $alpha-bottom)), $base;
+}
+
+@mixin brand-shadegray-bg-gradient($alpha-top:1, $alpha-bottom:1, $base: #000000) {
+    background: linear-gradient(to bottom, rgba(var(--brand-shadegray-gradient-top), $alpha-top), rgba(var(--brand-shadegray-gradient-bottom), $alpha-bottom)), $base;
+}
+
+@mixin brand-text-white($alpha:1) {
+    color: rgba(255,255,255,$alpha);
+}
+
+@mixin brand-text-blue() {
+    color: #047ac0;
+}
+
+@mixin btn-shadow-big() {
+    box-shadow: 0 0 20px rgba(12, 65, 97, 0.4);
+}
+
+@mixin btn-hover() {
+    box-shadow: 0 0 4px rgba(0,0,0,.12), 0 1px 3px rgba(0,0,0,.24), 0 3px 3px rgba(0,0,0,.12);
+}
+
+@mixin transition() {
+    transition: all 300ms ease-in-out;
+}
