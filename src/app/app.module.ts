@@ -16,6 +16,7 @@ import { jqxSplitterModule } from 'jqwidgets-ng/jqxsplitter';
 import { jqxTreeModule } from 'jqwidgets-ng/jqxtree';
 import { jqxPanelModule } from 'jqwidgets-ng/jqxpanel';
 import { jqxMenuModule } from 'jqwidgets-ng/jqxmenu';
+import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -58,7 +59,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     jqxExpanderModule,
     jqxSplitterModule,
     jqxMenuModule,
-    jqxPanelModule,    
+    jqxPanelModule, 
+    jqxGridModule,   
     NgxSpinnerModule,
     FontAwesomeModule
   ],

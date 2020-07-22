@@ -49,8 +49,7 @@ export class ListComponent implements AfterViewInit {
   getWineSubscription: Subscription;
   isFetchingData = false;
   searchItem: SearchItem;
-  // https://www.youtube.com/watch?v=FssKK37Ob4k
-
+    // https://www.youtube.com/watch?v=FssKK37Ob4k
   constructor(
     private wineService: WineService,
     private fotoService: FotoService,

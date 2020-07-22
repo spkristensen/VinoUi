@@ -30,7 +30,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "jqwidgets-framework": "^9.1.6",
-    "jqwidgets-ng": "^9.1.6",
+    "jqwidgets-ng": "^9.1.7",
     "jqwidgets-scripts": "^9.1.6",
     "ngx-spinner": "^9.0.2",
     "popper.js": "^1.15.0",
