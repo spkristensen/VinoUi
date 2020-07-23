@@ -5,8 +5,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { WineService } from 'src/app/services/wine.service';
 import { MessageService } from 'src/app/services/message.service';
 import { faFileExcel, faSyncAlt, faSearch, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
-// import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
-import { jqxPanelComponent } from 'jqwidgets-ng/jqxpanel';
+import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-liste',
@@ -17,21 +17,21 @@ import { jqxPanelComponent } from 'jqwidgets-ng/jqxpanel';
 export class ListeComponent implements OnInit, AfterViewInit {
   constructor(
     private wineService: WineService,
+    private fileSrv: FileService,
     private messageService: MessageService,
     private authenticationService: AuthenticationService) {
     this.currentUser = authenticationService.currentUserValue;
   }
   currentUser: User;
-  // @ViewChild('myGrid', { static: false }) myGrid: jqxGridComponent;
-  @ViewChild('myPanel', { static: false }) myPanel: jqxPanelComponent;
+  @ViewChild('myGrid', { static: false }) myGrid: jqxGridComponent;
   faExportIcon = faFileExcel;
   ngAfterViewInit(): void {
     this.wineService.listVine(true).subscribe((data: any) => {
        console.log(data);     
        this.source.localdata = data;
-      //  this.myGrid.createComponent(this.gridSettings); 
-      //  // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
-      //  this.myGrid.updatebounddata('cells');  
+       this.myGrid.createComponent(this.gridSettings); 
+       // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
+       this.myGrid.updatebounddata('cells');  
     },
       error => {
         if (error.message == null) {
@@ -141,5 +141,10 @@ export class ListeComponent implements OnInit, AfterViewInit {
     else {
       return desktop;
     }
-  }  
+  } 
+  
+  public onExportClick() {
+    console.log('ListeComponent exportClick');
+    this.fileSrv.DownloadCsvFile();
+  }
 }
