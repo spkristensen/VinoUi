@@ -10,8 +10,8 @@ export class FileService {
   constructor(
       private wineSvc: WineService, private messageSvc: MessageService) { }
 
-  DownloadCsvFile() {
-    this.wineSvc.exportVine().subscribe((excelData: any) => {
+  DownloadCsvFile(showHistory) {
+    this.wineSvc.exportVine(showHistory).subscribe((excelData: any) => {
         const filename: string = 'Vindata';
         const headerList: string[] = Object.keys(excelData[0]);
 

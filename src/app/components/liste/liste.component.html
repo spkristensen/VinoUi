@@ -9,7 +9,8 @@
                     <div class="row justify-content-end">
                         <div class="col-xs-12 col-lg-12 d-flex" style="padding-right: 0px;">
                             <label style="margin: auto 0 auto auto;">
-                            <input type="checkbox" value="" class="check-space" title="Medtag også slettede vine">Historik</label>
+                                <input type="checkbox" value="" class="check-space" title="Medtag også slettede vine" (change)="cbHistoryChange($event)">Historik
+                            </label>
                             <button type="button" class="btn btn-success d-flex ml-3" (click)="onExportClick()">
                                 <i class="fa fa-file-excel-o mr-2"></i>
                                 <span class="badge">Eksport til Excel</span>
@@ -21,7 +22,7 @@
         </div>
     </div>
     <div class="col-xs-12 col-lg-12">
-        <jqxGrid #myGrid [width]="getWidth()" [height]="getHeight()" [source]="dataAdapter" [columns]="columns"
+        <jqxGrid #wineGrid [width]="getWidth()" [height]="getHeight()" [source]="dataAdapter" [columns]="columns"
             [columnsresize]="true" [filterable]="true" [sortable]="true" [autoshowfiltericon]="true"
             [localization]="localization">
         </jqxGrid>

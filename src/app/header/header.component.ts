@@ -38,7 +38,7 @@ export class HeaderComponent  {
 
   export() {
     console.log('HeaderComponent exportClick');
-    this.fileSrv.DownloadCsvFile();
+    this.fileSrv.DownloadCsvFile(this.cbHistory);
   }
 
   vinliste()  {

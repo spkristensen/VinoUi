@@ -1,12 +1,12 @@
 import { Component, ViewChild, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
 import { User } from 'src/app/domain/user';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { WineService } from 'src/app/services/wine.service';
 import { MessageService } from 'src/app/services/message.service';
 import { faFileExcel, faSyncAlt, faSearch, faFolderPlus } from '@fortawesome/free-solid-svg-icons';
 import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
 import { FileService } from 'src/app/services/file.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-liste',
@@ -20,18 +20,20 @@ export class ListeComponent implements OnInit, AfterViewInit {
     private fileSrv: FileService,
     private messageService: MessageService,
     private authenticationService: AuthenticationService) {
-    this.currentUser = authenticationService.currentUserValue;
+    this.currentUser = authenticationService.currentUserValue;    
   }
   currentUser: User;
-  @ViewChild('myGrid', { static: false }) myGrid: jqxGridComponent;
+  @ViewChild('wineGrid', { static: false }) wineGrid: jqxGridComponent;
   faExportIcon = faFileExcel;
+  cbHistory = false;
+
   ngAfterViewInit(): void {
     this.wineService.listVine(true).subscribe((data: any) => {
        console.log(data);     
        this.source.localdata = data;
-       this.myGrid.createComponent(this.gridSettings); 
+       this.wineGrid.createComponent(this.gridSettings); 
        // passing `cells` to the `updatebounddata` method will refresh only the cells values when the new rows count is equal to the previous rows count.
-       this.myGrid.updatebounddata('cells');  
+       this.wineGrid.updatebounddata('cells');  
     },
       error => {
         if (error.message == null) {
@@ -127,11 +129,11 @@ export class ListeComponent implements OnInit, AfterViewInit {
     if (document.body.offsetHeight < 780) {
       return 525;
     }
-    return 740;
+    return 820;
   }
  
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
   public resizeOnResponsive(desktop: number, mobile: number) {
@@ -143,8 +145,13 @@ export class ListeComponent implements OnInit, AfterViewInit {
     }
   } 
   
+  cbHistoryChange(e)
+  {
+      this.cbHistory = e.target.checked;
+  }
+
   public onExportClick() {
     console.log('ListeComponent exportClick');
-    this.fileSrv.DownloadCsvFile();
+    this.fileSrv.DownloadCsvFile(this.cbHistory);
   }
 }

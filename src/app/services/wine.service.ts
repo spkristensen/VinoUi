@@ -75,9 +75,9 @@ export class WineService {
     return res;
   }
 
-  exportVine(): Observable<any> {
+  exportVine(showHistory): Observable<any> {
     console.log('WineService ExportVin');    
-    const res = this.httpClient.get(`${environment.apiUrl}/api/wineExport`);
+    const res = this.httpClient.get(`${environment.apiUrl}/api/wineExport?showHistory=` + showHistory);
     console.log(res);    
     return res;    
   }
