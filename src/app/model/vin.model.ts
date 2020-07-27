@@ -9,8 +9,8 @@ export class Vin {
     anvendelse: string;
     antal: number;
     KoebsPris: number;
-    webSite: string;
-    alkoholProcent: number;
+    website: string;
+    alkohol: number;
     land: string;
     landId: number;
     flaskeStoerrelse: string;
