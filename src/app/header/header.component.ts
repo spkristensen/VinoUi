@@ -31,6 +31,16 @@ export class HeaderComponent  {
     this.wineSvc.search(this.searchText, this.cbHistory);
   }
 
+  treeView(){
+    console.log('HeaderComponent TreeViewClick');
+    this.router.navigate(['/list']);
+  }
+
+  liste(){
+    console.log('HeaderComponent ListeClick');
+    this.router.navigate(['/VinListe']);
+  }
+
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
