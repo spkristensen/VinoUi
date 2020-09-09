@@ -14,10 +14,10 @@ import { FotoService } from '../../services/foto.service';
 import { MessageService } from '../../services/message.service';
 import { Vin } from '../../model/vin.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { User } from '../../domain/user';
 import { environment } from 'src/environments/environment';
 import { Image } from './../../model/image.model';
 import { format } from 'url';
+import { User } from 'src/app/model/user.model';
 
 declare var $: any;
 

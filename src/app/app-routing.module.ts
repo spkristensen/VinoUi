@@ -6,6 +6,7 @@ import { ListeComponent } from './components/liste/liste.component';
 import { WineComponent } from './components/wine/wine.component';
 import { AuthGuard } from './guards/auth-guard';
 import { FooterComponent } from './footer/footer.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 // https://www.c-sharpcorner.com/article/create-registration-and-login-page-using-angular-7-and-web-api/
 
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
   { path: 'login', component: LoginComponent, data: { title: 'Login Page'}},
   { path: 'list', component: ListComponent, data: { title: 'Vino'}, canActivate: [AuthGuard]},
+  { path: 'Settings', component: SettingsComponent, data: { title: 'Settings'}, canActivate: [AuthGuard]},
   { path: 'Wine', component: WineComponent, data: { title: 'Vino'}, canActivate: [AuthGuard]},
   { path: 'VinListe', component: ListeComponent, data: { title: 'Vino'}, canActivate: [AuthGuard]},
   { path: 'Footer', component: FooterComponent, data: { title: 'Vino'}, canActivate: [AuthGuard]}

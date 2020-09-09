@@ -1,5 +1,4 @@
 import { Component, ViewChild, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
-import { User } from 'src/app/domain/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { WineService } from 'src/app/services/wine.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -7,6 +6,7 @@ import { faFileExcel, faSyncAlt, faSearch, faFolderPlus } from '@fortawesome/fre
 import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
 import { FileService } from 'src/app/services/file.service';
 import { Subject } from 'rxjs';
+import { User } from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-liste',

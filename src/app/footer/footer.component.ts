@@ -3,8 +3,8 @@ import { Subject, Subscription } from 'rxjs';
 
 import { debounceTime } from 'rxjs/operators';
 import { WineService } from '../services/wine.service';
-import { User } from 'src/app/domain/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-footer',

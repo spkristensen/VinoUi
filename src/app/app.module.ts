@@ -28,6 +28,8 @@ import { FotoService } from './services/foto.service';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { ListeComponent } from './components/liste/liste.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SettingsComponent } from './components/settings/settings.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     ListComponent,
     LoginComponent,
     FileUploadComponent,
-    ListeComponent        
+    ListeComponent,
+    SettingsComponent,
+    SettingsComponent        
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
   providers: [
     WineService,
     FotoService,
+    UserService,
     DatePipe,
     { provide: NgbDateParserFormatter, useClass: DanishDateFormatter},
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

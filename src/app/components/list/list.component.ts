@@ -10,9 +10,9 @@ import { Vin } from '../../model/vin.model';
 import { MessageService } from '../../services/message.service';
 import { WineComponent } from '../wine/wine.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { User } from '../../domain/user';
 import { FotoService } from 'src/app/services/foto.service';
 import { SearchItem } from 'src/app/model/SearchItem.models';
+import { User } from 'src/app/model/user.model';
 
 declare var $: any;
 

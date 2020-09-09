@@ -3,8 +3,9 @@ import { WineService } from '../services/wine.service';
 import { FileService } from '../services/file.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
-import { User } from 'src/app/domain/user';
+
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-header',
@@ -54,5 +55,10 @@ export class HeaderComponent  {
   vinliste()  {
     console.log('HeaderComponent vinlisteClick');
     this.router.navigate(['/VinListe']);
+  }
+
+  settings()  {
+    console.log('HeaderComponent settingsClick');
+    this.router.navigate(['/Settings']);
   }
 }
