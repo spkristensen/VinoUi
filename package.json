@@ -14,10 +14,10 @@
   "dependencies": {
     "-": "0.0.1",
     "@angular/animations": "^9.1.9",
-    "@angular/common": "^9.1.9",
+    "@angular/common": "^11.0.4",
     "@angular/compiler": "^11.0.4",
-    "@angular/core": "^9.1.9",
-    "@angular/forms": "^9.1.9",
+    "@angular/core": "^11.0.4",
+    "@angular/forms": "^11.0.4",
     "@angular/localize": "^9.1.9",
     "@angular/platform-browser": "^9.1.9",
     "@angular/platform-browser-dynamic": "^9.1.9",
