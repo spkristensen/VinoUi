@@ -3,22 +3,30 @@ import { MessageService } from 'src/app/services/message.service';
 import { FotoService } from 'src/app/services/foto.service';
 import { Vin } from '../../model/vin.model';
 import { WineService } from '../../services/wine.service';
+import { Subscription } from 'rxjs';
 
 declare var $: any;
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent {
   imageUrl = '../assets/img/UploadImageDefault.png';
   selectedFile: File = null;
   vin: Vin;
+  messageServiceSubscription: Subscription;
+
   constructor(
     private messageService: MessageService,
     private wineService: WineService,
-    private fotoService: FotoService) { }
+    private fotoService: FotoService) {
 
-  ngOnInit() {
+    // Her under har  vi abonnement på meddelelser der bliver sendt fra MessageService
+    this.messageServiceSubscription = messageService.getMessage().subscribe(message => {
+      if (message.type === 'info') {
+        this.imageUrl = message.url;
+      }
+    })
   }
 
   onFileSelected(file: FileList) {

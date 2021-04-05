@@ -4,5 +4,5 @@ export class User {
     firstName: string;
     lastName: string;   
     created: string;
-    token: string;
+    jwtToken: string;
 }

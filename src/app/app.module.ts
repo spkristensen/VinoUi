@@ -30,6 +30,7 @@ import { ListeComponent } from './components/liste/liste.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UserService } from './services/user.service';
+import { ImageGalleryComponent } from './components/imagegallery/image-gallery/image-gallery.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { UserService } from './services/user.service';
     FileUploadComponent,
     ListeComponent,
     SettingsComponent,
-    SettingsComponent        
+    ImageGalleryComponent        
   ],
   imports: [
     BrowserModule,

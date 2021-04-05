@@ -68,7 +68,7 @@ export class WineService {
 
   searchVin(searchItem): Observable<any> {
     console.log('WineService searchVin: ' + searchItem);
-    const res = this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + searchItem.searchValue + `&searchHistory=` + searchItem.searchHistory);
+    const res = this.httpClient.get(`${environment.apiUrl}/api/wineList/search?searchText=` + searchItem.searchValue + `&searchHistory=` + searchItem.searchHistory);
 
     console.log(res);
     this.updateFooterInfoAnnounced.next('');
@@ -153,7 +153,7 @@ export class WineService {
   }
 
   getAllWines(searchItem): Observable<any> {
-    return this.httpClient.get(`${environment.apiUrl}/api/wineList?searchText=` + '' + searchItem.searchValue + `&searchHistory=` + searchItem.searchHistory);
+    return this.httpClient.get(`${environment.apiUrl}/api/wineList/search?searchText=` + searchItem.searchValue + `&searchHistory=` + searchItem.searchHistory);
   }
 
   getVin(id): Observable<any> {

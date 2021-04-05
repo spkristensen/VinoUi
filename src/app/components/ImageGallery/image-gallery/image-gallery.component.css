@@ -1,0 +1,25 @@
+.img{      
+    margin:6px 6px;      
+    border: 4px solid #eee;      
+    box-shadow:rgb(224, 199, 199) 1px 1px 8px 1px;      
+    cursor: pointer      
+       }      
+   .modal-content {      
+     width: 440px !important;      
+   }      
+   ul {
+      padding:0;
+       width:470px;
+       margin:10px auto;margin-left: 10px;
+       max-height: 250px;
+       overflow-y: auto;
+    }      
+   li { display:inline;}    
+
+   .list-group{
+    max-height: 200px;
+    max-width: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
