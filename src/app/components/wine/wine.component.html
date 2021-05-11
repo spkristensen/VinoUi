@@ -4,7 +4,7 @@
       <form #imageForm=ngForm>
         <a class="cursor-pointer">
           <img [src]="imageUrl" style="width:100px; height: 100px" data-toggle="modal" data-target="#FileUploadModal"
-            placement="bottom" ngbTooltip="Klik for at tilføje foto">
+            placement="bottom" ngbTooltip="{{imageUrl}}">
         </a>
       </form>
     </div>
@@ -12,7 +12,8 @@
       <form #imageForm=ngForm>
         <a class="cursor-pointer" [attr.href]="imageUrlOrg" target="_blank">
           <img [src]="imageUrl" style="width:100px; height: 100px" placement="bottom"
-            ngbTooltip="Klik for at vise foto i stort format">
+          ngbTooltip="{{imageUrl}}">
+            <!-- ngbTooltip="Klik for at vise foto i stort format"> -->
         </a>
       </form>
     </div>
@@ -166,7 +167,7 @@
                   <a class="cursor-pointer">
                     <img [src]="imageUrl" style="width:100px; height: 100px" data-toggle="modal"
                       data-target="#FileUploadModal" placement="bottom"
-                      ngbTooltip="Klik for at tilføje eller ændre foto">
+                      ngbTooltip="{{imageUrl}}">
                   </a>
                 </form>
               </div>

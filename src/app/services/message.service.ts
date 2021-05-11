@@ -16,8 +16,8 @@ export class MessageService {
     this.subject.next({ type: 'error', text: message });
   }
 
-  setSelectedImage(id: string, imageUrl: string) {    
-    this.subject.next({ type: 'info', id: id, url: imageUrl });
+  setSelectedImage(id: string, imageUrl: string, imageName: string) {    
+    this.subject.next({ type: 'info', id: id, url: imageUrl, imageName: imageName });
   }
 
   getMessage(): Observable<any> {

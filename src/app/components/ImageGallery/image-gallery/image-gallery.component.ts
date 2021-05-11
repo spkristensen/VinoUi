@@ -33,7 +33,7 @@ export class ImageGalleryComponent implements OnChanges {
 
   imageClick(imageObj)
   {      
-      this.messageService.setSelectedImage(imageObj.id, imageObj.url)      
+      this.messageService.setSelectedImage(imageObj.id, imageObj.urlResized, imageObj.imageName)      
   }  
 
   soeg()

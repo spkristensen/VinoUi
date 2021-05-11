@@ -63,6 +63,7 @@ export class WineComponent implements OnInit {
   WineGetCreateSubscription: Subscription;
   wineDeletedSubscription: Subscription;
   fileUploadedSubscription: Subscription;
+  fileUploadedSubscriptionExcisting: Subscription;
   vinDetail: Vin;  
   imageUrl = '../assets/img/UploadImageDefault.png';
   imageUrlOrg = '';
@@ -136,13 +137,23 @@ export class WineComponent implements OnInit {
       }
     });
     this.fileUploadedSubscription = fotoService.fileUploadedAnnounced$.subscribe(data => {
-      const url = `${environment.apiUrl}/image/${data.imageId}`;
-      this.imageUrl = url;
+      // const url = `${environment.apiUrl}/images/Reseized/${data.imageId}`;
+      this.imageUrl = data.urlResized;
       this.wine.imageId = data.id;
       this.imageTempplate = false;
       this.imageShow = false;
       this.imageShow = true;
-      this.imageUrlOrg = `${environment.apiUrl}/image/ORG-${data}`;
+      this.imageUrlOrg = data.urlOriginal;
+      // `${environment.apiUrl}/images/Original/ORG-${data}`;
+    });
+
+    this.fileUploadedSubscriptionExcisting = fotoService.fileUploadedAnnouncedExcisting$.subscribe(data => {      
+      this.imageUrl = data.urlResized;;      
+      this.imageTempplate = false;
+      this.imageShow = false;
+      this.imageShow = true;
+      this.imageUrlOrg = data.urlOriginal;
+      //  `/ORG-${imageUrl}`;
     });
 
     this.WineGetSubscription = wineService.getWineAnnounced$.subscribe(vin => {
@@ -153,18 +164,19 @@ export class WineComponent implements OnInit {
         this.imageTempplate = true;
         this.imageShow = false;
       } else {
-        this.imageUrl = `${environment.apiUrl}/image/${vin.imageName}`;
+        this.imageUrl = `${environment.apiUrl}/images/Resized/${vin.imageName}`;
         this.imageTempplate = false;
         this.imageShow = true;
-        this.imageUrlOrg = `${environment.apiUrl}/image/ORG-${vin.imageName}`;
+        this.imageUrlOrg = `${environment.apiUrl}/images/Original/ORG-${vin.imageName}`;
       }
       this.wine = vin;
     });
 
     this.WineGetCreateSubscription = wineService.getWineCreateAnnounced$.subscribe(vin => {
-      const url = `${environment.apiUrl}/image/${vin.imageName}`;
+      const url = `${environment.apiUrl}/images/Original/${vin.imageName}`;
       this.wine = vin;
       this.imageUrl = url;
+      this.imageUrlOrg = `${environment.apiUrl}/images/Original/ORG-${vin.imageName}`;
       $('#wineModal').modal('show');
     });
 

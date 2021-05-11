@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -16,21 +16,30 @@ export class FotoService {
     allImages = [];
     private fileUploadedAnnounced = new Subject<any>();
     fileUploadedAnnounced$ = this.fileUploadedAnnounced.asObservable();
+    
+    private fileUploadedAnnouncedEcixting = new Subject<any>();
+    fileUploadedAnnouncedExcisting$ = this.fileUploadedAnnouncedEcixting.asObservable();
+    
     private imageSearchAnnounced = new Subject<any>();
     imageSearchAnnounced$ = this.imageSearchAnnounced.asObservable();
 
-    uploadFoto(wineId: number, fileToUpload: File): Observable<any> {
+    uploadFoto(wineId: number, file: FormData): Observable<any> {
         const obs = new Observable(observer => {
             observer.next(true);
             observer.complete();
         });
         console.log('FotoService upload foto');
-        const formData = new FormData();
-        formData.append('image', fileToUpload, fileToUpload.name);
-        // formData.append('ImageCaption', caption);
-        formData.append('WineId', wineId.toString());
-
-        this.httpClient.post(`${environment.apiUrl}/api/image`, formData).subscribe((data: any) => {
+        
+        // https://www.remotestack.io/post-multipart-form-data-in-angular-with-httpclient/
+        // const formData = new FormData();
+        // formData.append('image', fileToUpload, fileToUpload.name);
+        //formData.append('WineId', wineId.toString());
+        //const url = `${this.apiUrl}/${CONFIG.apiEndpoints.encode.fileToBase64}`;
+       
+        //const headers = new HttpHeaders().append('Content-Disposition', 'multipart/form-data');
+        const url = `${environment.apiUrl}/api/image/upload/${wineId}`;
+        //this.httpClient.post(url, fileToUpload, {headers: headers}).subscribe((data: any) => {
+        this.httpClient.post(url, file).subscribe((data: any) => {
             this.fileUploadedAnnounced.next(data);
         },
             error => {
@@ -38,22 +47,24 @@ export class FotoService {
             });
         return obs;
     }
-   
-    //getImages(searchText: string): Observable<any> {
-    // getImages1(searchText: string) {
-    //     console.log('FotoService getImages');  
-    //     //http://localhost:61000/api/image/getimagelist/g?subDirEnum=0
+
+    uploadFotoExcisting(wineId: number, imageId: number, fotoUrl: string): Observable<any> {
+        const obs = new Observable(observer => {
+            observer.next(true);
+            observer.complete();
+        });
+        
+
+        const url = `${environment.apiUrl}/api/wine/image/${wineId}/${imageId}`;
+        this.httpClient.get(url).subscribe((data: any) => {
+            this.fileUploadedAnnouncedEcixting.next(data);
+        },
+            error => {
+                this.messageService.error(error.title, false);
+            });
+        return obs;
+    }
        
-
-    //     const res = this.httpClient.get(`${environment.apiUrl}/api/image/getimagelist/` + searchText).subscribe((data: any) => {
-    //     console.log(res);  
-    //     return this.allImages = Imagesdelatils;            
-    //     }
-      
-
-    // }
-   
-    //getImages(searchText: string) {
     getImages(searchText: string): Observable<any> {
         console.log('FotoService getImages ' + searchText);  
         const obs = new Observable(observer => {
@@ -61,11 +72,10 @@ export class FotoService {
             observer.complete();
         });
 
-        const store = 1;
-        const url = `${environment.apiUrl}/api/image/getimagelist/?searchfor=${searchText}`;
-        const url1 = `${environment.apiUrl}/api/image/getimagelist/?searchfor=${searchText}&subDirEnum=${store}`;
+        const store = 2;
+        const url = `${environment.apiUrl}/api/image/getimagelist/?searchfor=${searchText}&subDirEnum=${store}`;
 
-        this.httpClient.get(url1).subscribe((data: any) => {
+        this.httpClient.get(url).subscribe((data: any) => {
             this.imageSearchAnnounced.next(data);                                        
         });
         return obs;         

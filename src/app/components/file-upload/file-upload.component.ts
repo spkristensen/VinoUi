@@ -10,13 +10,14 @@ declare var $: any;
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
 })
-export class FileUploadComponent {
+export class FileUploadComponent  {
   imageUrl = '../assets/img/UploadImageDefault.png';
+  imageId = 0; // Når der er valgt er eksisterende billede
   selectedFile: File = null;
   vin: Vin;
   messageServiceSubscription: Subscription;
-
-  constructor(
+   
+  constructor(   
     private messageService: MessageService,
     private wineService: WineService,
     private fotoService: FotoService) {
@@ -25,8 +26,9 @@ export class FileUploadComponent {
     this.messageServiceSubscription = messageService.getMessage().subscribe(message => {
       if (message.type === 'info') {
         this.imageUrl = message.url;
-      }
-    })
+        this.imageId = message.id;
+      }      
+    })    
   }
 
   onFileSelected(file: FileList) {
@@ -35,13 +37,31 @@ export class FileUploadComponent {
     const reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
+      this.imageId = null;
     };
     reader.readAsDataURL(this.selectedFile);
   }
 
   uploadFoto() {
-    // https://www.youtube.com/watch?v=YkvqLNcJz3Y
-    this.fotoService.uploadFoto(this.wineService.vin.vinId, this.selectedFile).subscribe(data => {
+    if (this.imageId === null || this.imageId === 0)
+    {
+      this.uploadFotoNew()    
+    }
+    else
+    {
+      this.uploadFotoExcisting();
+    }
+  }
+  clearImage() {
+    this.imageUrl = '../assets/img/UploadImageDefault.png';
+  }
+
+  uploadFotoNew()
+  {    
+     // https://www.youtube.com/watch?v=YkvqLNcJz3Y
+     const formData = new FormData();
+     formData.append('foto', this.selectedFile);
+     this.fotoService.uploadFoto(this.wineService.vin.vinId, formData).subscribe(data => {
       console.log(data);
       this.messageService.success('Fotoet blev uploaded');
       $('#FileUploadModal').modal('hide');
@@ -51,7 +71,22 @@ export class FileUploadComponent {
       }
     );
   }
-  clearImage() {
-    this.imageUrl = '../assets/img/UploadImageDefault.png';
+
+  uploadFotoExcisting()
+  {
+    // https://www.youtube.com/watch?v=YkvqLNcJz3Y
+    this.fotoService.uploadFotoExcisting(this.wineService.vin.vinId, this.imageId,  this.imageUrl).subscribe(data => {
+      console.log(data);
+      this.messageService.success('Fotoet blev uploaded');
+      $('#FileUploadModal').modal('hide');
+    },
+      error => {
+        this.messageService.error(error.message, false);
+      }
+    );
   }
 }
+function upload(event: Event): (error: any) => void {
+  throw new Error('Function not implemented.');
+}
+
