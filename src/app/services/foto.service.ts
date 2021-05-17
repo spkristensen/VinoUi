@@ -73,7 +73,8 @@ export class FotoService {
         });
 
         const store = 2;
-        const url = `${environment.apiUrl}/api/image/getimagelist/?searchfor=${searchText}&subDirEnum=${store}`;
+        const url = `${environment.apiUrl}/api/image/getimagelist/${searchText}&subDirEnum=${store}`;
+        //const url = `${environment.apiUrl}/api/image/getimagelist/?searchfor=${searchText}&subDirEnum=${store}`;
 
         this.httpClient.get(url).subscribe((data: any) => {
             this.imageSearchAnnounced.next(data);                                        
