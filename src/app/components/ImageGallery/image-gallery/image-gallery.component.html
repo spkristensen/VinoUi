@@ -18,9 +18,9 @@
  
   <div class="row">          
       <ul>    
-        <li *ngFor="let img of (allImages )">  
+        <li *ngFor="let img of (imageListe)">  
           <a>    
-            <img src="{{img.urlResized}}" class="img" width="100" height="100" (click)="imageClick(img)" ngbTooltip="{{img.imageName}}">    
+            <img src="{{img.imageUrl}}" class="img" width="100" height="100" (click)="imageClick(img.imageUrl)" ngbTooltip="{{img.imageName}}">    
           </a>
         </li>    
       </ul>    
