@@ -4,6 +4,8 @@ import { Subject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MessageService } from '../services/message.service';
 import { Image } from '../model/Image.model';
+import { ImageInfo } from '../model/ImageInfo';
+import { ImageObjectId } from '../model/ImageObjectId';
 
 @Injectable()
 export class FotoService {
@@ -48,15 +50,21 @@ export class FotoService {
         return obs;
     }
 
-    uploadFotoExcisting(wineId: number, imageId: number, fotoUrl: string): Observable<any> {
+    uploadFotoExcisting(wineId: number, imageId: string, fotoUrl: string): Observable<any> {
         const obs = new Observable(observer => {
             observer.next(true);
             observer.complete();
         });
         
-
-        const url = `${environment.apiUrl}/api/wine/image/${wineId}/${imageId}`;
-        this.httpClient.get(url).subscribe((data: any) => {
+        // Her skal vi opdatere vinen med id på et eksisterende billede.
+        // Id på billede der er gemt i db er navnet  på den fysiske billedeFil
+        const imageObjId : ImageObjectId = {
+            vinId: wineId,
+            imageId: imageId
+          };
+        
+        const url = `${environment.apiUrl}/api/wine/image`;
+        this.httpClient.put(url, imageObjId).subscribe((data: any) => {
             this.fileUploadedAnnouncedEcixting.next(data);
         },
             error => {

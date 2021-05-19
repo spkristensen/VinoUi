@@ -14,7 +14,6 @@ export class ImageGalleryComponent implements OnChanges {
 
   images:any[];    
   filterBy?: string = 'all'    
-  allImages:any[] = []; 
   imageListe: ImageInfo[];   
   //private imageUrl = new Subject<any>();
   public searchText = '';
@@ -23,7 +22,6 @@ export class ImageGalleryComponent implements OnChanges {
   constructor(private fotoService: FotoService, private messageService: MessageService) {    
     //this.allImages = this.fotoService.getImages(this.searchText); 
     this.imageSearchSubscription = fotoService.imageSearchAnnounced$.subscribe(data => {
-      this.allImages = data;
       this.imageListe = data;
     });   
   }   
@@ -36,7 +34,7 @@ export class ImageGalleryComponent implements OnChanges {
 
   imageClick(imageObj)
   {      
-      this.messageService.setSelectedImage(imageObj.id, imageObj.urlResized, imageObj.imageName)      
+      this.messageService.setSelectedImage(imageObj.imageUrl, imageObj.imageName)      
   }  
 
   soeg()

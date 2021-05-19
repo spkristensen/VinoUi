@@ -13,6 +13,7 @@ declare var $: any;
 export class FileUploadComponent  {
   imageUrl = '../assets/img/UploadImageDefault.png';
   imageId = 0; // Når der er valgt er eksisterende billede
+  imageExcistingId = '';
   selectedFile: File = null;
   vin: Vin;
   messageServiceSubscription: Subscription;
@@ -26,7 +27,7 @@ export class FileUploadComponent  {
     this.messageServiceSubscription = messageService.getMessage().subscribe(message => {
       if (message.type === 'info') {
         this.imageUrl = message.url;
-        this.imageId = message.id;
+        this.imageExcistingId = message.imageName;
       }      
     })    
   }
@@ -43,7 +44,7 @@ export class FileUploadComponent  {
   }
 
   uploadFoto() {
-    if (this.imageId === null || this.imageId === 0)
+    if (this.imageExcistingId === null || this.imageExcistingId === '')
     {
       this.uploadFotoNew()    
     }
@@ -75,7 +76,7 @@ export class FileUploadComponent  {
   uploadFotoExcisting()
   {
     // https://www.youtube.com/watch?v=YkvqLNcJz3Y
-    this.fotoService.uploadFotoExcisting(this.wineService.vin.vinId, this.imageId,  this.imageUrl).subscribe(data => {
+    this.fotoService.uploadFotoExcisting(this.wineService.vin.vinId, this.imageExcistingId,  this.imageUrl).subscribe(data => {
       console.log(data);
       this.messageService.success('Fotoet blev uploaded');
       $('#FileUploadModal').modal('hide');
