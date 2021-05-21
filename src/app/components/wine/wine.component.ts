@@ -138,21 +138,21 @@ export class WineComponent implements OnInit {
     });
     this.fileUploadedSubscription = fotoService.fileUploadedAnnounced$.subscribe(data => {
       // const url = `${environment.apiUrl}/images/Reseized/${data.imageId}`;
-      this.imageUrl = data.urlResized;
+      this.imageUrl = data.imageUrlResized;
       this.wine.imageId = data.id;
       this.imageTempplate = false;
       this.imageShow = false;
       this.imageShow = true;
-      this.imageUrlOrg = data.urlOriginal;
+      this.imageUrlOrg = data.imageUrlOriginal;
       // `${environment.apiUrl}/images/Original/ORG-${data}`;
     });
 
     this.fileUploadedSubscriptionExcisting = fotoService.fileUploadedAnnouncedExcisting$.subscribe(data => {      
-      this.imageUrl = data.urlResized;;      
+      this.imageUrl = data.imageUrlResized;;      
       this.imageTempplate = false;
       this.imageShow = false;
       this.imageShow = true;
-      this.imageUrlOrg = data.urlOriginal;
+      this.imageUrlOrg = data.imageUrlOriginal;
       //  `/ORG-${imageUrl}`;
     });
 

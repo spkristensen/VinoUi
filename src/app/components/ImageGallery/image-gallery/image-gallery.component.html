@@ -20,7 +20,7 @@
       <ul>    
         <li *ngFor="let img of (imageListe)">  
           <a>    
-            <img src="{{img.imageUrl}}" class="img" width="100" height="100" (click)="imageClick(img)" ngbTooltip="{{img.imageName}}">    
+            <img src="{{img.imageUrlResized}}" class="img" width="100" height="100" (click)="imageClick(img)" ngbTooltip="{{img.name}}">    
           </a>
         </li>    
       </ul>    
