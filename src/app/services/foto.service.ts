@@ -33,14 +33,7 @@ export class FotoService {
         console.log('FotoService upload foto');
         
         // https://www.remotestack.io/post-multipart-form-data-in-angular-with-httpclient/
-        // const formData = new FormData();
-        // formData.append('image', fileToUpload, fileToUpload.name);
-        //formData.append('WineId', wineId.toString());
-        //const url = `${this.apiUrl}/${CONFIG.apiEndpoints.encode.fileToBase64}`;
-       
-        //const headers = new HttpHeaders().append('Content-Disposition', 'multipart/form-data');
         const url = `${environment.apiUrl}/api/image/upload/${wineId}`;
-        //this.httpClient.post(url, fileToUpload, {headers: headers}).subscribe((data: any) => {
         this.httpClient.post(url, file).subscribe((data: any) => {
             this.fileUploadedAnnounced.next(data);
         },

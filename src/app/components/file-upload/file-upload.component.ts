@@ -61,7 +61,8 @@ export class FileUploadComponent  {
   {    
      // https://www.youtube.com/watch?v=YkvqLNcJz3Y
      const formData = new FormData();
-     formData.append('foto', this.selectedFile);
+     // file er navnet på parameter i  public async Task<IActionResult> UploadFile(IFormFile file, int vinId)
+     formData.append('file', this.selectedFile);
      this.fotoService.uploadFoto(this.wineService.vin.vinId, formData).subscribe(data => {
       console.log(data);
       this.messageService.success('Fotoet blev uploaded');
